@@ -1,6 +1,4 @@
-SCM5800
-Due date Friday 11 June 2004
-AssignmentóA War Game
+Assignment‚ÄîA War Game
 The playing field (or the board).
 First move
 Either side can start the game by making the first move. Then, each player taking turns to make
@@ -27,14 +25,14 @@ yellow army. The total strength of the blue army is then multiplied by their mul
 similarly, the strength of the yellow army is multiplied by their own multiplier.
 For example, if the blue token attacks the battle square, as shown in the diagram above, then the
 blue army have the attacking strength of 40 units and the yellow army defends with 20 units as
-indicated by the dotted squares. Letís say the respective blue and yellow random multipliers are
+indicated by the dotted squares. Let‚Äôs say the respective blue and yellow random multipliers are
 6 and 10. The attacking strength is 240 and defending strength is 200 units so the blue token
 wins and takes over the battle square. The yellow token is removed from the board. If the result
 is a draw, blue token withdraws to the original square.
 Moving Tokens
-Use the mouse to ìdragî the token where you want it to go. The token should be always centred
+Use the mouse to ‚Äúdrag‚Äù the token where you want it to go. The token should be always centred
 on its square. Of course, only the legal moves are allowed. Any attempts to drag the token to a
-wrong square should result in an ìIllegal moveî error message displayed on the applet and when
+wrong square should result in an ‚ÄúIllegal move‚Äù error message displayed on the applet and when
 the mouse button is released the token returns to the previous position. Mouse dragging should
 be implemented via MouseListener class. The motion begins in the mousePressed() method and
 ends in mouseReleased().
@@ -49,20 +47,20 @@ At least one buttons is required to reset the game. Two text fields requesting t
 player can choose to leave it blank). Two more text fields (initiated to 0 at the start of the game)
 indicating the strength of the blue and yellow tokens (including strength of their supporting tokens)
 involved in the most recent battle. An additional text field is required for the various messages, e.g.,
-ìIllegal moveî or ìBlue winsî etc.
+‚ÄúIllegal move‚Äù or ‚ÄúBlue wins‚Äù etc.
 Comments
-ï
+‚Ä¢
 You are only allowed to use the library classes and methods covered in the lectures (wit a
 exception of the MouseDragged() methods). You are permitted to use the standard Java arrays
 and swing library. Be warned, you are likely to fail the assignment if you choose to break this
 rules.
-ï
+‚Ä¢
 The Java code should be fully documented.
-ï Use loops were possible (and reasonable).
-ï Applet must have the board, the tokens with their the unit strength, text fields and buttons.
-ï Use an array of objects to represent the tokens. Define appropriate attributes (strength, colour,
+‚Ä¢ Use loops were possible (and reasonable).
+‚Ä¢ Applet must have the board, the tokens with their the unit strength, text fields and buttons.
+‚Ä¢ Use an array of objects to represent the tokens. Define appropriate attributes (strength, colour,
 location, old location etc.). Other useful objects and arrays, as required.
-ï You are encouraged to discuss the assignment with your fellow students but the actual design
+‚Ä¢ You are encouraged to discuss the assignment with your fellow students but the actual design
 and coding must be strictly your own work. Sharing code with other students is forbidden.
 Plagiarism will not be tolerated, no excuses!
 Assignment
@@ -72,19 +70,19 @@ Assignment
 3. Implement Token object and arrays. 4 marks
 5. The battle square logic and the end game logic. 2 marks
 Submission
-ï
+‚Ä¢
 Due date Friday 11, June 2004.
-ï Late assignments will be penalised 2 marks per day Submit the assignment only in an
-electronic formóthe java source code and the class files.
-ï Email your assignment to Dr J Szajman scm5800@melba.vu.edu.au. All emails will be
+‚Ä¢ Late assignments will be penalised 2 marks per day Submit the assignment only in an
+electronic form‚Äîthe java source code and the class files.
+‚Ä¢ Email your assignment to Dr J Szajman scm5800@melba.vu.edu.au. All emails will be
 acknowledged within two working days. If you did not receive the acknowledgment within two
 working days, please resend the assignment.
-ï Submit only the final version of the assignment. Subsequent emails with the updated files will
+‚Ä¢ Submit only the final version of the assignment. Subsequent emails with the updated files will
 be ignored.
-ï The email must include the following information. Failure to supply the requested information
+‚Ä¢ The email must include the following information. Failure to supply the requested information
 may result in a failure.
 ID, last and first name,
 subject code
 course code
-tutorís name.
-ï All attached files must also have comment lines with the above information.
+tutor‚Äôs name.
+‚Ä¢ All attached files must also have comment lines with the above information.

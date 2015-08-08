@@ -1,0 +1,6 @@
+1	Radio	Name the last Sultan dynasty to rule Delhi	Mameluk,Khalji,Tughluq,Lodhi
+2	CheckBox	Which of the following are works by Kalidasa?	Raghuvamsa,Kadambari,Kiritarjuniya,Malvikagnimitra,Meghaduta
+3	TextArea	Write a note on changes in Agrarian Economy in the post-Gupta period.
+4	CheckBox	Which of the following dynasties were not involved in the struggle for Kanauj?	Pratiharas,Chalukyas,Cholas,Hoyasalas,Rashtrakutas
+5	TextArea	Write a note on Temple Architecture under the Cholas.
+6	Radio	In which year did the Mughals lost Persia to the Safavids?	1649,1634,1679,1643 		

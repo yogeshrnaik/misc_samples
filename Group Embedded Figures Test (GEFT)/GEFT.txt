@@ -1,0 +1,18 @@
+Hi,
+
+I have written a little about the assignment and attached the document.
+Go thru the zip file. It contains the required code also.
+Please give me your response as soon as possible.
+
+Assignment Definition:
+GEFT is a test to check student's ability identifying simple shapes from complex object. The test result is used in many purposes but that's not our concern. This assignment is to provide web user interface for examinees to identify and draw the simple shape from given pictures and find a way to send it back to instructor to grade. You may need java applet with JSP. 
+
+First task to do in the assignment is to figure out the "proper" way to capture the data of drawing (student's answer) and send it through Internet to database in web server for instructor to grade. There can be several answers. But, I expect you to investigate and think about it and come back to me with your suggestion(s).
+
+Go thru the link http://www.izhuk.com/painter/product/doc/placing.htm.
+
+Regards,
+Pavan
+
+
+ 

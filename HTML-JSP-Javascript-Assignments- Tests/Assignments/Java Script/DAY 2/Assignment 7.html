@@ -1,0 +1,75 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE> Day 2 - Assignment 7 </TITLE>
+</HEAD>
+<SCRIPT>
+	function isValid()
+	{
+		if (isNaN(parseInt(window.myform.txtWidth.value)) || isNaN(window.myform.txtWidth.value))
+		{
+			alert("Width should be a number.");
+			return false;
+		}
+		if (isNaN(parseInt(window.myform.txtHeight.value))|| isNaN(window.myform.txtHeight.value))
+		{
+			alert("Height should be a number.");
+			return false;
+		}
+		if (isNaN(parseInt(window.myform.txtLeft.value)) || isNaN(window.myform.txtLeft.value))
+		{
+			alert("Left coordinate should be a number.");
+			return false;
+		}
+		if (isNaN(parseInt(window.myform.txtTop.value)) || isNaN(window.myform.txtTop.value))
+		{
+			alert("Top coordinate should be a number.");
+			return false;
+		}
+		return true;
+	}
+	function createWindow()
+	{
+		//alert("new window");
+		if (isValid())
+		{
+			var intWidth = parseInt(window.myform.txtWidth.value);
+			var intHeight = parseInt(window.myform.txtHeight.value);
+			var intLeft = parseInt(window.myform.txtLeft.value);
+			var intTop = parseInt(window.myform.txtTop.value);
+			var strFeatures = "width="		+ intWidth	+
+							  ", height="	+ intHeight +
+							  ", left="		+ intLeft	+
+							  ", top="		+ intTop	+
+							  ", resizable=yes" + ",scrollbars=yes";
+			window.open("../indexpage.html", "New_Window",strFeatures);
+		}
+	}
+</SCRIPT>
+<BODY>
+<FORM ID="myform">
+	<B> Create a new window </B> <BR><BR>
+	<TABLE BORDER="1" CELLSPACING="0">
+		<TR> <TD>
+		<TABLE>
+			<TR> <TD>
+				 <B> Width: </B>
+				 <INPUT ID="txtWidth" TYPE="text" SIZE="5">
+				 &nbsp;&nbsp;&nbsp;&nbsp;
+				 <B> Height: </B>
+				 <INPUT ID="txtHeight" TYPE="text" SIZE="5">
+			<TR> <TD ALIGN="center"> <B> POSITION </B>
+			<TR> <TD>
+				 <B> Left: </B>
+				 <INPUT ID="txtLeft" TYPE="text" SIZE="5">
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				 <B> Top: </B>
+				 <INPUT ID="txtTop" TYPE="text" SIZE="5">
+			<TR> <TD ALIGN="center">
+				 <INPUT ID="btnNewwin" TYPE="button" VALUE="New Window" ONCLICK="createWindow()">
+				 <INPUT ID="btnReset" TYPE="reset">
+		</TABLE>
+	</TABLE>
+</FORM>
+</BODY>
+</HTML>

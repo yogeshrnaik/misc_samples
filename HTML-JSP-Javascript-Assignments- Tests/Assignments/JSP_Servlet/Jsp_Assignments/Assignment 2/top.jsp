@@ -1,0 +1,10 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE> top.jsp </TITLE>
+</HEAD>
+
+<BODY>
+<MARQUEE><H1><FONT COLOR = "red">  PATNI TRAINING </FONT></H1></MARQUEE>
+</BODY>
+</HTML>

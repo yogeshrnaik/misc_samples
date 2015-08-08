@@ -1,0 +1,41 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE>Day 1 - Assignment 5</TITLE>
+</HEAD>
+<SCRIPT>
+	function book(strName, strAuthor, strIsbn, strSubject, intRating)
+	{
+		this.strName = strName;
+		this.strAuthor = strAuthor;
+		this.strIsbn = strIsbn;
+		this.strSubject = strSubject;
+		this.intRating = intRating;
+		this.displayBookDetails = displayBookDetails;
+	}
+	function displayBookDetails()
+	{
+		document.write(	this.strName + " " + 
+						this.strAuthor + " " + 
+						this.strIsbn + " "+ 
+						this.strSubject + " " + 
+						this.intRating + "<BR>");
+	}
+	function display()
+	{
+		document.write("List of Books<BR>");
+		document.write("------------------<BR>");
+		var book1 = new book("Book1", "Author1", "isbn1", "Sub1", 1);
+		var book2 = new book("Book2", "Author2", "isbn2", "Sub2", 2);
+		var book3 = new book("Book3", "Author3", "isbn3", "Sub3", 3);
+		var book4 = new book("Book4", "Author4", "isbn4", "Sub4", 4);
+		book1.displayBookDetails();
+		book2.displayBookDetails();
+		book3.displayBookDetails();
+		book4.displayBookDetails();
+	}
+	display();
+</SCRIPT>
+<BODY >
+</BODY>
+</HTML>

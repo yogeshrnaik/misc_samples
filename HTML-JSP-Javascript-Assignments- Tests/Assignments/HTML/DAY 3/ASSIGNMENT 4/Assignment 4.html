@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE> About me </TITLE>
+</HEAD>
+<SCRIPT LANGUAGE="JavaScript">
+	function img1_onmouseover()
+	{
+		img2.style.visibility = "hidden";
+	}
+	function img1_onmouseout()
+	{
+		img2.style.visibility = "visible";
+	}
+	function img2_onmouseover()
+	{
+		img1.style.visibility = "hidden";
+	}
+	function img2_onmouseout()
+	{
+		img1.style.visibility = "visible";
+	}
+</SCRIPT>
+
+<BODY>
+<IMG ID="img1" SRC="image1.gif" onmouseover="img1_onmouseover();" onmouseout="img1_onmouseout();"> 
+<IMG ID="img2" SRC="image2.gif" onmouseover="img2_onmouseover();" onmouseout="img2_onmouseout();"> 
+</H1>
+</BODY>
+</HTML>

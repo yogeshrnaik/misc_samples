@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE> Z-index Example </TITLE>
+</HEAD>
+<STYLE>
+	table.t1
+	{
+		position:absolute;
+		left:95; top:95;
+		z-index:2
+	}
+	table.t2
+	{
+		position:absolute;
+		left:50; top:50;
+		z-index:1
+	}
+</STYLE>
+<BODY>
+
+<TABLE CLASS="t2" BORDER="1" WIDTH="50%" CELLSPACING="0">
+	<TR> <TD HEIGHT="200"  VALIGN="top" BGCOLOR="lime"> 
+			<BR> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Block 2
+</TABLE>
+
+<TABLE CLASS="t1" BORDER="1" WIDTH="50%" CELLSPACING="0">
+	<TR> <TD HEIGHT="200"  VALIGN="top" BGCOLOR="yellow"> 
+		&nbsp;&nbsp;&nbsp; Block 1
+</TABLE>
+
+</BODY>
+</HTML>

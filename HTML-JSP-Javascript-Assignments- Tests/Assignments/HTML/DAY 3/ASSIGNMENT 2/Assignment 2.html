@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE> Style Sheet Demo </TITLE>
+</HEAD>
+
+<!-- Embedded Style Sheet -->
+<STYLE>
+
+	P.all 
+	{
+		TEXT-DECORATION:underline;
+		FONT-SIZE:14pt;
+		TEXT-ALIGN:center; 
+		FONT-FAMILY:Arial, Impact, Sans-serif;
+		COLOR:red;
+		BACKGROUND:yellow;
+		FONT-WEIGHT:bold;
+		FONT-STYLE:italic;
+		TEXT-ALIGN:center
+	}
+</STYLE>
+
+<LINK REL="stylesheet" HREF="css1.css" TYPE="text/css">
+<BODY>
+<P CLASS="all"> Text using Embedded Style Sheet </P>
+<P STYLE="TEXT-DECORATION:underline;
+		FONT-SIZE:14pt;
+		TEXT-ALIGN:center; 
+		COLOR:blue;
+		BACKGROUND:orange;
+		FONT-WEIGHT:bold">
+		Text using Inline Style Sheet 
+</P>
+
+<P CLASS="css1"> Text using Linked Style Sheet </P>
+</BODY>
+
+</HTML>

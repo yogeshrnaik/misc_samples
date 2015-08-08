@@ -1,0 +1,29 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE> Day 2 - Assignment 3 </TITLE>
+</HEAD>
+<SCRIPT>
+	var strPCS = "Patni Computer Systems";
+	function scollText1()
+	{
+		if (strPCS.length == 0)
+		{
+			strPCS = "Patni Computer Systems";
+		}
+		setTimeout("scollText2()",  50);
+	}
+	function scollText2()
+	{
+		window.txtPCS.value = strPCS;
+		strPCS = strPCS.substring(1);
+		setTimeout("scollText1()",  50);
+	}
+</SCRIPT>
+
+<BODY ONLOAD="scollText1()">
+<CENTER>
+	<INPUT ID="txtPCS" TYPE="text" VALUE="Patni Computer Systems" DISABLED>
+</CENTER>
+</BODY>
+</HTML>

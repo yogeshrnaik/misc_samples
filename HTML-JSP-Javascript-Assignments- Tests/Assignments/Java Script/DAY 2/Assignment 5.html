@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE> Day 2 - Assignment 5 </TITLE>
+</HEAD>
+<SCRIPT>
+	function isValid()
+	{
+		if (isNaN(window.txtLoan.value) || isNaN(parseFloat(window.txtLoan.value)))
+		{
+			alert("Amount of the loan should be a number.");
+			return false;
+		}
+		if (isNaN(window.txtRate.value) || isNaN(parseFloat(window.txtRate.value)))
+		{
+			alert("Rate of interest should be a number.");
+			return false;
+		}
+		if (isNaN(window.txtPeriod.value) || isNaN(parseFloat(window.txtPeriod.value)))
+		{
+			alert("Repayment period should be a number.");
+			return false;
+		}
+		var fltLoan = parseFloat(window.txtLoan.value);
+		if (fltLoan > 1500000)
+		{
+			alert("Amount of loan should be <= 15 lakhs.");
+			return false;
+		}
+		var fltPeriod = parseFloat(window.txtPeriod.value);
+		if (fltPeriod < 7 || fltPeriod > 15)
+		{
+			alert("Repayment period should be between 7 and 15 years.");
+			return false;
+		}
+		return true;
+	}
+	function calculate()
+	{
+		if (isValid())
+		{
+			//alert("valid");
+			var fltLoan = parseFloat(window.txtLoan.value);
+			var fltRate = parseFloat(window.txtRate.value);
+			var fltPeriod = parseFloat(window.txtPeriod.value);
+			var fltInterest = fltPeriod * fltLoan * fltRate/100.0;
+			var fltTotal = fltLoan + fltInterest;
+			window.txtMonthly.value = fltTotal/(fltPeriod * 12);
+			window.txtTotal.value = fltTotal;
+			window.txtInterest.value = fltInterest;
+		}
+	}
+</SCRIPT>
+<BODY>
+	<FONT SIZE="4"><B>Enter Loan Information:<B></FONT>
+	<TABLE BORDER="0">
+		<TR> 
+			<TD> 1) Amount of the loan (any currency):
+			<TD> <INPUT ID="txtLoan" TYPE="text">
+		</TR>
+		<TR> 
+			<TD> 2) Annual percentage rate of interest:
+			<TD> <INPUT ID="txtRate" TYPE="text">
+		</TR>
+		<TR> 
+			<TD> 3) Repayment period  in years:
+			<TD> <INPUT ID="txtPeriod" TYPE="text">
+		</TR>
+		<TR> 
+			<TD COLSPAN="2">
+				<INPUT ID="btnCompute" TYPE="button" VALUE="Compute" ONCLICK="calculate()"> 
+				<FONT SIZE="4"><B>Payment Information:</B></FONT>
+		</TR>
+		<TR> 
+			<TD> 4) Your monthly payment will be:
+			<TD> <INPUT ID="txtMonthly" TYPE="text" DISABLED>
+		</TR>
+		<TR> 
+			<TD> 5) Your total payment wil be:
+			<TD> <INPUT ID="txtTotal" TYPE="text" DISABLED>
+		</TR>
+		<TR> 
+			<TD> 6) Your total interest payments will be:
+			<TD> <INPUT ID="txtInterest" TYPE="text" DISABLED>
+		</TR>
+	</TABLE>
+</BODY>
+</HTML>

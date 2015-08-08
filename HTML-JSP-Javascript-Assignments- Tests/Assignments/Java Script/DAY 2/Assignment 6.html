@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE> Day 2 - Assignment 6 </TITLE>
+</HEAD>
+<STYLE>
+	IMG
+	{	
+		POSITION:absolute;
+		LEFT: 25px;
+		TOP: 50px;
+		VISIBILITY:hidden;
+	}
+</STYLE>
+<SCRIPT LANGUAGE="JavaScript">
+	function clock_onmouseover()
+	{
+		imgClock.style.visibility = "visible";
+		imgKey.style.visibility = "hidden";
+		imgHand.style.visibility = "hidden";
+		imgIdea.style.visibility = "hidden";
+	}
+	function clock_onmouseout()
+	{
+		imgClock.style.visibility = "hidden";
+	}
+	function key_onmouseover()
+	{
+		imgClock.style.visibility = "hidden";
+		imgKey.style.visibility = "visible";
+		imgHand.style.visibility = "hidden";
+		imgIdea.style.visibility = "hidden";
+	}
+	function key_onmouseout()
+	{
+		imgKey.style.visibility = "hidden";
+	}
+	function hand_onmouseover()
+	{
+		imgClock.style.visibility = "hidden";
+		imgKey.style.visibility = "hidden";
+		imgHand.style.visibility = "visible";
+		imgIdea.style.visibility = "hidden";
+	}
+	function hand_onmouseout()
+	{
+		imgHand.style.visibility = "hidden";
+	}
+	function idea_onmouseover()
+	{
+		imgClock.style.visibility = "hidden";
+		imgKey.style.visibility = "hidden";
+		imgHand.style.visibility = "hidden";
+		imgIdea.style.visibility = "visible";
+	}
+	function idea_onmouseout()
+	{
+		imgIdea.style.visibility = "hidden";
+	}
+</SCRIPT>
+
+<BODY>
+<U onmouseover="clock_onmouseover();" onmouseout="clock_onmouseout();">Clock</U>&nbsp;
+<U onmouseover="key_onmouseover();" onmouseout="key_onmouseout();">Key</U>&nbsp;
+<U onmouseover="hand_onmouseover();" onmouseout="hand_onmouseout();">Hand</U>&nbsp;
+<U onmouseover="idea_onmouseover();" onmouseout="idea_onmouseout();">Idea</U>&nbsp;
+<BR><BR>
+<IMG ID="imgClock" SRC="clock.bmp" BORDER="1">
+<IMG ID="imgKey" SRC="key.bmp" BORDER="1">
+<IMG ID="imgHand" SRC="hand.bmp" BORDER="1">
+<IMG ID="imgIdea" SRC="idea.bmp" BORDER="1">
+
+</H1>
+</BODY>
+</HTML>

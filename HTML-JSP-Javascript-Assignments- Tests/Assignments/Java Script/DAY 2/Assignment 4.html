@@ -1,0 +1,61 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE> Day 2 - Assignment 4</TITLE>
+</HEAD>
+<SCRIPT>
+	function populate()
+	{
+		var strSelected = lstCategory.options[lstCategory.selectedIndex].value;
+		var strItems = "";
+		if (strSelected.match("none") != null)
+		{
+			lstItems.options[0].text = "";
+			lstItems.options[1].text = "";
+			lstItems.options[2].text = "";
+		}
+		else if (strSelected.match("fruits") != null)
+		{
+			lstItems.options[0].text = "Apple";
+			lstItems.options[1].text = "Orange";
+			lstItems.options[2].text = "Banana";
+		}
+		else if (strSelected.match("vegetables") != null)
+		{
+			lstItems.options[0].text = "Potato";
+			lstItems.options[1].text = "Tomato";
+			lstItems.options[2].text = "Drum Sticks";
+		}
+		else
+		{
+			lstItems.options[0].text = "Beef";
+			lstItems.options[1].text = "Pork";
+			lstItems.options[2].text = "Red Meat";
+		}
+	}
+</SCRIPT>
+
+<BODY>
+	<SELECT ID="lstCategory" ONCHANGE="populate()">
+		<OPTION SELECTED VALUE="none"> None
+		<OPTION VALUE="fruits"> Fruits
+		<OPTION VALUE="vegetables"> Vegetables
+		<OPTION VALUE="meats"> Meats</OPTION> 
+	</SELECT>
+	<BR><BR>
+	<SELECT NAME="lstItems" MULTIPLE DISABLED>
+		<OPTION VALUE="none"> 
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</OPTION> 
+		<OPTION VALUE="fruits"> 
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</OPTION> 
+		<OPTION VALUE="vegetables"> 
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</OPTION> 
+		<OPTION VALUE="meats">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</OPTION> 
+	</SELECT>
+</BODY>
+</HTML>

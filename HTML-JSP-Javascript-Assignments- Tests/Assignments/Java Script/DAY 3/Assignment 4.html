@@ -1,0 +1,35 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE> Day 3 - Asssignment 4 </TITLE>
+</HEAD>
+<SCRIPT>
+	function displayBrowserInfo()
+	{
+		var strMessage = "<HTML><HEAD><TITLE>Browser Information</TITLE></HEAD>";
+		strMessage += "<BODY><TABLE WIDTH=100% BORDER=1 CELLSPACING=0 CELLPADDING=3>";
+		strMessage += "<TR> <TH COLSPAN=2>NAVIGATOR INFORMATION";
+		strMessage += "<TR> <TD WIDTH=30%><B>Browser:</B>";
+		strMessage += "<TD WIDTH=*>";
+		strMessage +=  navigator.appName;
+		
+		strMessage += "<TR> <TD WIDTH=30%><B>Version:</B>";
+		strMessage += "<TD WIDTH=*>";
+		strMessage +=  navigator.appVersion;
+		
+		strMessage += "<TR> <TD WIDTH=30%><B>AppCode Name:</B>";
+		strMessage += "<TD WIDTH=*>";
+		strMessage +=  navigator.appCodeName;
+		
+		strMessage += "<TR> <TD WIDTH=30%><B>Platform:</B>";
+		strMessage += "<TD WIDTH=*>";
+		strMessage +=  navigator.platform;
+	
+		strMessage += "</TABLE></BODY>";
+		document.write(strMessage);
+	}
+</SCRIPT>
+<BODY>
+<INPUT ID="btnNavInfo" TYPE="button" VALUE="   Navigator Information   " ONCLICK="displayBrowserInfo()">
+</BODY>
+</HTML>

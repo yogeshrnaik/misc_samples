@@ -1,0 +1,82 @@
+<?xml version = "1.0" encoding = "ISO-8859-1" ?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+<taglib>
+	<tlibversion>1.0</tlibversion>
+	<jspversion>1.1</jspversion>
+	<shortname>sql</shortname>
+	<info> User Defined library for sql statements </info>
+
+	<tag>
+		<name>connection</name>
+		<tagclass>dbcon.ConnectTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Tag for connection</info>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>url</name>
+		</attribute>
+		<attribute>
+			<name>driver</name>
+		</attribute>
+		<attribute>
+			<name>user</name>
+		</attribute>
+		<attribute>
+			<name>password</name>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>statement</name>
+		<tagclass>dbcon.StatementTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Statement Tag</info>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>conn</name>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>query</name>
+		<tagclass>dbcon.QueryTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>For Queries</info>
+
+	</tag>
+
+	<tag>
+		<name>resultSet</name>
+		<tagclass>dbcon.ResultSetTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>For resultSet</info>
+		<attribute>
+			<name>id</name>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name> getColumn</name>
+		<tagclass>dbcon.ColumnTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>for column names</info>
+		<attribute>
+			<name>position</name>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>closeConnection</name>
+		<tagclass>dbcon.CloseTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Close connection</info>
+		<attribute>
+			<name>conn</name>
+		</attribute>
+	</tag>
+</taglib>

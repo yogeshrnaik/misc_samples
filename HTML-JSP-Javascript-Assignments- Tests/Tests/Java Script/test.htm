@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE> Test </TITLE>
+<SCRIPT LANGUAGE="JavaScript" SRC="validations.js">
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<CENTER> <H3><U>Leave Form</U></H3> </CENTER>
+<FORM ID="frmLeaveForm">
+<TABLE BORDER="0" COLS="10" WIDTH="50%" COLS="20%, 5%, *">
+	<TR>	<TD>Employee Code
+			<TD> :
+			<TD><INPUT ID="txtEmpCode">
+    <TR>	<TD>Employee Name
+			<TD> :
+			<TD><INPUT ID="txtEmpName">
+	<TR>	<TD> Group
+			<TD> :
+			<TD>
+				<SELECT NAME="lstGroup">
+					<OPTION SELECTED> Project
+					<OPTION> Training
+					<OPTION> Hardware
+					<OPTION> Admin
+					<OPTION> HRD
+				</SELECT>
+	<TR>	<TD>Extn Number
+			<TD> :
+			<TD><INPUT ID="txtExt">
+	<TR>	<TD>Email Address
+			<TD> :
+			<TD><INPUT ID="txtEmail">
+	<TR>	<TD>Leave Start dt
+			<TD> :
+			<TD><SELECT ID="lstStartDate">
+					<OPTION SELECTED> DD	<OPTION> 01	<OPTION> 02	<OPTION> 03	<OPTION> 04	
+					<OPTION> 05	<OPTION> 06	<OPTION> 07	<OPTION> 08	<OPTION> 09	<OPTION> 10	
+					<OPTION> 11	<OPTION> 12	<OPTION> 13	<OPTION> 14	<OPTION> 15	<OPTION> 16	
+					<OPTION> 17	<OPTION> 18	<OPTION> 19	<OPTION> 20	<OPTION> 21	<OPTION> 22	
+					<OPTION> 23	<OPTION> 24	<OPTION> 25	<OPTION> 26	<OPTION> 27	<OPTION> 28	
+					<OPTION> 29	<OPTION> 30	<OPTION> 31
+				</SELECT>
+				<SELECT ID="lstStartMonth">
+					<OPTION SELECTED> MM	<OPTION> 01	<OPTION> 02	<OPTION> 03	<OPTION> 04	<OPTION> 05
+					<OPTION> 06	<OPTION> 07	<OPTION> 08	<OPTION> 09	<OPTION> 10	<OPTION> 11
+					<OPTION> 12
+				</SELECT>
+				<SELECT ID="lstStartYear" DISABLED>
+					<OPTION SELECTED> 2003
+				</SELECT>
+	<TR>	<TD>Leave End dt
+			<TD> :
+			<TD><SELECT ID="lstEndDate">
+					<OPTION SELECTED> DD	<OPTION> 01	<OPTION> 02	<OPTION> 03	<OPTION> 04	
+					<OPTION> 05	<OPTION> 06	<OPTION> 07	<OPTION> 08	<OPTION> 09	<OPTION> 10	
+					<OPTION> 11	<OPTION> 12	<OPTION> 13	<OPTION> 14	<OPTION> 15	<OPTION> 16	
+					<OPTION> 17	<OPTION> 18	<OPTION> 19	<OPTION> 20	<OPTION> 21	<OPTION> 22	
+					<OPTION> 23	<OPTION> 24	<OPTION> 25	<OPTION> 26	<OPTION> 27	<OPTION> 28	
+					<OPTION> 29	<OPTION> 30	<OPTION> 31
+				</SELECT>
+				<SELECT ID="lstEndMonth">
+					<OPTION SELECTED> MM	<OPTION> 01	<OPTION> 02	<OPTION> 03	<OPTION> 04	<OPTION> 05
+					<OPTION> 06	<OPTION> 07	<OPTION> 08	<OPTION> 09	<OPTION> 10	<OPTION> 11
+					<OPTION> 12
+				</SELECT>
+				<SELECT ID="lstEndYear" DISABLED>
+					<OPTION SELECTED> 2003
+				</SELECT>
+	<TR>	<TD>Type of Leave
+			<TD> :
+			<TD><SELECT ID="lstLeaveType" ONBLUR="activateAddressField()">
+					<OPTION SELECTED> PL
+					<OPTION> CL
+					<OPTION> SL
+					<OPTION> CompOff
+				</SELECT>
+	<TR>	<TD>Contact Add
+			<TD> :
+			<TD> <BR>
+	<TR>	<TD> <BR>
+			<TD> <BR>
+			<TD><TEXTAREA ID="txtAddress" ROWS=3></TEXTAREA>
+	<TR>	<TD>  Manager's Email
+			<TD> :
+			<TD><INPUT ID="txtManagerEmail">
+</TABLE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<INPUT TYPE="button" NAME='btnShowDetails"' VALUE="Show Details" SIZE="30" ONCLICK="validate()">
+<INPUT TYPE="reset" NAME='btnReset"' SIZE="30" value=Reset>
+</FORM>
+</BODY>
+</HTML>

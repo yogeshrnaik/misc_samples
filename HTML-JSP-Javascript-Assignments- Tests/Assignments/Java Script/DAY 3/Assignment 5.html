@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE> Day 3 - Assignment 5 </TITLE>
+</HEAD>
+<SCRIPT>
+	function displayColors()
+	{
+		var arrColors = new Array("red.html", "yellow.html", "blue.html", "green.html", "white.html");
+		var intNum1 = Math.round(Math.random() * 4);
+		var intNum2 = Math.round(Math.random() * 4);
+		while (intNum1 == intNum2)
+		{
+			intNum2 = Math.round(Math.random() * 4);
+		}
+		window.frmFrame1.location.href = arrColors[intNum1];
+		window.frmFrame2.location.href = arrColors[intNum2];
+		setTimeout("displayColors()", 500);
+	}
+</SCRIPT>
+
+<FRAMESET COLS="50%, 50%" ONLOAD="displayColors()">
+	<FRAME ID="frmFrame1" SRC="" NORESIZE>
+	<FRAME ID="frmFrame2" SRC="" NORESIZE>
+</FRAMESET>
+</HTML>

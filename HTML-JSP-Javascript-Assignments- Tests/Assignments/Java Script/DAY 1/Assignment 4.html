@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE></TITLE>
+</HEAD>
+<SCRIPT>
+	function displayDate()
+	{
+		var dtToday = new Date();
+		document.write("Today's Date : ");
+		var intDD = dtToday.getDate();
+		var intMM = dtToday.getMonth()+1;
+		var intYYYY = dtToday.getFullYear();
+		document.write(intDD + "/" + intMM + "/" + intYYYY);
+	}
+</SCRIPT>
+<BODY ONLOAD="displayDate()">
+</BODY>
+</HTML>

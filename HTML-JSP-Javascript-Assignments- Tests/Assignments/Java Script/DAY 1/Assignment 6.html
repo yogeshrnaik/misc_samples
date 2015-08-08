@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE> Day 1 - Assignment 6 </TITLE>
+</HEAD>
+<SCRIPT>
+	function showOutput()
+	{
+		document.write("A random between 1 and 100 : ");
+		var intNum = Math.floor(Math.random() * 100 + 1);
+		document.write(intNum + "<BR>");
+		var fltSqrtNum = Math.sqrt(intNum);
+		document.write("Square root of the random number : " +
+						fltSqrtNum+ "<BR>");
+		document.write("Integer less than of equal to Square root " + 
+						"of the random number : " + Math.floor(fltSqrtNum));
+	}
+	showOutput();
+</SCRIPT>
+<BODY>
+
+
+</BODY>
+</HTML>

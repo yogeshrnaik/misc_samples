@@ -1,0 +1,37 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE> Day 2 - Assignment 1 </TITLE>
+</HEAD>
+<SCRIPT>
+	function changeStatus(strAreaCode)
+	{
+		if (strAreaCode == "yellow")
+			window.status = "Yellow Area";
+		else if (strAreaCode == "red")
+			window.status = "Red Area";
+		else if (strAreaCode == "blue")
+			window.status = "Blue  Area";
+		else if (strAreaCode == "green")
+			window.status = "Green Area";
+		else window.status = "Mouse not on Image";
+	}
+	function setDefault()
+	{
+		window.status = "Done";
+	}
+</SCRIPT>
+
+<BODY ONUNLOAD="setDefault()" >
+Move mouse over the image to see the change in status bar message.<BR><BR>
+<MAP NAME="mymap">
+<AREA SHAPE="RECT" COORDS="0, 0, 87, 87" ONMOUSEOVER="changeStatus('yellow')" ONMOUSEOUT="changeStatus()">
+<AREA SHAPE="RECT" COORDS="87, 0, 175, 87" ONMOUSEOVER="changeStatus('red')" ONMOUSEOUT="changeStatus()">
+<AREA SHAPE="RECT" COORDS="0, 87, 87, 175" ONMOUSEOVER="changeStatus('blue')" ONMOUSEOUT="changeStatus()">
+<AREA SHAPE="RECT" COORDS="87, 87, 175, 175" ONMOUSEOVER="changeStatus('green')" ONMOUSEOUT="changeStatus()">
+</MAP>
+
+<IMG SRC="myimage.gif" USEMAP="#mymap">
+
+</BODY>
+</HTML>

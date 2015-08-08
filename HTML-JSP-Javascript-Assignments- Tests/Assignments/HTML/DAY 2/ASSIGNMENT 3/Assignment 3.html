@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE> Form Demo </TITLE>
+</HEAD>
+
+<BODY>
+<FORM ACTION="mailto:empinfo@patni.com">
+<CENTER><H1>Form Demo</H1></CENTER>
+<TABLE BORDER="0" WIDTH="90%">
+<COL WIDTH="30%">
+<COL WIDTH="2%">
+<COL WIDTH="49%">
+<TR>
+	<TD> <B> Name
+	<TH> : 
+	<TD> <INPUT TYPE="text" MAXLENGTH="20" SIZE="20">
+</TR>
+<TR>
+	<TD> <B> Employee Code
+	<TH> : 
+	<TD> <INPUT TYPE="text" MAXLENGTH="4" SIZE="4">
+</TR>
+<TR>
+	<TD> <B> Department
+	<TH> : 
+	<TD> 
+	<INPUT TYPE="radio" NAME="dept" VALUE="a"> Dept A
+	<INPUT TYPE="radio" NAME="dept" VALUE="b"> Dept B
+	<INPUT TYPE="radio" NAME="dept" VALUE="c"> Dept C
+	<INPUT TYPE="radio" NAME="dept" VALUE="o" CHECKED> Other
+</TR>
+<TR>
+	<TD> <B> Date of Joining
+	<TH> : 
+	<TD> <INPUT TYPE="text" MAXLENGTH="10" SIZE="10"> dd/mm/yyyy
+</TR>
+<TR>
+	<TD VALIGN="top"> <B> Address
+	<TH VALIGN="top"> : 
+	<TD> <TEXTAREA NAME="address" ROWS="4" COLS="20"></TEXTAREA>
+</TR>
+<TR>
+	<TD> <B> Training programs attended 
+	<TH> : 
+	<TD> <INPUT TYPE="checkbox" NAME="java" VALUE="JA"> Java
+		 <INPUT TYPE="checkbox" NAME="java" VALUE="JA"> C/C++
+		 <INPUT TYPE="checkbox" NAME="java" VALUE="JA"> XML
+		 <INPUT TYPE="checkbox" NAME="java" VALUE="JA"> HTML
+</TR>
+<TR>
+	<TD> <B> Training programs need to attend
+	<TH> : 
+	<TD> <SELECT NAME="training" SIZE="4" MULTIPLE>
+		 <OPTION VALUE="N" > Networking 
+		 <OPTION VALUE="J" > JSP and ASP
+		 <OPTION VALUE="O" > Oracle
+		 <OPTION VALUE="V" > Visual Basic
+		 <OPTION VALUE="S" > Servlets
+		 </SELECT>
+</TR>
+<!-- <TR>
+	<TD> <B> Send information at
+	<TH> : 
+	<TD> <A HREF="mailto:empinfo@patni.com">empinfo@patni.com</A> 
+-->
+</TR>
+</TABLE>
+<BR><BR>
+<CENTER>
+<INPUT TYPE="submit" NAME="" VALUE="Send information at empinfo@patni.com">
+</CENTER>
+</FORM>
+</BODY>
+</HTML>

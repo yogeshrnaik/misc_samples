@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE> Day 3 - Assignment 1 </TITLE>
+</HEAD>
+<SCRIPT>
+	function turnBlue(intColumn)
+	{
+		if (intColumn == 1)
+		{
+			item1.bgColor = "blue";
+			text1.color = "white";
+		}
+		else if (intColumn == 2)
+		{	
+			item2.bgColor = "blue";
+			text2.color = "white";
+		}
+		else if (intColumn == 3)
+		{
+			item3.bgColor = "blue";
+			text3.color = "white";
+		}
+	}
+	function restore(intColumn)
+	{
+		if (intColumn == 1)
+		{
+			item1.bgColor = "white";
+			text1.color = "black";
+		}
+		else if (intColumn == 2)
+		{	
+			item2.bgColor = "white";
+			text2.color = "black";
+		}
+		else if (intColumn == 3)
+		{
+			item3.bgColor = "white";
+			text3.color = "black";
+		}
+	}
+</SCRIPT>
+<BODY>
+<TABLE ID="myTable" BORDER="0" CELLSPACING="5" CELLPADDING="5">
+	<TR> <TD ID="item1" ONMOUSEOVER="turnBlue(1)" ONMOUSEOUT="restore(1)"> <A HREF="Assignment 1.html"><FONT ID="text1" COLOR="black">Item 1</FONT></A>
+		 <TD ID="item2" ONMOUSEOVER="turnBlue(2)" ONMOUSEOUT="restore(2)"> <A HREF="Assignment 1.html"><FONT ID="text2" COLOR="black">Item 2</FONT></A>
+		 <TD ID="item3" ONMOUSEOVER="turnBlue(3)" ONMOUSEOUT="restore(3)"> <A HREF="Assignment 1.html"><FONT ID="text3" COLOR="black">Item 3</FONT></A>
+</TABLE>
+</BODY>
+</HTML>

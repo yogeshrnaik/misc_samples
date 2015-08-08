@@ -1,0 +1,31 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE> Url Page </TITLE>
+</HEAD>
+<SCRIPT>
+	function openUrl()
+	{
+		var strUrl = lstProtocol.options[lstProtocol.selectedIndex].text;
+		strUrl += txtHostname.value;
+		strUrl += txtPathname.value;
+		parent.frmFrame1.location.href = strUrl;
+	}	
+</SCRIPT>
+<BODY>
+<H2>protocol//hostname:port pathname</H2>
+<TABLE BORDER="0" COLS="15%, 35%, 35%, 15%" WIDTH="100%">
+	<TR> <TD> Protocol:
+		 <TD> &nbsp;&nbsp;Hostname:
+		 <TD> &nbsp;&nbsp;Pathname:
+		 <TD> <BR>
+	<TR> <TD> <SELECT ID="lstProtocol">
+				<OPTION> http://
+				<OPTION> file://
+			  </SELECT>
+		 <TD> <INPUT ID="txtHostname" TYPE="text">
+		 <TD> <INPUT ID="txtPathname" TYPE="text">
+		 <TD> <INPUT ID="btnGo" TYPE="button" ONCLICK="openUrl()" VALUE="  GO  ">
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,33 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE> Day 3 - Assignment 2 </TITLE>
+<SCRIPT>
+	function validate()
+	{
+		if (isNaN(window.txtAmt.value) || window.txtAmt.value == "")
+		{
+			alert("Amount of purchase should be a number.");
+			return false;
+		}
+		else
+		{
+			var fltAmount = parseFloat(window.txtAmt.value);
+			if (fltAmount < 100)
+			{
+				alert("Thank-you, but surely there is something else you would like to purchase.");
+			}
+			else
+			{
+				alert("Thank-you for your purchase!");
+			}
+		}
+	}
+</SCRIPT>
+</HEAD>
+<BODY>
+Please enter amount of purchase : 
+<INPUT ID="txtAmt" TYPE="text" SIZE="5" ONBLUR="validate()">
+<INPUT ID="btnOk" VALUE="OK" TYPE="button" ONCLICK="validate()">
+</BODY>
+</HTML>

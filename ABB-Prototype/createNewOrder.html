@@ -1,0 +1,171 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>	
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+	<title>The ABB Group - Automation and Power Technologies</title>
+	<link type="text/css" rel="stylesheet" href="abb_style.css"/>
+	<link type="text/css" rel="stylesheet" href="calendar.css"/>
+    <link type="image/x-icon" rel="shortcut icon" href="images/favicon.ico"/>
+	<script src="script/common.js"></script>
+	<script src="script/calendar_eu.js"></script>
+    <meta content="ABB (www.abb.com) is a leader in power and automation technologies that enable utility and industry customers to improve their performance while lowering environmental impact. The ABB Group of companies operates in around 100 countries and employs about 120,000 people." name="description"/>
+</head>
+
+<body onload="initPage('createNewOrder', false);">
+<center>
+<div id="mainContainer">
+	<div id="headerRegion">
+		<span id="header"></span> <!-- Logo and Application title -->
+		<div id="mainMenuOuter"></div> <!-- Menu -->
+	</div> <!-- Header Region -->
+<!-----------------------------  End of Header Region ------------------------------------------>
+	<span style="width:100%;background-color:white;"><br></span>
+<!-----------------------------  Start of Login Page Contents ------------------------------------------>
+	<table border="0" cellspacing="2" cellpadding="10" class="contentsTable" height="430px">
+		<tr>
+			<td width="100%" style="background-color:white" valign="top">
+				<div id="pageTitle"  style="border-bottom: solid 1px black; text-align: left; width:100%">
+					Create New Work Order
+				</div>
+				<div class="bodyText">
+					<br>Please enter the work order details below and click on Create Order button.<br/><br/>
+				</div>
+				<form name="frmCreateNewOrder">
+				<table border="0" style="border:1px solid black" cellspacing="0" cellpadding="5" class="bodyText" width="100%">
+					<tr>
+						<td align="left" colspan="4" style="background-color:#686868; color:white; font-weight:bold">
+							Order details
+						</td>
+					</tr>
+					<tr>
+						<td align="right" nowrap>
+							Customer *:
+						</td>
+						<td align="left">
+							<input type="text" size="30" maxlength="50" tabindex="1">
+						</td>
+						<td align="right" rowspan="3" valign="top">
+							Comments:
+						</td>
+						<td align="left" rowspan="3" valign="top">
+							<textarea rows="5" cols="40" tabindex="4"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" nowrap>
+							Priority *:
+						</td>
+						<td align="left">
+							<select tabindex="2">
+								<option>--Select--</option>
+								<option>High</option>
+								<option>Medium</option>
+								<option>Low</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" nowrap>
+							Start Date *:
+						</td>
+						<td align="left">
+							<input id="startDate" name="startDate" type="text" size="10" maxlength="10" tabindex="3" />
+							<script language="JavaScript">
+							new tcal ({
+								// form name
+								'formname': 'frmCreateNewOrder',
+								// input name
+								'controlname': 'startDate'
+							});
+							</script> 
+							(dd / mm / yyyy)
+						</td>
+					</tr>
+					<!--
+					<tr>
+						<td align="right" nowrap>
+							Assign Electrical Contact :
+						</td>
+						<td align="left">
+							<select>
+								<option>-- Select --</option>
+								<option>Mr. Swapnil Shinde (0)</option>
+								<option>Mr. Dinesh Shah (2)</option>
+								<option>Mr. Amar Patil (3)</option>
+							</select>
+						</td>
+						<td align="right" nowrap>
+							Assign Mechanical Contact :
+						</td>
+						<td align="left">
+							<select>
+								<option>-- Select --</option>
+								<option>Mr. Devang Mehta (2)</option>
+								<option>Mr. Dinesh Patil (3)</option>
+								<option>Mr. Yash Kulkarni (1)</option>
+							</select>
+						</td>
+					</tr>
+					-->
+					<tr>
+						<td align="left" colspan="4" style="background-color:#686868; color:white; font-weight:bold">
+							Documents
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<table border="0" class="bodyText" cellpadding="3" width="100%">
+								<tr>
+									<td align="left" valign="center"><b>Choose a document to upload</b></td>
+									<td align="left"><b>Description of document</b></td>
+								</tr>
+								<tr>
+									<td align="left" valign="center">
+										<input type="file" size="60">
+									</td>
+									<td align="left">
+										<input type="text" size="60">
+									</td>
+								</tr>
+								<tr>
+									<td align="left" valign="center">
+										<input type="file" size="60">
+									</td>
+									<td align="left">
+										<input type="text" size="60">
+									</td>
+								</tr>
+								<tr>
+									<td align="left" valign="center">
+										<input type="file" size="60">
+									</td>
+									<td align="left">
+										<input type="text" size="60">
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td align="center" colspan="4">
+							<input type="button" value="Create Order" name="createNew"/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="button" value="Cancel" name="cancel" onclick="window.location.href='orderSummary.html'"/>
+						</td>
+					</tr>
+				</table>
+				</form>
+				<div class="bodyText">
+					<div style="padding-bottom:5px"><b><u>Notes:</u></b></div>
+					<div style="padding-bottom:5px">- All fields marked with asterisk (*) are mandatory.</div>
+					<!-- <div style="padding-bottom:5px">- The number in the bracket in front of each person name indicates the number of work orders they are currently working on.</div> -->
+					<div style="padding-bottom:5px">- Work Order Number, Target Date will be generated by the system.</div>
+				</div>
+			</td>
+		</tr>
+	</table>	
+<!-----------------------------  End of Login Page Contents ------------------------------------------>
+</div> <!-- mainContainer -->
+<div id="footer"></div>
+</center>
+</body>
+</html>

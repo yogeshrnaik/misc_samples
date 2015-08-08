@@ -1,0 +1,254 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>	
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+	<title>The ABB Group - Automation and Power Technologies</title>
+	<link type="text/css" rel="stylesheet" href="abb_style.css"/>
+    <link type="image/x-icon" rel="shortcut icon" href="images/favicon.ico"/>
+
+	<link type="text/css" rel="stylesheet" href="calendar.css"/>
+	<script src="script/calendar_eu.js"></script>
+
+	<script src="script/common.js"></script>
+    <meta content="ABB (www.abb.com) is a leader in power and automation technologies that enable utility and industry customers to improve their performance while lowering environmental impact. The ABB Group of companies operates in around 100 countries and employs about 120,000 people." name="description"/>
+</head>
+
+<body onload="initPage('orderSummary', false);">
+<center>
+<div id="mainContainer">
+	<div id="headerRegion">
+		<span id="header"></span> <!-- Logo and Application title -->
+		<div id="mainMenuOuter"></div> <!-- Menu -->
+	</div> <!-- Header Region -->
+<!-----------------------------  End of Header Region ------------------------------------------>
+	<span style="width:100%;background-color:white;"><br></span>
+<!-----------------------------  Start of Login Page Contents ------------------------------------------>
+	<table border="0" cellspacing="2" cellpadding="10" class="contentsTable" height="430px">
+		<tr>
+			<td width="100%" style="background-color:white" valign="top">
+				<div id="pageTitle">
+					Order Summary
+				</div>
+				<div class="bodyText">
+					<br>All orders currently assigned to you or completed by you are shown below.<br/><br/>
+				</div>
+				
+				<div class="bodyText" style="padding-bottom:5px;color:blue">
+					This page layout is displayed assuming that the logged in engineer is from Electrical department. Hence, he can only update the completion date(s) present under the Electrical Column. Similarly, for mechnical engineer, he will be able to update the completion date(s) only under Mechanical column.
+					<u>This note won't be displayed in actual application.</u>
+				</div>
+
+
+				<form name="frmOrderSummary">
+				<table border="0" width="100%" cellspacing="0" cellpadding="3" class="bodyText" >
+					<tr>
+						<td align="left">
+							<b>Show Orders by status:</b>
+							<select>
+								<option>All</option>
+								<option>In Progress</option>
+								<option>Completed</option>
+							</select>
+							<input type="button" name="showBtn" value=" Go ">
+						</td>
+						<td align="right" nowrap>
+							<b>Actions:</b>
+							<select>
+								<option>Update Order Details</option>
+								<option>Update Order & Get Next</option>
+								<option>Get Next Order</option>
+							</select>
+							<input type="button" name="actionBtn" value=" Go ">
+						</td>
+					</tr>
+				</table>
+				<br/>
+				<table cellspacing="0" cellpadding="5" class="bodyText whiteBorder" width="100%">
+					<tr style="background-color:#686868;color:white">
+						<td align="center" width="8%" nowrap><b>Work<br>Order No.</b></td>
+						<td align="left"><b>Customer</b></td>
+						<td align="center"><b>Priority</b></td>
+						<td align="center"><b>Start Date</b></td>
+						<td align="center"><b>Target Date</b></td>
+						<td align="center" nowrap><b>Electrical</b></td>
+						<td align="center" nowrap><b>Mechanical</b></td>
+						<td align="center" nowrap><b>Status</b></td>
+						<td align="center" nowrap><b>No of days <br>to target date</b></td>
+						<td align="center" nowrap><b>Created By</b></td>
+					</tr>
+
+					<tr class="bodyText mainRowAlt">
+						<td align="left" nowrap>
+							<input name="orderSelected" type="radio">
+							<a href="javascript:toggleRows('r1231', 2);"><img src="images/expanded.gif" border="0" onclick="toggleImage(this)"></a>
+							&nbsp;&nbsp;
+							<a href="#" style="font-weight:bold;color:blue;">1231</a>
+						</td>
+						<td align="left">Ingresol Rand</td>
+						<td align="center">High</td>
+						<td align="center" nowrap>08/01/2010</td>
+						<td align="center" nowrap>06/02/2010</td>
+						<td align="center" nowrap>Amar Patil</td>
+						<td align="center" class="redText" nowrap>Not Assigned</td>
+						<td align="center" nowrap>In Progress</td>
+						<td align="center" nowrap>26</td>
+						<td align="center" nowrap>Sachin Joshi</td>
+					</tr>
+					<tr id="r1231_1" class="bodyText childRowAlt" style="display:">
+						<td align="center" nowrap><br></td>
+						<td align="left"><br></td>
+						<td align="center"><br></td>
+						<td align="right" nowrap><b><a href="file:///c:/" target="_blank" style="color:blue">Documents</a></b></td>
+						<td align="center" nowrap>17/01/2010</td>
+						<td align="center" nowrap>
+							<input id="elecDocDate1" name="elecDocDate1" type="text" size="7" maxlength="10" tabindex="3" />
+							<script language="JavaScript">
+							new tcal ({
+								// form name
+								'formname': 'frmOrderSummary',
+								// input name
+								'controlname': 'elecDocDate1'
+							});
+							</script> 
+						</td>
+						<td align="center" class="redText" nowrap>-</td>
+						<td align="center" class="redText" nowrap>-</td>
+						<td align="center" nowrap>7</td>
+						<td align="center" nowrap><br></td>
+					</tr>
+					<tr id="r1231_2" class="bodyText childRowAlt" style="display:">
+						<td align="center" nowrap><br></td>
+						<td align="left"><br></td>
+						<td align="center"><br></td>
+						<td align="right" nowrap><b>BOM</b></td>
+						<td align="center" nowrap>06/02/2010</td>
+						<td align="center" class="redText" nowrap>
+							<input id="elecBomDate1" name="elecBomDate1" type="text" size="7" maxlength="10" tabindex="3" />
+							<script language="JavaScript">
+							new tcal ({
+								// form name
+								'formname': 'frmOrderSummary',
+								// input name
+								'controlname': 'elecBomDate1'
+							});
+							</script> 
+						</td>
+						<td align="center" class="redText" nowrap>-</td>
+						<td align="center" class="redText" nowrap>-</td>
+						<td align="center" nowrap>26</td>
+						<td align="center" nowrap><br></td>
+					</tr>
+
+
+					<tr class="bodyText mainRow">
+						<td align="left" nowrap>
+							<input name="orderSelected" type="radio">
+							<a href="javascript:toggleRows('r523', 2);"><img src="images/expanded.gif" border="0" onclick="toggleImage(this)"></a>
+							&nbsp;&nbsp;
+							<a href="#" style="font-weight:bold;color:blue;">523</a>
+						</td>
+						<td align="left">Thermax</td>
+						<td align="center">Low</td>
+						<td align="center" nowrap>05/01/2010</td>
+						<td align="center" nowrap>14/01/2010</td>
+						<td align="center" nowrap>Amar Patil</td>
+						<td align="center" nowrap>Yash Kulkarni</td>
+						<td align="center" nowrap>In Progress</td>
+						<td align="center" nowrap>24</td>
+						<td align="center" nowrap>Sachin Joshi</td>
+					</tr>
+					<tr id="r523_1" class="bodyText childRow" style="display:">
+						<td align="center" nowrap><br></td>
+						<td align="left"><br></td>
+						<td align="center"><br></td>
+						<td align="right" nowrap><b><a href="file:///c:/" target="_blank" style="color:blue">Documents</a></b></td>
+						<td align="center" nowrap>14/01/2010</td>
+						<td align="center" nowrap>10/01/2010</td>
+						<td align="center" nowrap>12/01/2010</td>
+						<td align="center" nowrap>12/01/2010</td>
+						<td align="center" nowrap>-</td>
+						<td align="center" nowrap><br></td>
+					</tr>
+					<tr id="r523_2" class="bodyText childRow" style="display:">
+						<td align="center" nowrap><br></td>
+						<td align="left"><br></td>
+						<td align="center"><br></td>
+						<td align="right" nowrap><b>BOM</b></td>
+						<td align="center" nowrap>03/02/2010</td>
+						<td align="center" class="redText" nowrap>
+							<input id="elecBomDate2" name="elecBomDate2" type="text" size="7" maxlength="10" tabindex="3" />
+							<script language="JavaScript">
+							new tcal ({
+								// form name
+								'formname': 'frmOrderSummary',
+								// input name
+								'controlname': 'elecBomDate2'
+							});
+							</script> 
+						</td>
+						<td align="center" class="redText" nowrap>-</td>
+						<td align="center" class="redText" nowrap>-</td>
+						<td align="center" nowrap>24</td>
+						<td align="center" nowrap><br></td>
+					</tr>
+
+
+					<tr class="bodyText mainRowAlt">
+						<td align="left" nowrap>
+							<input name="orderSelected" type="radio" disabled>
+							<a href="javascript:toggleRows('r1422', 2);"><img src="images/collapsed.gif" border="0" onclick="toggleImage(this)"></a>
+							&nbsp;&nbsp;
+							<a href="#" style="font-weight:bold;color:blue;">1422</a>
+						</td>
+						<td align="left">Ingresol Rand</td>
+						<td align="center">Medium</td>
+						<td align="center" nowrap>10/12/2009</td>
+						<td align="center" nowrap>08/01/2010</td>
+						<td align="center" nowrap>Amar Patil</td>
+						<td align="center" nowrap>Devesh Shah</td>
+						<td align="center" class="greenText" nowrap>Completed <br> (07/01/2010)</td>
+						<td align="center" nowrap>-</td>
+						<td align="center" nowrap>Nitin Rodge</td>
+					</tr>
+					<tr id="r1422_1" class="bodyText mainRowAlt" style="display:none">
+						<td align="center" nowrap><br></td>
+						<td align="left"><br></td>
+						<td align="center"><br></td>
+						<td align="right" nowrap><b><a href="file:///c:/" target="_blank" style="color:blue">Documents</a></b></td>
+						<td align="center" nowrap>10/12/2009</td>
+						<td align="center" nowrap>09/12/2009</td>
+						<td align="center" nowrap>07/12/2009</td>
+						<td align="center" nowrap>09/12/2009</td>
+						<td align="center" nowrap>-</td>
+						<td align="center" nowrap><br></td>
+					</tr>
+					<tr id="r1422_2" class="bodyText mainRowAlt" style="display:none">
+						<td align="center" nowrap><br></td>
+						<td align="left"><br></td>
+						<td align="center"><br></td>
+						<td align="right" nowrap><b>BOM</b></td>
+						<td align="center" nowrap>08/01/2010</td>
+						<td align="center" nowrap>05/01/2010</td>
+						<td align="center" nowrap>07/01/2010</td>
+						<td align="center" nowrap>07/01/2010</td>
+						<td align="center" nowrap>-</td>
+						<td align="center" nowrap><br></td>
+					</tr>
+				</table>
+				</form>
+				<div class="bodyText">
+					<div style="padding-bottom:5px"><b><u>Notes:</u></b></div>
+					<div style="padding-bottom:5px">- All dates are displayed in dd/mm/yyyy format.</div>
+					<div style="padding-bottom:5px">- "Update Order Details" updates the details of the selected order.</div>
+					<div style="padding-bottom:5px">- "Update Order & Get Next" updates the selected order details and assigns the next pending order (if present) to you.</div>
+					<div style="padding-bottom:5px">- "Get Next Order" assigns the next pending order (if present) to you.</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+	
+<!-----------------------------  End of Login Page Contents ------------------------------------------>
+</div> <!-- mainContainer -->
+<div id="footer"></div>
+</center>
+</body>
+</html>

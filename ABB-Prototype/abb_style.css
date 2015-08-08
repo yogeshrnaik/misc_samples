@@ -1,0 +1,363 @@
+body {
+	background-color:#969696;
+	color:#000000;
+	font-family:Arial,Helvetica,sans-serif;
+	font-size:80%;
+	margin:0;
+	padding:0;
+}
+
+#mainContainer {
+	background-color:#FFFFFF;
+	margin:0 auto;
+	padding:10px 20px 20px 20px;
+	text-align:left;
+	width:1024px;/*width:956px;*/
+	/*height:90%;*/
+}
+
+
+#layoutNormal #mainRegion {
+	margin-left:15px;
+	margin-right:15px;
+	width:538px;
+}
+
+html > body #mainRegion {
+	height:auto;
+}
+
+#headerRegion {
+	background-color:#FFFFFF;
+	/* padding-bottom:20px; */
+	width:1024px;/*width:956px;*/
+}
+
+#appName {
+	float:right;
+	font-size:22px;
+	font-weight:bold;
+	margin-top:15px;
+	/*color:#0076B7;*/
+	color:#FF000F;
+}
+#appName div {
+	float:left;
+}
+/****************************** MENU ****************************/
+#mainMenuOuter {
+	float:left;
+	padding:0;
+}
+#mainMenu {
+	float:left;
+	margin:0;
+	width:1024px;/*width:956px;*/
+}
+#mainMenu a {
+	display:block;
+	padding-left:8px;
+	padding-right:8px;
+	white-space:nowrap;
+}
+#mainMenuOne a {
+	color:#2D2D2D;
+}
+#mainMenuTwo a {
+	color:#FFFFFF;
+}
+#mainMenuOne li.selected {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:#EEEEEE none repeat scroll 0 0;
+	border-color:#686868;
+	border-style:solid;
+	border-width:1px 1px 0;
+	margin-top:0;
+}
+#mainMenuOne li.selected a {
+	padding-bottom:5px;
+	padding-top:5px;
+}
+.rootLevel #mainMenuOne {
+	border-bottom:1px solid #686868;
+}
+#mainMenuOne li.selected a, #mainMenuOne li.selected a:hover {
+	color:#000000;
+	font-weight:bold;
+}
+#mainMenuTwo li.selected a, #mainMenuTwo li.selected a:hover {
+	color:#000000;
+	font-weight:bold;
+}
+#mainMenu .first a {
+	padding-left:10px;
+}
+#mainMenuOne, #mainMenuTwo {
+	float:left;
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	width:100%;
+}
+#mainMenuOne {
+	background-color:#686868; /*#969696*/
+	background-image:url(images/sprites_small.gif);
+	background-position:0 -1600px;
+	background-repeat:repeat-x;
+}
+#mainMenuOne li {
+	float:left;
+	margin-top:4px;
+}
+#mainMenuOne li a {
+	color:#FFFFFF;
+	float:left;
+}
+#mainMenuOne li.first {
+	margin-left:0;
+}
+#mainMenuOne li.firstBefore {
+	display:inline;
+	margin-left:10px;
+}
+#mainMenuOne a {
+	padding-bottom:4px;
+	padding-top:3px;
+}
+#mainMenuTwo {
+	background-color:#EEEEEE;
+	border-bottom:2px solid #C8C8C8;
+}
+#mainMenuTwo li {
+	float:left;
+	margin-bottom:-2px;
+	padding-bottom:2px;
+	position:relative;
+}
+#mainMenuTwo li.selected {
+	border-bottom:2px solid #000000;
+	padding-bottom:0;
+}
+#mainMenuTwo li a {
+	color:#2D2D2D;
+	display:block;
+	float:left;
+	padding-bottom:4px;
+	padding-top:4px;
+}
+#mainMenuTwo li.before {
+	background-image:url(images/sprites_small.gif);
+	background-position:right bottom;
+	background-repeat:no-repeat;
+}
+#mainMenuTwo li.after {
+	background-image:url(images/sprites_small.gif);
+	background-position:-18px bottom;
+	background-repeat:no-repeat;
+}	
+#mainMenuTwo li.before a {
+	margin-right:1px;
+	padding-right:7px;
+}
+#mainMenuTwo li.after a {
+	margin-left:1px;
+	padding-left:7px;
+}
+#mainMenuOne li a:hover {
+	background-color:#686868;
+	border-bottom:1px solid #686868;
+	text-decoration:none;
+}
+#mainMenuOne li a:hover {
+	border-bottom:medium none;
+}
+#mainMenuOne li.selected a:hover, #mainMenuOne li.selected:hover {
+	background-color:#E0E0E0;
+	background-image:none;
+	border-bottom:medium none;
+}
+#mainMenuTwo li a:hover {
+	background-color:#E0E0E0;
+}
+/****************************** MENU ****************************/
+
+.contentsTable {
+	background-color:#EEEEEE;
+	width:1024px;/*width:956px;*/
+}
+
+#pageTitle {
+	border-bottom:1px solid black;
+	width:100%;
+	color:black;
+	font-weight:bold;
+	font-size:16px;
+}
+
+.bodyText {
+	font-size:12px;
+}
+
+.loginTable {
+	border:1px solid black;
+	background-color:#E0E0E0;
+}
+
+/*
+.buttonTiny {
+	font-size:100%;
+	padding-bottom:2px;
+	padding-left:2px;
+	width:2em;
+}
+
+.button, .buttonSmall, .buttonTiny, .buttonDisabled {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:black url(images/sprites_small.gif) repeat-x scroll 0 -401px;
+	border:1px solid #000000;
+	color:#FFFFFF;
+	height:21px;
+}
+
+.button:hover, .buttonSmall:hover, .buttonTiny:hover, .buttonHover {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:#FFFFFF url(images/sprites_small.gif) repeat-x scroll 0 -501px;
+	color:#000000;
+}
+.button {
+	padding-bottom:2px;
+}
+.buttonSmall {
+	font-size:100%;
+	padding-bottom:2px;
+	width:56px;
+}
+.buttonTiny {
+	font-size:100%;
+	padding-bottom:2px;
+	padding-left:2px;
+	width:2em;
+}
+.buttonGray {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:#7F7F7F url(images/sprites_small.gif) repeat-x scroll 0 -601px;
+	border-color:#555555;
+}
+.buttonGray:hover {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:white url(images/sprites_small.gif) repeat-x scroll 0 -501px;
+	border-color:#555555;
+}
+.textInput {
+	background-color:#FFFFFF;
+	border:1px solid #969696;
+	min-height:17px;
+	padding-left:2px;
+}
+*/
+
+#footer {
+	font-size:11px;
+	margin:5px auto;
+	text-align:center;
+	width:996px;
+}
+
+.borderRight {
+	border-right:1px solid black;
+}
+
+.borderBottom {
+	border-bottom:1px solid black;
+}
+
+
+table.grayBorder td 
+{ 
+	border: 1px solid #CCCCCC;
+}
+table.lightGrayBorder td 
+{ 
+	border: 1px solid #F0F0F0;
+}
+table.whiteBorder td 
+{ 
+	border: 1px solid white;
+}
+
+span.collapsed {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent url(images/collapsed.gif) no-repeat scroll 4px 0;
+}
+
+.redText {
+	color:red;
+	font-weight:bold;
+}
+
+
+.greenText {
+	color:green;
+	font-weight:bold;
+}
+
+/* used in Order Summary */
+/*
+tr.mainRow {
+	background-color:#686868;
+	color:white;
+}
+tr.childRow {
+	background-color:#F0F0F0;
+	color:black;
+}
+*/
+
+/* used in Order Summary 02 */
+/*
+tr.mainRow {
+	background-color:white;
+	color:black;
+}
+
+tr.childRow {
+	background-color:#F0F0F0;
+	color:black;
+}
+*/
+
+/* used in Order Summary 03 */
+tr.mainRow {
+	background-color:#E0E0E0;
+	color:black;
+}
+
+tr.childRow {
+	background-color:#E0E0E0;
+	color:black;
+}
+tr.mainRowAlt {
+	background-color:#ECF4FD;
+	color:black;
+}
+
+tr.childRowAlt {
+	background-color:#ECF4FD; /*#C3DAF9; #D1E2FA*/
+	color:black;
+}
+
+
+
+

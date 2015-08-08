@@ -1,0 +1,57 @@
+A {
+	TEXT-DECORATION: none
+}
+A:hover {
+	TEXT-DECORATION: underline
+}
+BODY {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+H2 {
+	FONT-SIZE: 140%
+}
+H3 {
+	FONT-SIZE: 120%
+}
+H4 {
+	FONT-SIZE: 100%
+}
+PRE {
+	FONT-SIZE: 80%; FONT-FAMILY: Courier New, Courier, monospace
+}
+TD {
+	FONT-SIZE: 10pt; VERTICAL-ALIGN: top; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-ALIGN: left
+}
+TH {
+	FONT-SIZE: 10pt; VERTICAL-ALIGN: top; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-ALIGN: left
+}
+TH {
+	FONT-WEIGHT: bold; VERTICAL-ALIGN: bottom
+}
+UL {
+	LIST-STYLE-TYPE: square
+}
+#demoBox {
+	BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 8px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 8px; PADDING-BOTTOM: 8px; BORDER-LEFT: #000000 1px solid; WIDTH: 24em; PADDING-TOP: 8px; BORDER-BOTTOM: #000000 1px solid
+}
+.footer {
+	MARGIN-BOTTOM: 0px; TEXT-ALIGN: center
+}
+TABLE.boxed {
+	border-spacing: 2px; empty-cells: hide
+}
+TD.boxed {
+	BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 8px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 8px; PADDING-BOTTOM: 2px; BORDER-LEFT: #000000 1px solid; COLOR: #000000; PADDING-TOP: 2px; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffffff
+}
+TH.boxed {
+	BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 8px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 8px; PADDING-BOTTOM: 2px; BORDER-LEFT: #000000 1px solid; COLOR: #000000; PADDING-TOP: 2px; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffffff
+}
+TH.boxedHeader {
+	BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 8px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 8px; PADDING-BOTTOM: 2px; BORDER-LEFT: #000000 1px solid; COLOR: #000000; PADDING-TOP: 2px; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffffff
+}
+TH.boxed {
+	BACKGROUND-COLOR: #c0c0c0
+}
+TH.boxedHeader {
+	COLOR: #ffffff; BACKGROUND-COLOR: #808080
+}

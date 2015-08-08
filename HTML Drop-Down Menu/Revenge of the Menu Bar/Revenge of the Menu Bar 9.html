@@ -1,0 +1,553 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0050)http://www.brainjar.com/dhtml/menubar/default9.asp -->
+<!--************************************************************************--><!--* Copyright 2000-2004 by Mike Hall                                     *--><!--* Please see http://www.brainjar.com for terms of use.                 *--><!--************************************************************************--><HTML 
+lang=en xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>BrainJar.com: Revenge of the Menu Bar</TITLE>
+<META http-equiv=Content-Type content=text/html;charset=utf-8><LINK 
+href="Revenge of the Menu Bar 9_files/article.css" type=text/css rel=stylesheet>
+<STYLE type=text/css>DIV.menuBar {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menuBar A.menuButton {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menu {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menu A.menuItem {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menuBar {
+	BORDER-RIGHT: #909090 2px solid; PADDING-RIGHT: 2px; BORDER-TOP: #f0f0f0 2px solid; PADDING-LEFT: 2px; PADDING-BOTTOM: 4px; BORDER-LEFT: #f0f0f0 2px solid; PADDING-TOP: 4px; BORDER-BOTTOM: #909090 2px solid; BACKGROUND-COLOR: #d0d0d0; TEXT-ALIGN: left
+}
+DIV.menuBar A.menuButton {
+	BORDER-RIGHT: #d0d0d0 1px solid; PADDING-RIGHT: 6px; BORDER-TOP: #d0d0d0 1px solid; PADDING-LEFT: 6px; Z-INDEX: 100; LEFT: 0px; PADDING-BOTTOM: 2px; MARGIN: 1px; BORDER-LEFT: #d0d0d0 1px solid; CURSOR: default; COLOR: #000000; PADDING-TOP: 2px; BORDER-BOTTOM: #d0d0d0 1px solid; POSITION: relative; TOP: 0px; BACKGROUND-COLOR: transparent; TEXT-DECORATION: none
+}
+DIV.menuBar A.menuButton:hover {
+	BORDER-LEFT-COLOR: #f0f0f0; BORDER-BOTTOM-COLOR: #909090; COLOR: #000000; BORDER-TOP-COLOR: #f0f0f0; BACKGROUND-COLOR: transparent; BORDER-RIGHT-COLOR: #909090
+}
+DIV.menuBar A.menuButtonActive {
+	BORDER-LEFT-COLOR: #909090; LEFT: 1px; BORDER-BOTTOM-COLOR: #f0f0f0; COLOR: #ffffff; BORDER-TOP-COLOR: #909090; TOP: 1px; BACKGROUND-COLOR: #a0a0a0; BORDER-RIGHT-COLOR: #f0f0f0
+}
+DIV.menuBar A.menuButtonActive:hover {
+	BORDER-LEFT-COLOR: #909090; LEFT: 1px; BORDER-BOTTOM-COLOR: #f0f0f0; COLOR: #ffffff; BORDER-TOP-COLOR: #909090; TOP: 1px; BACKGROUND-COLOR: #a0a0a0; BORDER-RIGHT-COLOR: #f0f0f0
+}
+DIV.menu {
+	BORDER-RIGHT: #909090 2px solid; PADDING-RIGHT: 1px; BORDER-TOP: #f0f0f0 2px solid; PADDING-LEFT: 0px; Z-INDEX: 101; LEFT: 0px; VISIBILITY: hidden; PADDING-BOTTOM: 1px; BORDER-LEFT: #f0f0f0 2px solid; PADDING-TOP: 0px; BORDER-BOTTOM: #909090 2px solid; POSITION: absolute; TOP: 0px; BACKGROUND-COLOR: #d0d0d0
+}
+DIV.menu A.menuItem {
+	PADDING-RIGHT: 1em; DISPLAY: block; PADDING-LEFT: 1em; PADDING-BOTTOM: 3px; CURSOR: default; COLOR: #000000; PADDING-TOP: 3px; WHITE-SPACE: nowrap; TEXT-DECORATION: none
+}
+DIV.menu A.menuItem:hover {
+	COLOR: #ffffff; BACKGROUND-COLOR: #000080
+}
+DIV.menu A.menuItemHighlight {
+	COLOR: #ffffff; BACKGROUND-COLOR: #000080
+}
+DIV.menu A.menuItem SPAN.menuItemText {
+	
+}
+DIV.menu A.menuItem SPAN.menuItemArrow {
+	MARGIN-RIGHT: -0.75em
+}
+DIV.menu DIV.menuItemSep {
+	BORDER-TOP: #909090 1px solid; MARGIN: 4px 2px; BORDER-BOTTOM: #f0f0f0 1px solid
+}
+</STYLE>
+
+<SCRIPT type=text/javascript>//<![CDATA[
+
+//----------------------------------------------------------------------------
+// Code to determine the browser and version.
+//----------------------------------------------------------------------------
+
+function Browser() {
+
+  var ua, s, i;
+
+  this.isIE    = false;  // Internet Explorer
+  this.isOP    = false;  // Opera
+  this.isNS    = false;  // Netscape
+  this.version = null;
+
+  ua = navigator.userAgent;
+
+  s = "Opera";
+  if ((i = ua.indexOf(s)) >= 0) {
+    this.isOP = true;
+    this.version = parseFloat(ua.substr(i + s.length));
+    return;
+  }
+
+  s = "Netscape6/";
+  if ((i = ua.indexOf(s)) >= 0) {
+    this.isNS = true;
+    this.version = parseFloat(ua.substr(i + s.length));
+    return;
+  }
+
+  // Treat any other "Gecko" browser as Netscape 6.1.
+
+  s = "Gecko";
+  if ((i = ua.indexOf(s)) >= 0) {
+    this.isNS = true;
+    this.version = 6.1;
+    return;
+  }
+
+  s = "MSIE";
+  if ((i = ua.indexOf(s))) {
+    this.isIE = true;
+    this.version = parseFloat(ua.substr(i + s.length));
+    return;
+  }
+}
+
+var browser = new Browser();
+
+//----------------------------------------------------------------------------
+// Code to handle the menus and sub menus.
+//----------------------------------------------------------------------------
+
+function menuMouseover(event) {
+
+  var menu;
+
+  // Find the target menu element.
+
+  if (browser.isIE)
+    menu = getContainerWith(window.event.srcElement, "DIV", "menu");
+  else
+    menu = event.currentTarget;
+
+  // Close any active sub menu.
+
+  if (menu.activeItem != null)
+    closeSubMenu(menu);
+}
+
+function menuItemMouseover(event, menuId) {
+
+  var item, menu, x, y;
+
+  // Find the target item element and its parent menu element.
+
+  if (browser.isIE)
+    item = getContainerWith(window.event.srcElement, "A", "menuItem");
+  else
+    item = event.currentTarget;
+  menu = getContainerWith(item, "DIV", "menu");
+
+  // Close any active sub menu and mark this one as active.
+
+  if (menu.activeItem != null)
+    closeSubMenu(menu);
+  menu.activeItem = item;
+
+  // Highlight the item element.
+
+  item.className += " menuItemHighlight";
+
+  // Initialize the sub menu, if not already done.
+
+  if (item.subMenu == null) {
+    item.subMenu = document.getElementById(menuId);
+    if (item.subMenu.isInitialized == null)
+      menuInit(item.subMenu);
+  }
+
+  // Get position for submenu based on the menu item.
+
+  x = getPageOffsetLeft(item) + item.offsetWidth;
+  y = getPageOffsetTop(item);
+
+  // Adjust position to fit in view.
+
+  var maxX, maxY;
+
+  if (browser.isIE) {
+    maxX = (document.documentElement.scrollLeft   != 0 ? document.documentElement.scrollLeft   : document.body.scrollLeft)
+         + (document.documentElement.clientWidth  != 0 ? document.documentElement.clientWidth  : document.body.clientWidth);
+    maxY = (document.documentElement.scrollTop    != 0 ? document.documentElement.scrollTop    : document.body.scrollTop)
+         + (document.documentElement.clientHeight != 0 ? document.documentElement.clientHeight : document.body.clientHeight);
+  }
+  if (browser.isOP) {
+    maxX = document.documentElement.scrollLeft + window.innerWidth;
+    maxY = document.documentElement.scrollTop  + window.innerHeight;
+  }
+  if (browser.isNS) {
+    maxX = window.scrollX + window.innerWidth;
+    maxY = window.scrollY + window.innerHeight;
+  }
+  maxX -= item.subMenu.offsetWidth;
+  maxY -= item.subMenu.offsetHeight;
+
+  if (x > maxX)
+    x = Math.max(0, x - item.offsetWidth - item.subMenu.offsetWidth
+      + (menu.offsetWidth - item.offsetWidth));
+  y = Math.max(0, Math.min(y, maxY));
+
+  // Position and show it.
+
+  item.subMenu.style.left = x + "px";
+  item.subMenu.style.top  = y + "px";
+  item.subMenu.style.visibility = "visible";
+
+  // Stop the event from bubbling.
+
+  if (browser.isIE)
+    window.event.cancelBubble = true;
+  else
+    event.stopPropagation();
+}
+
+function closeSubMenu(menu) {
+
+  if (menu == null || menu.activeItem == null)
+    return;
+
+  // Recursively close any sub menus.
+
+  if (menu.activeItem.subMenu != null) {
+    closeSubMenu(menu.activeItem.subMenu);
+    menu.activeItem.subMenu.style.visibility = "hidden";
+    menu.activeItem.subMenu = null;
+  }
+  removeClassName(menu.activeItem, "menuItemHighlight");
+  menu.activeItem = null;
+}
+
+//----------------------------------------------------------------------------
+// Code to initialize menus.
+//----------------------------------------------------------------------------
+
+function menuInit(menu) {
+
+  var itemList, spanList;
+  var textEl, arrowEl;
+  var itemWidth;
+  var w, dw;
+  var i, j;
+
+  // For IE, replace arrow characters.
+
+  if (browser.isIE) {
+    menu.style.lineHeight = "2.5ex";
+    spanList = menu.getElementsByTagName("SPAN");
+    for (i = 0; i < spanList.length; i++)
+      if (hasClassName(spanList[i], "menuItemArrow")) {
+        spanList[i].style.fontFamily = "Webdings";
+        spanList[i].firstChild.nodeValue = "4";
+      }
+  }
+
+  // Find the width of a menu item.
+
+  itemList = menu.getElementsByTagName("A");
+  if (itemList.length > 0)
+    itemWidth = itemList[0].offsetWidth;
+  else
+    return;
+
+  // For items with arrows, add padding to item text to make the
+  // arrows flush right.
+
+  for (i = 0; i < itemList.length; i++) {
+    spanList = itemList[i].getElementsByTagName("SPAN");
+    textEl  = null;
+    arrowEl = null;
+    for (j = 0; j < spanList.length; j++) {
+      if (hasClassName(spanList[j], "menuItemText"))
+        textEl = spanList[j];
+      if (hasClassName(spanList[j], "menuItemArrow"))
+        arrowEl = spanList[j];
+    }
+    if (textEl != null && arrowEl != null) {
+      textEl.style.paddingRight = (itemWidth 
+        - (textEl.offsetWidth + arrowEl.offsetWidth)) + "px";
+      // For Opera, remove the negative right margin to fix a display bug.
+      if (browser.isOP)
+        arrowEl.style.marginRight = "0px";
+    }
+  }
+
+  // Fix IE hover problem by setting an explicit width on first item of
+  // the menu.
+
+  if (browser.isIE) {
+    w = itemList[0].offsetWidth;
+    itemList[0].style.width = w + "px";
+    dw = itemList[0].offsetWidth - w;
+    w -= dw;
+    itemList[0].style.width = w + "px";
+  }
+
+  // Mark menu as initialized.
+
+  menu.isInitialized = true;
+}
+
+//----------------------------------------------------------------------------
+// General utility functions.
+//----------------------------------------------------------------------------
+
+function getContainerWith(node, tagName, className) {
+
+  // Starting with the given node, find the nearest containing element
+  // with the specified tag name and style class.
+
+  while (node != null) {
+    if (node.tagName != null && node.tagName == tagName &&
+        hasClassName(node, className))
+      return node;
+    node = node.parentNode;
+  }
+
+  return node;
+}
+
+function hasClassName(el, name) {
+
+  var i, list;
+
+  // Return true if the given element currently has the given class
+  // name.
+
+  list = el.className.split(" ");
+  for (i = 0; i < list.length; i++)
+    if (list[i] == name)
+      return true;
+
+  return false;
+}
+
+function removeClassName(el, name) {
+
+  var i, curList, newList;
+
+  if (el.className == null)
+    return;
+
+  // Remove the given class name from the element's className property.
+
+  newList = new Array();
+  curList = el.className.split(" ");
+  for (i = 0; i < curList.length; i++)
+    if (curList[i] != name)
+      newList.push(curList[i]);
+  el.className = newList.join(" ");
+}
+
+function getPageOffsetLeft(el) {
+
+  var x;
+
+  // Return the x coordinate of an element relative to the page.
+
+  x = el.offsetLeft;
+  if (el.offsetParent != null)
+    x += getPageOffsetLeft(el.offsetParent);
+
+  return x;
+}
+
+function getPageOffsetTop(el) {
+
+  var y;
+
+  // Return the x coordinate of an element relative to the page.
+
+  y = el.offsetTop;
+  if (el.offsetParent != null)
+    y += getPageOffsetTop(el.offsetParent);
+
+  return y;
+}
+
+function initSample(event) {
+
+  menuInit(document.getElementById("menu3"));
+}
+
+window.onload = initSample;
+
+//]]></SCRIPT>
+
+<META content="MSHTML 6.00.2900.2180" name=GENERATOR></HEAD>
+<BODY>
+<DIV id=main>
+<DIV class=navBar><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <SPAN 
+class=navCurrentPage>9</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> </DIV>
+<DIV id=content>
+<H2>Revenge of the Menu Bar</H2><SPAN class=sideBox>See the <A 
+href="http://www.brainjar.com/dhtml/menubar/demo.html">demo</A> page for the 
+finished version of the code.</SPAN> 
+<H4>Positioning a Sub Menu</H4>
+<P>As with positioning a menu under a button, we first find the coordinates of 
+the link element with respect to the page. Adding the width of the item to the 
+horizontal coordinate will put the sub menu just to the right of the item.</P><PRE>  // Get position for submenu based on the menu item.
+
+  x = getPageOffsetLeft(item) + item.offsetWidth;
+  y = getPageOffsetTop(item);
+</PRE>
+<P>Unlike the buttons and main menus however, we take the sub menu positioning a 
+bit further. With a long chain of sub menus, each positioned downward and to the 
+right of the previous one, it's easy to run out of room. A Sub menu may end up 
+extending past the edge of the browser window.</P>
+<P>To prevent this, we find the coordinates of the current, viewable area of the 
+page using the browser's window dimensions and adjusting for any scrolling 
+offsets.</P><PRE>  // Adjust position to fit in view.
+
+  var maxX, maxY;
+
+  if (browser.isIE) {
+    maxX =
+      (document.documentElement.scrollLeft   != 0 ?
+         document.documentElement.scrollLeft
+       : document.body.scrollLeft)
+    + (document.documentElement.clientWidth  != 0 ?
+       document.documentElement.clientWidth
+       : document.body.clientWidth);
+    maxY =
+      (document.documentElement.scrollTop    != 0 ?
+       document.documentElement.scrollTop
+       : document.body.scrollTop)
+    + (document.documentElement.clientHeight != 0 ?
+       document.documentElement.clientHeight
+       : document.body.clientHeight);
+  }
+  if (browser.isOP) {
+    maxX = document.documentElement.scrollLeft + window.innerWidth;
+    maxY = document.documentElement.scrollTop  + window.innerHeight;
+  }
+  if (browser.isNS) {
+    maxX = window.scrollX + window.innerWidth;
+    maxY = window.scrollY + window.innerHeight;
+  }
+  maxX -= item.subMenu.offsetWidth;
+  maxY -= item.subMenu.offsetHeight;
+
+  if (x &gt; maxX)
+    x = Math.max(0, x - item.offsetWidth - item.subMenu.offsetWidth
+      + (menu.offsetWidth - item.offsetWidth));
+  y = Math.max(0, Math.min(y, maxY));
+</PRE>
+<P>Taking into account the width and height of the sub menu, we can define a 
+range of coordinates where the sub menu can be positioned while staying fully in 
+view.</P>
+<P>Should our original position fall outside this range, we adjust it to place 
+the sub menu to the left of its parent menu and/or move it upwards so that its 
+bottom edge will remain in view.</P>
+<DIV class=noteBox><B>Browser Compatibility</B> 
+<P></P>Methods for finding the dimensions of the client area and scroll offsets 
+vary from browser to browser, as there is no set standard for this. It can even 
+vary from version to version for a given browser. 
+<P></P>In the case of IE, version 5.5 and version 6 in "quirks" mode, these 
+values can be found in the <CODE>document.body</CODE> object. But IE 6 in 
+standard mode stores these values in the <CODE>document.documentElement</CODE> 
+object instead. The code above handles this by taking the values from 
+<CODE>document.documentElement</CODE> if they are not set to zero. Otherwise, it 
+takes them from <CODE>document.body</CODE>. </DIV>
+<P>Once a suitable position is found, the sub menu is moved and made 
+visible.</P><PRE>  // Position and show it.
+
+  item.subMenu.style.left = x + "px";
+  item.subMenu.style.top  = y + "px";
+  item.subMenu.style.visibility = "visible";
+</PRE>
+<P>The last step in this function cancels the event bubble.</P><PRE>  // Stop the event from bubbling.
+
+  if (browser.isIE)
+    window.event.cancelBubble = true;
+  else
+    event.stopPropagation();
+</PRE>
+<P>Since the item is part of the menu DIV, and the menu DIV also has an 
+<CODE>onmousemove</CODE> event handler defined for it, any 
+<CODE>mousemove</CODE> event fired on the item also fires for its parent 
+menu.</P>
+<P>That's not good because, as we'll see next, the <CODE>onmousemove</CODE> 
+handler for the menu closes any active sub menu. If the event were allowed to 
+bubble from here, the sub menu just displayed would be immediately hidden 
+again.</P>
+<H4>Deactivating Sub Menus</H4>
+<P>The sample menu below demonstrates the code up to this point. Mousing over an 
+item with a sub menu activates that item and sub menu. It will stay active until 
+you mouse over some other sub menued item.</P>
+<DIV style="POSITION: relative; HEIGHT: 10.5em">
+<DIV class=menu id=menu3 style="VISIBILITY: visible"><A class=menuItem 
+onclick="return false;" href="http://www.brainjar.com/dhtml/menubar/">Menu 3 
+Item 1</A> <A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3 Item 2</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3 Item 3</A> <A 
+class=menuItem onmouseover="menuItemMouseover(event, 'menu3_4');" 
+onclick="return false;" href="http://www.brainjar.com/dhtml/menubar/"><SPAN 
+class=menuItemText>Menu 3 Item 4</SPAN> <SPAN class=menuItemArrow>▶</SPAN></A> 
+<A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3 Item 5</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem 
+onmouseover="menuItemMouseover(event, 'menu3_6');" onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/"><SPAN class=menuItemText>Menu 3 
+Item 6</SPAN> <SPAN class=menuItemArrow>▶</SPAN> </A></DIV></DIV>
+<DIV class=menu id=menu3_4><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3-4 Item 1</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3-4 Item 2</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3-4 Item 3</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3-4 Item 4</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3-4 Item 5</A> </DIV>
+<DIV class=menu id=menu3_6><A class=menuItem 
+onmouseover="menuItemMouseover(event, 'menu3_6_1');" onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/"><SPAN class=menuItemText>Menu 3-6 
+Item 1</SPAN> <SPAN class=menuItemArrow>▶</SPAN></A> <A class=menuItem 
+onclick="return false;" href="http://www.brainjar.com/dhtml/menubar/">Menu 3-6 
+Item 2</A> <A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3-6 Item 3</A> </DIV>
+<DIV class=menu id=menu3_6_1><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3-6-1 Item 1</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3-6-1 Item 2</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3-6-1 Item 3</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3-6-1 Item 4</A> </DIV>
+<P><A onclick="closeSubMenu(document.getElementById('menu3')); return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Close Sub Menus</A></P>
+<P>This presents a problem because once any sub menu is opened, you can't get 
+rid of them. Moving the mouse to another, normal item does nothing while moving 
+to another sub menued item just switches the active sub menu. (For this sample, 
+you can use the link above to get rid of the sub menus).</P>
+<P>Instead, we want the active sub menu to close when any other item in the 
+parent menu is moused over. That's where the <CODE>mouseover</CODE> event 
+handler on the menu DIV comes in.</P>
+<P class=footer><A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">Prev</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">Next</A> </P></DIV>
+<DIV class=navBar><SPAN class=navCurrentPage 
+style="FLOAT: left">BrainJar.com&nbsp;·&nbsp;©1999-2004 by Mike 
+Hall&nbsp;</SPAN><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <SPAN 
+class=navCurrentPage>9</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> 
+</DIV></DIV></BODY></HTML>

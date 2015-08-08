@@ -1,0 +1,91 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0051)http://www.brainjar.com/dhtml/menubar/default10.asp -->
+<!--************************************************************************--><!--* Copyright 2000 by Mike Hall                                          *--><!--* Please see http://www.brainjar.com for terms of use.                 *--><!--************************************************************************--><HTML 
+lang=en xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>BrainJar.com: Revenge of the Menu Bar</TITLE>
+<META http-equiv=Content-Type content=text/html;charset=utf-8><LINK 
+href="Revenge of the Menu Bar 10_files/article.css" type=text/css 
+rel=stylesheet>
+<META content="MSHTML 6.00.2900.2180" name=GENERATOR></HEAD>
+<BODY>
+<DIV id=main>
+<DIV class=navBar><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <SPAN 
+class=navCurrentPage>10</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> </DIV>
+<DIV id=content>
+<H2>Revenge of the Menu Bar</H2><SPAN class=sideBox>See the <A 
+href="http://www.brainjar.com/dhtml/menubar/demo.html">demo</A> page for the 
+finished version of the code.</SPAN> 
+<H4>The Menu <CODE>mouseover</CODE> Event Handler</H4>
+<P>The <CODE>menuMouseover()</CODE> function handles this. It fires any time the 
+mouse moves over any part of the menu, except for item links that have a sub 
+menu (because they capture the event first and handle it themselves).</P><PRE>function menuMouseover(event) {
+
+  var menu;
+
+  // Find the target menu element.
+
+  if (browser.isIE)
+    menu = getContainerWith(window.event.srcElement, "DIV", "menu");
+  else
+    menu = event.currentTarget;
+
+  // Close any active sub menu.
+
+  if (menu.activeItem != null)
+    closeSubMenu(menu);
+}
+</PRE>
+<P>It first identifies the target menu and checks to see if it has an 
+<CODE>activeItem</CODE> set. If so, it calls <CODE>closeSubMenu()</CODE> which 
+takes care of hiding that sub menu (and any sub menus it may have active).</P><PRE>function closeSubMenu(menu) {
+
+  if (menu == null || menu.activeItem == null)
+    return;
+
+  // Recursively close any sub menus.
+
+  if (menu.activeItem.subMenu != null) {
+    closeSubMenu(menu.activeItem.subMenu);
+    menu.activeItem.subMenu.style.visibility = "hidden";
+    menu.activeItem.subMenu = null;
+  }
+  removeClassName(menu.activeItem, "menuItemHighlight");
+  menu.activeItem = null;
+}
+</PRE>
+<P><CODE>closeSubMenu()</CODE> is a recursive function. Given a menu, it checks 
+it for an active item. If there is one, it first calls itself on that item's sub 
+menu. This effectively runs down the <CODE>activeItem</CODE> -&gt; 
+<CODE>subMenu</CODE> -&gt; <CODE>activeItem</CODE> -&gt; <CODE>subMenu</CODE> 
+-&gt;... chain, deactivating them as it goes.</P>
+<P>Once a sub menu has been hidden, it unhighlights the active menu item and 
+clears those references.</P>
+<P>With all this code in place, the menu bar will function as desired. However, 
+there is one last glitch (with IE browsers) to take care of.</P>
+<P class=footer><A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">Prev</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">Next</A> </P></DIV>
+<DIV class=navBar><SPAN class=navCurrentPage 
+style="FLOAT: left">BrainJar.com&nbsp;·&nbsp;©1999-2004 by Mike 
+Hall&nbsp;</SPAN><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <SPAN 
+class=navCurrentPage>10</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> 
+</DIV></DIV></BODY></HTML>

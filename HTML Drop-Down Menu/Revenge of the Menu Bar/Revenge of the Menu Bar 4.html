@@ -1,0 +1,144 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0050)http://www.brainjar.com/dhtml/menubar/default4.asp -->
+<!--************************************************************************--><!--* Copyright 2000-2004 by Mike Hall                                     *--><!--* Please see http://www.brainjar.com for terms of use.                 *--><!--************************************************************************--><HTML 
+lang=en xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>BrainJar.com: Revenge of the Menu Bar</TITLE>
+<META http-equiv=Content-Type content=text/html;charset=utf-8><LINK 
+href="Revenge of the Menu Bar 4_files/article.css" type=text/css rel=stylesheet>
+<META content="MSHTML 6.00.2900.2180" name=GENERATOR></HEAD>
+<BODY>
+<DIV id=main>
+<DIV class=navBar><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <SPAN 
+class=navCurrentPage>4</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> </DIV>
+<DIV id=content>
+<H2>Revenge of the Menu Bar</H2><SPAN class=sideBox>See the <A 
+href="http://www.brainjar.com/dhtml/menubar/demo.html">demo</A> page for the 
+finished version of the code.</SPAN> 
+<H3>Scripting the Menu Bar</H3>
+<P>Be sure to look at the <A 
+href="http://www.brainjar.com/dhtml/menubar/demo.html">demo</A> page and observe 
+how the buttons and menus work before reading on. Understanding the code will be 
+easier if you first see the menu in action.</P>
+<H4>The Active Button</H4>
+<P>Looking at the demo page, you may have noticed that only one button and drop 
+down menu can be active at any given time. To track which button (if any) is 
+currently active, another global variable is defined at the beginning of the 
+script.</P><PRE>var activeButton = null;
+</PRE>
+<P>This global can then be accessed from anywhere in the code as needed, just 
+like the <CODE>browser</CODE> global.</P>
+<H4>Button Event Handlers</H4>
+<P>Now to put the buttons and menus together. First, unique IDs need to be 
+assigned to each menu's DIV tag. This will allow them to be easily referenced by 
+name.</P><PRE>&lt;div id="<I>menu1</I>" class="menu"&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 1 Item 1&lt;/a&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 1 Item 2&lt;/a&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 1 Item 3&lt;/a&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 1 Item 4&lt;/a&gt;
+&lt;div class="menuItemSep"&gt;&lt;/div&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 1 Item 5&lt;/a&gt;
+&lt;/div&gt;
+</PRE>
+<P>In the A tags for the menu buttons, an event handler for the 
+<CODE>onclick</CODE> event is defined to call the function 
+<CODE>buttonClick()</CODE> with two arguments.</P><PRE>&lt;a class="menuButton"
+   href="" 
+   onclick="return buttonClick(event, '<I>menu1</I>');"
+&gt;Button 1&lt;/a&gt;
+</PRE>
+<P>The first is the <CODE>Event</CODE> object. The second is the ID of the menu 
+to be associated with the button.</P>
+<H4>The Button <CODE>onclick</CODE> Event Handler</H4>
+<P>This function makes a button active, changing its appearance and displaying 
+the menu associated with it.</P><PRE>function buttonClick(event, menuId) {
+
+  var button;
+
+  // Get the target button element.
+
+  if (browser.isIE)
+    button = window.event.srcElement;
+  else
+    button = event.currentTarget;
+</PRE>
+<P>The first step is to get the element object representing the button link from 
+the <CODE>Event</CODE> object. This varies depending on the browser.</P>
+<DIV class=noteBox><B>Browser Compatibility</B> 
+<P></P>IE doesn't follow the standard event model. It uses a single, global 
+event object named <CODE>window.event</CODE> rather than passing an event object 
+to the event handler. Also, the event object in IE uses non-standard property 
+names and methods. So separate code is needed. 
+<P></P>See the <A href="http://www.brainjar.com/dhtml/events/">DOM Event 
+Model</A> for details on events and browser compatibility. </DIV>
+<P>Once found, the link element's <CODE>.blur()</CODE> method is called, to 
+remove the dotted outline most browsers display around a link when it is 
+clicked.</P><PRE>  // Blur focus from the link to remove that annoying outline.
+
+  button.blur();
+</PRE>
+<P>Next, it finds the DIV element corresponding to the button's menu. The first 
+time this function is called for a button, we need to locate the menu DIV using 
+the given ID. Once found, it is saved as a user defined property on the button 
+called <CODE>menu</CODE> so it can be easily referenced later.</P><PRE>  // Associate the named menu to this button if not already done.
+  // Additionally, initialize menu display.
+
+  if (button.menu == null) {
+    button.menu = document.getElementById(menuId);
+    if (button.menu.isInitialized == null)
+      menuInit(button.menu);
+  }
+</PRE>
+<P>Additionally, <CODE>menuInit()</CODE> is called. This function takes care of 
+a few display problems with the menu items, mostly related to sub menus. It's 
+detailed later on.</P>
+<P>Next it checks to see if some other button is currently active, using the 
+<CODE>activeButton</CODE> global. If so, it deactivates it.</P><PRE>  // Reset the currently active button, if any.
+
+  if (activeButton != null)
+    resetButton(activeButton);
+</PRE>
+<P>It then it makes this button the active one (unless it was the active button, 
+in which case we leave it deactivated).</P><PRE>  // Activate this button, unless it was the currently active one.
+
+  if (button != activeButton) {
+    depressButton(button);
+    activeButton = button;
+  }
+  else
+    activeButton = null;
+
+  return false;
+}
+</PRE>
+<P>The last line returns a value of <CODE>false,</CODE> to prevent the browser 
+from attempting to follow the link.</P>
+<P>The <CODE>depressButton()</CODE> and <CODE>resetButton()</CODE> functions do 
+the actual work of changing the button appearance and showing or hiding its 
+menu.</P>
+<P class=footer><A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">Prev</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">Next</A> </P></DIV>
+<DIV class=navBar><SPAN class=navCurrentPage 
+style="FLOAT: left">BrainJar.com&nbsp;·&nbsp;©1999-2004 by Mike 
+Hall&nbsp;</SPAN><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <SPAN 
+class=navCurrentPage>4</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> 
+</DIV></DIV></BODY></HTML>

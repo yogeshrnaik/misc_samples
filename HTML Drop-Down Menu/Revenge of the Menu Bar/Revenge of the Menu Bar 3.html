@@ -1,0 +1,151 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0050)http://www.brainjar.com/dhtml/menubar/default3.asp -->
+<!--************************************************************************--><!--* Copyright 2000-2004 by Mike Hall                                     *--><!--* Please see http://www.brainjar.com for terms of use.                 *--><!--************************************************************************--><HTML 
+lang=en xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>BrainJar.com: Revenge of the Menu Bar</TITLE>
+<META http-equiv=Content-Type content=text/html;charset=utf-8><LINK 
+href="Revenge of the Menu Bar 3_files/article.css" type=text/css rel=stylesheet>
+<META content="MSHTML 6.00.2900.2180" name=GENERATOR></HEAD>
+<BODY>
+<DIV id=main>
+<DIV class=navBar><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <SPAN 
+class=navCurrentPage>3</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> </DIV>
+<DIV id=content>
+<H2>Revenge of the Menu Bar</H2><SPAN class=sideBox>See the <A 
+href="http://www.brainjar.com/dhtml/menubar/demo.html">demo</A> page for the 
+finished version of the code.</SPAN> 
+<H4>Utility Functions</H4>
+<P>To make things easier, some utility functions are defined. These are used in 
+several places throughout the menu bar script to handle simple, generic tasks. 
+Like the code for browser detection, they could useful in other scripts as 
+well.</P>
+<P>The first is called <CODE>getContainerWith().</CODE> The code for the menu 
+bar includes a number of event handlers which may be fired from many of the 
+different elements making up the components we've defined (the bar, buttons, 
+menus, menu items, etc.).</P>
+<P>Using the <CODE>Event</CODE> object associated with an event, you can 
+determine which element fired it, such as a link. But for the menu bar, we'll 
+often need to locate an outer or containing element, such as the menu DIV that 
+holds a given item link.</P><PRE>function getContainerWith(node, tagName, className) {
+
+  // Starting with the given node, find the nearest containing element
+  // with the specified tag name and style class.
+
+  while (node != null) {
+    if (node.tagName != null &amp;&amp; node.tagName == tagName &amp;&amp;
+        hasClassName(node, className))
+      return node;
+    node = node.parentNode;
+  }
+
+  return node;
+}
+</PRE>
+<P>This function does just that. Specifying the type of tag to look for and a 
+style class name, you can give it a starting element. It will move up the 
+document node tree looking for a match. The result is either the matching 
+element or a <CODE>null</CODE> value (meaning no match). Note that if the 
+starting node itself matches the criteria, it will be returned.</P>
+<P>To match the class name it calls another utility function, 
+<CODE>hasClassName().</CODE> Remember that you can specify several style class 
+names in a tag's CLASS attribute (separated by spaces) so it helps to be able to 
+identify individual names when accessing this value programmatically.</P><PRE>function hasClassName(el, name) {
+
+  var i, list;
+
+  // Return true if the given element currently has the given class
+  // name.
+
+  list = el.className.split(" ");
+  for (i = 0; i &lt; list.length; i++)
+    if (list[i] == name)
+      return true;
+
+  return false;
+}
+</PRE>
+<P>This function takes a given name and checks it against each name in the 
+element's <CODE>className</CODE> property for a match, returning either 
+<CODE>true</CODE> or <CODE>false.</CODE></P>
+<P>Also dealing with multiple class names on an element is the 
+<CODE>removeClassName()</CODE> function. Adding a class name to an element 
+object is easy, you just append the name to its <CODE>className</CODE> property, 
+preceeded by a space.</P><PRE>elObj.className += " <I>myClassName</I>";
+</PRE>
+<P>Removing a class name can be little more difficult since there may be more 
+than one in the element's <CODE>className</CODE> property. This function splits 
+up that string of space-separated class names and rebuilds them, minus the 
+specified name.</P><PRE>function removeClassName(el, name) {
+
+  var i, curList, newList;
+
+  if (el.className == null)
+    return;
+
+  // Remove the given class name from the element's className property.
+
+  newList = new Array();
+  curList = el.className.split(" ");
+  for (i = 0; i &lt; curList.length; i++)
+    if (curList[i] != name)
+      newList.push(curList[i]);
+  el.className = newList.join(" ");
+}
+</PRE>
+<P>The last pair of utility functions are used for positioning. The drop down 
+menus and sub menus are absolutely positioned elements which will need to be 
+placed near a corresponding button or menu item element. These two functions are 
+used to calculate the pixel coordinates of those elements on the page.</P><PRE>function getPageOffsetLeft(el) {
+
+  var x;
+
+  // Return the x coordinate of an element relative to the page.
+
+  x = el.offsetLeft;
+  if (el.offsetParent != null)
+    x += getPageOffsetLeft(el.offsetParent);
+
+  return x;
+}
+
+function getPageOffsetTop(el) {
+
+  var y;
+
+  // Return the x coordinate of an element relative to the page.
+
+  y = el.offsetTop;
+  if (el.offsetParent != null)
+    y += getPageOffsetTop(el.offsetParent);
+
+  return y;
+}
+</PRE>
+<P>Now for the code specific to the the menu bar.</P>
+<P class=footer><A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">Prev</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">Next</A> </P></DIV>
+<DIV class=navBar><SPAN class=navCurrentPage 
+style="FLOAT: left">BrainJar.com&nbsp;·&nbsp;©1999-2004 by Mike 
+Hall&nbsp;</SPAN><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <SPAN 
+class=navCurrentPage>3</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> 
+</DIV></DIV></BODY></HTML>

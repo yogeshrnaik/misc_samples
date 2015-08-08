@@ -1,0 +1,688 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0050)http://www.brainjar.com/dhtml/menubar/default5.asp -->
+<!--************************************************************************--><!--* Copyright 2000-2004 by Mike Hall                                     *--><!--* Please see http://www.brainjar.com for terms of use.                 *--><!--************************************************************************--><HTML 
+lang=en xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>BrainJar.com: Revenge of the Menu Bar</TITLE>
+<META http-equiv=Content-Type content=text/html;charset=utf-8><LINK 
+href="Revenge of the Menu Bar 5_files/article.css" type=text/css rel=stylesheet>
+<STYLE type=text/css>DIV.menuBar {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menuBar A.menuButton {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menu {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menu A.menuItem {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menuBar {
+	BORDER-RIGHT: #909090 2px solid; PADDING-RIGHT: 2px; BORDER-TOP: #f0f0f0 2px solid; PADDING-LEFT: 2px; PADDING-BOTTOM: 4px; BORDER-LEFT: #f0f0f0 2px solid; PADDING-TOP: 4px; BORDER-BOTTOM: #909090 2px solid; BACKGROUND-COLOR: #d0d0d0; TEXT-ALIGN: left
+}
+DIV.menuBar A.menuButton {
+	BORDER-RIGHT: #d0d0d0 1px solid; PADDING-RIGHT: 6px; BORDER-TOP: #d0d0d0 1px solid; PADDING-LEFT: 6px; Z-INDEX: 100; LEFT: 0px; PADDING-BOTTOM: 2px; MARGIN: 1px; BORDER-LEFT: #d0d0d0 1px solid; CURSOR: default; COLOR: #000000; PADDING-TOP: 2px; BORDER-BOTTOM: #d0d0d0 1px solid; POSITION: relative; TOP: 0px; BACKGROUND-COLOR: transparent; TEXT-DECORATION: none
+}
+DIV.menuBar A.menuButton:hover {
+	BORDER-LEFT-COLOR: #f0f0f0; BORDER-BOTTOM-COLOR: #909090; COLOR: #000000; BORDER-TOP-COLOR: #f0f0f0; BACKGROUND-COLOR: transparent; BORDER-RIGHT-COLOR: #909090
+}
+DIV.menuBar A.menuButtonActive {
+	BORDER-LEFT-COLOR: #909090; LEFT: 1px; BORDER-BOTTOM-COLOR: #f0f0f0; COLOR: #ffffff; BORDER-TOP-COLOR: #909090; TOP: 1px; BACKGROUND-COLOR: #a0a0a0; BORDER-RIGHT-COLOR: #f0f0f0
+}
+DIV.menuBar A.menuButtonActive:hover {
+	BORDER-LEFT-COLOR: #909090; LEFT: 1px; BORDER-BOTTOM-COLOR: #f0f0f0; COLOR: #ffffff; BORDER-TOP-COLOR: #909090; TOP: 1px; BACKGROUND-COLOR: #a0a0a0; BORDER-RIGHT-COLOR: #f0f0f0
+}
+DIV.menu {
+	BORDER-RIGHT: #909090 2px solid; PADDING-RIGHT: 1px; BORDER-TOP: #f0f0f0 2px solid; PADDING-LEFT: 0px; Z-INDEX: 101; LEFT: 0px; VISIBILITY: hidden; PADDING-BOTTOM: 1px; BORDER-LEFT: #f0f0f0 2px solid; PADDING-TOP: 0px; BORDER-BOTTOM: #909090 2px solid; POSITION: absolute; TOP: 0px; BACKGROUND-COLOR: #d0d0d0
+}
+DIV.menu A.menuItem {
+	PADDING-RIGHT: 1em; DISPLAY: block; PADDING-LEFT: 1em; PADDING-BOTTOM: 3px; CURSOR: default; COLOR: #000000; PADDING-TOP: 3px; WHITE-SPACE: nowrap; TEXT-DECORATION: none
+}
+DIV.menu A.menuItem:hover {
+	COLOR: #ffffff; BACKGROUND-COLOR: #000080
+}
+DIV.menu A.menuItemHighlight {
+	COLOR: #ffffff; BACKGROUND-COLOR: #000080
+}
+DIV.menu DIV.menuItemSep {
+	BORDER-TOP: #909090 1px solid; MARGIN: 4px 2px; BORDER-BOTTOM: #f0f0f0 1px solid
+}
+</STYLE>
+
+<SCRIPT type=text/javascript>//<![CDATA[
+
+//----------------------------------------------------------------------------
+// Code to determine the browser and version.
+//----------------------------------------------------------------------------
+
+function Browser() {
+
+  var ua, s, i;
+
+  this.isIE    = false;  // Internet Explorer
+  this.isNS    = false;  // Netscape
+  this.version = null;
+
+  ua = navigator.userAgent;
+
+  s = "MSIE";
+  if ((i = ua.indexOf(s)) >= 0) {
+    this.isIE = true;
+    this.version = parseFloat(ua.substr(i + s.length));
+    return;
+  }
+
+  s = "Netscape6/";
+  if ((i = ua.indexOf(s)) >= 0) {
+    this.isNS = true;
+    this.version = parseFloat(ua.substr(i + s.length));
+    return;
+  }
+
+  // Treat any other "Gecko" browser as NS 6.1.
+
+  s = "Gecko";
+  if ((i = ua.indexOf(s)) >= 0) {
+    this.isNS = true;
+    this.version = 6.1;
+    return;
+  }
+}
+
+var browser = new Browser();
+
+//----------------------------------------------------------------------------
+// Code for handling the menu bar and active button.
+//----------------------------------------------------------------------------
+
+var activeButton = null;
+
+function buttonClick(event, menuId) {
+
+  var button;
+
+  // Get the target button element.
+
+  if (browser.isIE)
+    button = window.event.srcElement;
+  else
+    button = event.currentTarget;
+
+  // Blur focus from the link to remove that annoying outline.
+
+  button.blur();
+
+  // Associate the named menu to this button if not already done.
+  // Additionally, initialize menu display.
+
+  if (button.menu == null) {
+    button.menu = document.getElementById(menuId);
+    if (button.menu.isInitialized == null)
+      menuInit(button.menu);
+  }
+
+  // Reset the currently active button, if any.
+
+  if (activeButton != null)
+    resetButton(activeButton);
+
+  // Activate this button, unless it was the currently active one.
+
+  if (button != activeButton) {
+    depressButton(button);
+    activeButton = button;
+  }
+  else
+    activeButton = null;
+
+  return false;
+}
+
+function buttonMouseover(event, menuId) {
+
+  var button;
+
+  // Find the target button element.
+
+  if (browser.isIE)
+    button = window.event.srcElement;
+  else
+    button = event.currentTarget;
+
+  // If any other button menu is active, make this one active instead.
+
+  if (activeButton != null && activeButton != button)
+    buttonClick(event, menuId);
+}
+
+function depressButton(button) {
+
+  var x, y;
+
+  // Update the button's style class to make it look like it's
+  // depressed.
+
+  button.className += " menuButtonActive";
+
+  // Position the associated drop down menu under the button and
+  // show it.
+
+  x = getPageOffsetLeft(button);
+  y = getPageOffsetTop(button) + button.offsetHeight;
+
+  button.menu.style.left = x + "px";
+  button.menu.style.top  = y + "px";
+  button.menu.style.visibility = "visible";
+}
+
+function resetButton(button) {
+
+  // Restore the button's style class.
+
+  removeClassName(button, "menuButtonActive");
+
+  // Hide the button's menu, first closing any sub menus.
+
+  if (button.menu != null) {
+    closeSubMenu(button.menu);
+    button.menu.style.visibility = "hidden";
+  }
+}
+
+//----------------------------------------------------------------------------
+// Code to handle the menus and sub menus.
+//----------------------------------------------------------------------------
+
+function menuMouseover(event) {
+
+  var menu;
+
+  // Find the target menu element.
+
+  if (browser.isIE)
+    menu = getContainerWith(window.event.srcElement, "DIV", "menu");
+  else
+    menu = event.currentTarget;
+
+  // Close any active sub menu.
+
+  if (menu.activeItem != null)
+    closeSubMenu(menu);
+}
+
+function menuItemMouseover(event, menuId) {
+
+  var item, menu, x, y;
+
+  // Find the target item element and its parent menu element.
+
+  if (browser.isIE)
+    item = getContainerWith(window.event.srcElement, "A", "menuItem");
+  else
+    item = event.currentTarget;
+  menu = getContainerWith(item, "DIV", "menu");
+
+  // Close any active sub menu.
+
+  if (menu.activeItem != null)
+    closeSubMenu(menu);
+
+  // Set pointers.
+
+  menu.activeItem = item;
+  item.subMenu    = document.getElementById(menuId);
+
+  // Highlight the item element.
+
+  item.className += " menuItemHighlight";
+
+  // Initialize the sub menu, if not already done.
+
+  if (item.subMenu == null) {
+    item.subMenu = document.getElementById(menuId);
+    if (item.subMenu.isInitialized == null)
+      menuInit(item.subMenu);
+  }
+
+  // Get position for submenu based on the menu item.
+
+  x = getPageOffsetLeft(item) + item.offsetWidth;
+  y = getPageOffsetTop(item);
+
+  // Adjust position to fit in view.
+
+  var maxX, maxY;
+
+  if (browser.isNS) {
+    maxX = window.scrollX + window.innerWidth;
+    maxY = window.scrollY + window.innerHeight;
+  }
+  if (browser.isIE) {
+    maxX = (document.documentElement.scrollLeft   != 0 ? document.documentElement.scrollLeft   : document.body.scrollLeft)
+         + (document.documentElement.clientWidth  != 0 ? document.documentElement.clientWidth  : document.body.clientWidth);
+    maxY = (document.documentElement.scrollTop    != 0 ? document.documentElement.scrollTop    : document.body.scrollTop)
+         + (document.documentElement.clientHeight != 0 ? document.documentElement.clientHeight : document.body.clientHeight);
+  }
+  maxX -= item.subMenu.offsetWidth;
+  maxY -= item.subMenu.offsetHeight;
+
+  if (x > maxX)
+    x = Math.max(0, x - item.offsetWidth - item.subMenu.offsetWidth
+      + (menu.offsetWidth - item.offsetWidth));
+  y = Math.max(0, Math.min(y, maxY));
+
+  // Position and show it.
+
+  item.subMenu.style.left = x + "px";
+  item.subMenu.style.top  = y + "px";
+  item.subMenu.style.visibility = "visible";
+
+  // Stop the event from bubbling.
+
+  if (browser.isIE)
+    window.event.cancelBubble = true;
+  else
+    event.stopPropagation();
+}
+
+function closeSubMenu(menu) {
+
+  if (menu == null || menu.activeItem == null)
+    return;
+
+  // Recursively close any sub menus.
+
+  if (menu.activeItem.subMenu != null) {
+    closeSubMenu(menu.activeItem.subMenu);
+    menu.activeItem.subMenu.style.visibility = "hidden";
+    menu.activeItem.subMenu = null;
+  }
+  removeClassName(menu.activeItem, "menuItemHighlight");
+  menu.activeItem = null;
+}
+
+//----------------------------------------------------------------------------
+// Code to initialize menus.
+//----------------------------------------------------------------------------
+
+function menuInit(menu) {
+
+  var itemList, spanList;
+  var textEl, arrowEl;
+  var itemWidth;
+  var w, dw;
+  var i, j;
+
+  // For IE, replace arrow characters.
+
+  if (browser.isIE) {
+    menu.style.lineHeight = "2.5ex";
+    spanList = menu.getElementsByTagName("SPAN");
+    for (i = 0; i < spanList.length; i++)
+      if (hasClassName(spanList[i], "menuItemArrow")) {
+        spanList[i].style.fontFamily = "Webdings";
+        spanList[i].firstChild.nodeValue = "4";
+      }
+  }
+
+  // Find the width of a menu item.
+
+  itemList = menu.getElementsByTagName("A");
+  if (itemList.length > 0)
+    itemWidth = itemList[0].offsetWidth;
+  else
+    return;
+
+  // For items with arrows, add padding to item text to make the
+  // arrows flush right.
+
+  for (i = 0; i < itemList.length; i++) {
+    spanList = itemList[i].getElementsByTagName("SPAN");
+    textEl  = null;
+    arrowEl = null;
+    for (j = 0; j < spanList.length; j++) {
+      if (hasClassName(spanList[j], "menuItemText"))
+        textEl = spanList[j];
+      if (hasClassName(spanList[j], "menuItemArrow"))
+        arrowEl = spanList[j];
+    }
+    if (textEl != null && arrowEl != null)
+      textEl.style.paddingRight = (itemWidth 
+        - (textEl.offsetWidth + arrowEl.offsetWidth)) + "px";
+  }
+
+  // Fix IE hover problem by setting an explicit width on first item of
+  // the menu.
+
+  if (browser.isIE) {
+    w = itemList[0].offsetWidth;
+    itemList[0].style.width = w + "px";
+    dw = itemList[0].offsetWidth - w;
+    w -= dw;
+    itemList[0].style.width = w + "px";
+  }
+
+  // Mark menu as initialized.
+
+  menu.isInitialized = true;
+}
+
+//----------------------------------------------------------------------------
+// General utility functions.
+//----------------------------------------------------------------------------
+
+function getContainerWith(node, tagName, className) {
+
+  // Starting with the given node, find the nearest containing element
+  // with the specified tag name and style class.
+
+  while (node != null) {
+    if (node.tagName != null && node.tagName == tagName &&
+        hasClassName(node, className))
+      return node;
+    node = node.parentNode;
+  }
+
+  return node;
+}
+
+function hasClassName(el, name) {
+
+  var i, list;
+
+  // Return true if the given element currently has the given class
+  // name.
+
+  list = el.className.split(" ");
+  for (i = 0; i < list.length; i++)
+    if (list[i] == name)
+      return true;
+
+  return false;
+}
+
+function removeClassName(el, name) {
+
+  var i, curList, newList;
+
+  if (el.className == null)
+    return;
+
+  // Remove the given class name from the element's className property.
+
+  newList = new Array();
+  curList = el.className.split(" ");
+  for (i = 0; i < curList.length; i++)
+    if (curList[i] != name)
+      newList.push(curList[i]);
+  el.className = newList.join(" ");
+}
+
+function getPageOffsetLeft(el) {
+
+  var x;
+
+  // Return the x coordinate of an element relative to the page.
+
+  x = el.offsetLeft;
+  if (el.offsetParent != null)
+    x += getPageOffsetLeft(el.offsetParent);
+
+  return x;
+}
+
+function getPageOffsetTop(el) {
+
+  var y;
+
+  // Return the x coordinate of an element relative to the page.
+
+  y = el.offsetTop;
+  if (el.offsetParent != null)
+    y += getPageOffsetTop(el.offsetParent);
+
+  return y;
+}
+
+//]]></SCRIPT>
+
+<META content="MSHTML 6.00.2900.2180" name=GENERATOR></HEAD>
+<BODY>
+<DIV id=main>
+<DIV class=navBar><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <SPAN 
+class=navCurrentPage>5</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> </DIV>
+<DIV id=content>
+<H2>Revenge of the Menu Bar</H2><SPAN class=sideBox>See the <A 
+href="http://www.brainjar.com/dhtml/menubar/demo.html">demo</A> page for the 
+finished version of the code.</SPAN> 
+<H4>Activating a Button and Menu</H4>
+<P>To activate a button, the "menuButtonActive" style class is added to its 
+<CODE>className</CODE> property to change its appearance. Then its menu is 
+positioned just below it and made visible.</P><PRE>function depressButton(button) {
+
+  var x, y;
+
+  // Update the button's style class to make it look like it's
+  // depressed.
+
+  button.className += " menuButtonActive";
+
+  // Position the associated drop down menu under the button and
+  // show it.
+
+  x = getPageOffsetLeft(button);
+  y = getPageOffsetTop(button) + button.offsetHeight;
+
+  button.menu.style.left = x + "px";
+  button.menu.style.top  = y + "px";
+  button.menu.style.visibility = "visible";
+}
+</PRE>
+<P><CODE>getPageOffsetLeft()</CODE> and <CODE>getPageOffsetTop()</CODE> are used 
+to find the button's position on the page. Adding the height of the button gives 
+the pixel coordinates just below it. The menu is then moved there and made 
+visible.</P>
+<DIV class=noteBox><B>Browser Compatibility</B> 
+<P></P>Getting the pixel coordinates of an element can be a little tricky. The 
+<CODE>offsetLeft</CODE> and <CODE>offsetTop</CODE> properties used to calculate 
+these do not always reflect the element's true position on a given page, 
+depending on the browser, style settings used and the menu bar's location within 
+the page. 
+<P></P>For individual situations you may need to adjust the computed 
+<CODE>x</CODE> and <CODE>y</CODE> values by adding constants. For example, in 
+the <A href="http://www.brainjar.com/dhtml/menubar/demo.html">demo</A>, this 
+code is added just before the menu is moved: <PRE>  // For IE, adjust position.
+
+  if (browser.isIE) {
+    x += button.offsetParent.clientLeft;
+    y += button.offsetParent.clientTop;
+  }
+</PRE></DIV>
+<H4>Deactivating a Button and Menu</H4>
+<P>Deactivating a button is much simpler. We just need to remove the 
+<CODE>menuButtonActive</CODE> class from the button link and make the menu 
+invisible.</P><PRE>function resetButton(button) {
+
+  // Restore the button's style class.
+
+  removeClassName(button, "menuButtonActive");
+
+  // Hide the button's menu, first closing any sub menus.
+
+  if (button.menu != null) {
+    closeSubMenu(button.menu);
+    button.menu.style.visibility = "hidden";
+  }
+}
+</PRE>
+<P>Any sub menus need to be closed as well and this is done with a call to 
+<CODE>closeSubMenu().</CODE> Details on sub menus are given further on. For now, 
+let's look at the results of the code so far. (Note that the menu items in these 
+samples have been disabled, so clicking on them will not load a new page.)</P>
+<DIV class=menuBar><A class=menuButton 
+onclick="return buttonClick(event, 'menu1');" 
+href="http://www.brainjar.com/dhtml/menubar/">Button 1</A><A class=menuButton 
+onclick="return buttonClick(event, 'menu2');" 
+href="http://www.brainjar.com/dhtml/menubar/">Button 2</A><A class=menuButton 
+onclick="return buttonClick(event, 'menu3');" 
+href="http://www.brainjar.com/dhtml/menubar/">Button 3</A><A class=menuButton 
+onclick="return buttonClick(event, 'menu4');" 
+href="http://www.brainjar.com/dhtml/menubar/">Button 4</A></DIV>
+<DIV class=menu id=menu1><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 1 Item 1</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 1 Item 2</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 1 Item 3</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 1 Item 4</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 1 Item 5</A> </DIV>
+<DIV class=menu id=menu2><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 2 Item 1</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 2 Item 2</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 2 Item 3</A> </DIV>
+<DIV class=menu id=menu3><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3 Item 1</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3 Item 2</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3 Item 3</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3 Item 4</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3 Item 5</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3 Item 6</A> </DIV>
+<DIV class=menu id=menu4><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 4 Item 1</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 4 Item 2</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 4 Item 3</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 4 Item 4</A> </DIV>
+<P>You can click on any button to activate or deactivate it. Note that if you 
+click on one button while another is active, the old one is reset and the new 
+one is activated.</P>
+<P>Next, we want to add some code to handle mouseovers on the buttons. The 
+effect will be to make the active button "jump" as you move the mouse from one 
+button to another.</P>
+<H4>The Button <CODE>onmouseover</CODE> Event Handler</H4>
+<P>To implement this, we first add another event handler to the button tags. 
+This one calls the function <CODE>buttonMouseover()</CODE> on 
+<CODE>mouseover</CODE> events, naturally enough.</P><PRE>&lt;a class="menuButton"
+   href="" 
+   onclick="return buttonClick(event, '<I>menu1</I>');"
+   onmouseover="buttonMouseover(event, '<I>menu1</I>');"
+&gt;Button 1&lt;/a&gt;
+</PRE>
+<P>It takes the same two arguments used for <CODE>buttonClick(),</CODE> the 
+event object and the ID of the menu associated with the button.</P><PRE>function buttonMouseover(event, menuId) {
+
+  var button;
+
+  // Find the target button element.
+
+  if (browser.isIE)
+    button = window.event.srcElement;
+  else
+    button = event.currentTarget;
+
+  // If any other button menu is active, make this one active instead.
+
+  if (activeButton != null &amp;&amp; activeButton != button)
+    buttonClick(event, menuId);
+}
+</PRE>
+<P>Once again, it first identifies the link element for the button. Then it 
+checks to see if some other button is currently active, using the 
+<CODE>activeButton</CODE> global. If so, it deactivates that button and then 
+calls <CODE>buttonClick()</CODE> to activate this one.</P>
+<P>In effect, it acts just like <CODE>buttonClick()</CODE> except that it only 
+works when some button is already active. You can try it below to see the 
+effect.</P>
+<DIV class=menuBar><A class=menuButton 
+onmouseover="buttonMouseover(event, 'menu5');" 
+onclick="return buttonClick(event, 'menu5');" 
+href="http://www.brainjar.com/dhtml/menubar/">Button 1</A><A class=menuButton 
+onmouseover="buttonMouseover(event, 'menu6');" 
+onclick="return buttonClick(event, 'menu6');" 
+href="http://www.brainjar.com/dhtml/menubar/">Button 2</A><A class=menuButton 
+onmouseover="buttonMouseover(event, 'menu7');" 
+onclick="return buttonClick(event, 'menu7');" 
+href="http://www.brainjar.com/dhtml/menubar/">Button 3</A><A class=menuButton 
+onmouseover="buttonMouseover(event, 'menu8');" 
+onclick="return buttonClick(event, 'menu8');" 
+href="http://www.brainjar.com/dhtml/menubar/">Button 4</A></DIV>
+<DIV class=menu id=menu5><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 1 Item 1</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 1 Item 2</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 1 Item 3</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 1 Item 4</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 1 Item 5</A> </DIV>
+<DIV class=menu id=menu6><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 2 Item 1</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 2 Item 2</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 2 Item 3</A> </DIV>
+<DIV class=menu id=menu7><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3 Item 1</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3 Item 2</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3 Item 3</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3 Item 4</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3 Item 5</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 3 Item 6</A> </DIV>
+<DIV class=menu id=menu8><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 4 Item 1</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 4 Item 2</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 4 Item 3</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 4 Item 4</A> </DIV>
+<P>Now, when a button is active, you can move the mouse from one button to 
+another and it will switch the activate button automatically. This mimics the 
+behaviour commonly seen in application menu bars.</P>
+<P>Unfortunately, the only way to deactivate the buttons entirely is to click on 
+the active button again. We'll fix this next so that you can click anywhere on 
+the page to clear the active button.</P>
+<P class=footer><A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">Prev</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">Next</A> </P></DIV>
+<DIV class=navBar><SPAN class=navCurrentPage 
+style="FLOAT: left">BrainJar.com&nbsp;·&nbsp;©1999-2004 by Mike 
+Hall&nbsp;</SPAN><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <SPAN 
+class=navCurrentPage>5</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> 
+</DIV></DIV></BODY></HTML>

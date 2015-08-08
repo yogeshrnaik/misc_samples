@@ -1,0 +1,206 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0038)http://www.brainjar.com/dhtml/menubar/ -->
+<!--************************************************************************--><!--* Copyright 2000-2004 by Mike Hall                                     *--><!--* Please see http://www.brainjar.com for terms of use.                 *--><!--************************************************************************--><HTML 
+lang=en xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>BrainJar.com: Revenge of the Menu Bar</TITLE>
+<META http-equiv=Content-Type content=text/html;charset=utf-8><LINK 
+href="Revenge of the Menu Bar 1_files/article.css" type=text/css rel=stylesheet>
+<STYLE type=text/css>DIV.menuBar {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menuBar A.menuButton {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menu {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menu A.menuItem {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menuBar {
+	BORDER-RIGHT: #909090 2px solid; PADDING-RIGHT: 2px; BORDER-TOP: #f0f0f0 2px solid; PADDING-LEFT: 2px; PADDING-BOTTOM: 4px; BORDER-LEFT: #f0f0f0 2px solid; PADDING-TOP: 4px; BORDER-BOTTOM: #909090 2px solid; BACKGROUND-COLOR: #d0d0d0; TEXT-ALIGN: left
+}
+DIV.menuBar A.menuButton {
+	BORDER-RIGHT: #d0d0d0 1px solid; PADDING-RIGHT: 6px; BORDER-TOP: #d0d0d0 1px solid; PADDING-LEFT: 6px; Z-INDEX: 100; LEFT: 0px; PADDING-BOTTOM: 2px; MARGIN: 1px; BORDER-LEFT: #d0d0d0 1px solid; CURSOR: default; COLOR: #000000; PADDING-TOP: 2px; BORDER-BOTTOM: #d0d0d0 1px solid; POSITION: relative; TOP: 0px; BACKGROUND-COLOR: transparent; TEXT-DECORATION: none
+}
+DIV.menuBar A.menuButton:hover {
+	BORDER-LEFT-COLOR: #f0f0f0; BORDER-BOTTOM-COLOR: #909090; COLOR: #000000; BORDER-TOP-COLOR: #f0f0f0; BACKGROUND-COLOR: transparent; BORDER-RIGHT-COLOR: #909090
+}
+DIV.menuBar A.menuButtonActive {
+	BORDER-LEFT-COLOR: #909090; LEFT: 1px; BORDER-BOTTOM-COLOR: #f0f0f0; COLOR: #ffffff; BORDER-TOP-COLOR: #909090; TOP: 1px; BACKGROUND-COLOR: #a0a0a0; BORDER-RIGHT-COLOR: #f0f0f0
+}
+DIV.menuBar A.menuButtonActive:hover {
+	BORDER-LEFT-COLOR: #909090; LEFT: 1px; BORDER-BOTTOM-COLOR: #f0f0f0; COLOR: #ffffff; BORDER-TOP-COLOR: #909090; TOP: 1px; BACKGROUND-COLOR: #a0a0a0; BORDER-RIGHT-COLOR: #f0f0f0
+}
+</STYLE>
+
+<META content="MSHTML 6.00.2900.2180" name=GENERATOR></HEAD>
+<BODY>
+<DIV id=main>
+<DIV class=navBar><A href="http://www.brainjar.com/">Home</A> | <SPAN 
+class=navCurrentPage>1</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> </DIV>
+<DIV id=content>
+<H2>Revenge of the Menu Bar</H2><SPAN class=sideBox>See the <A 
+href="http://www.brainjar.com/dhtml/menubar/demo.html">demo</A> page for the 
+finished version of the code.</SPAN> 
+<P>This article details the construction of a menu bar like the one used on the 
+main pages of this site. It's built from standard HTML elements using CSS to 
+define the look and layout and JavaScript to handle the action of the drop down 
+menus.</P>
+<P>Basically, we want to emulate the look and behavior of the menu bar commonly 
+found on windowed applications. That is, display a row of buttons which when 
+clicked on, display a drop down menu. Additionally, the menus may have one or 
+more sub menus (which may in turn have sub menus).</P>
+<H3>The Menu Bar Components</H3>
+<P>To build the menu bar, a set of HTML tags and style rules are defined for 
+each component: the bar, the buttons, the drop down menus and the individual 
+menu items.</P>
+<H4>Constructing the Bar</H4>
+<P>First, the bar. A DIV tag is used with a style class defined to set the 
+appearance.</P><PRE>div.menuBar {
+  font-family: "MS Sans Serif", Arial, sans-serif;
+  font-size: 8pt;
+  font-style: normal;
+  font-weight: normal;
+  color: #000000;
+}
+
+div.menuBar {
+  background-color: #d0d0d0;
+  border: 2px solid;
+  border-color: #f0f0f0 #909090 #909090 #f0f0f0;
+  padding: 4px 2px 4px 2px;
+  text-align: left;
+}
+
+...
+
+&lt;div class="menuBar"&gt;&amp;nbsp;&lt;/div&gt;
+</PRE>
+<P>The font settings are placed in a separate style rule so that they can be 
+shared with the classes for other components, like the buttons and menu items. 
+This helps ensure that the bar will be properly sized around the buttons.</P>
+<P>Here's a sample of what it looks like.</P>
+<DIV class=menuBar style="WIDTH: 80%"></DIV>
+<H4>Adding the Buttons</H4>
+<P>For the buttons, normal hypertext links (A tags) are used. This way, both a 
+style class and a <CODE>hover:</CODE> pseudo-class can be defined to set the 
+default and mouseover appearance. The style sheet is updated as follows.</P><PRE>div.menuBar,
+div.menuBar a.menuButton {
+  font-family: "MS Sans Serif", Arial, sans-serif;
+  font-size: 8pt;
+  font-style: normal;
+  font-weight: normal;
+  color: #000000;
+}
+
+div.menuBar {
+  background-color: #d0d0d0;
+  border: 2px solid;
+  border-color: #f0f0f0 #909090 #909090 #f0f0f0;
+  padding: 4px 2px 4px 2px;
+  text-align: left;
+}
+
+div.menuBar a.menuButton {
+  background-color: transparent;
+  border: 1px solid #d0d0d0;
+  color: #000000;
+  cursor: default;
+  left: 0px;
+  margin: 1px;
+  padding: 2px 6px 2px 6px;
+  position: relative;
+  text-decoration: none;
+  top: 0px;
+  z-index: 100;
+}
+
+div.menuBar a.menuButton:hover {
+  background-color: transparent;
+  border-color: #f0f0f0 #909090 #909090 #f0f0f0;
+  color: #000000;
+}
+</PRE>
+<P>First, note that the button's border color on the normal class matches that 
+of the bar background, so it will remain invisible until moused over. Also, the 
+<CODE>cursor:default</CODE> setting to used prevent the normal link cursor from 
+displaying when the buttons are moused over. This makes it look more like a menu 
+bar found on a typical application window. The reason for using relative 
+positioning will be seen later.</P>
+<P>Once the button links are placed inside the bar's DIV tag, then menu bar 
+starts to take shape. Here's a sample of the HTML code and the result.</P><PRE>&lt;div class="menuBar"&gt;
+&lt;a class="menuButton" href="" ...&gt;Button 1&lt;/a&gt;
+&lt;a class="menuButton" href="" ...&gt;Button 2&lt;/a&gt;
+&lt;a class="menuButton" href="" ...&gt;Button 3&lt;/a&gt;
+&lt;a class="menuButton" href="" ...&gt;Button 4&lt;/a&gt;
+&lt;/div&gt;
+</PRE>
+<DIV class=menuBar style="WIDTH: 80%"><A class=menuButton 
+onclick="return false;" href="http://www.brainjar.com/dhtml/menubar/">Button 
+1</A> <A class=menuButton onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Button 2</A> <A class=menuButton 
+onclick="return false;" href="http://www.brainjar.com/dhtml/menubar/">Button 
+3</A> <A class=menuButton onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Button 4</A> </DIV>
+<P>You can see how the <CODE>:hover</CODE> class gives a nice mouseover effect 
+on the buttons.</P>
+<H4>Additional Button Styles</H4>
+<P>When a button is clicked on, we want to change its appearance, making it look 
+depressed. This is done by defining another style class.</P><PRE>div.menuBar a.menuButtonActive,
+div.menuBar a.menuButtonActive:hover {
+  background-color: #a0a0a0;
+  border-color: #909090 #f0f0f0 #f0f0f0 #909090;
+  color: #ffffff;
+  left: 1px;
+  top: 1px;
+}
+</PRE>
+<P>This new style class can then be added to the other in a button tag's CLASS 
+attribute via scripting. For now, we can hard code it on a button link just to 
+see what it looks like:</P><PRE>&lt;div class="menuBar"&gt;
+&lt;a class="menuButton" href="" ...&gt;Button 1&lt;/a&gt;
+&lt;a class="menuButton menuButtonActive" href="" ...&gt;Button 2&lt;/a&gt;
+&lt;a class="menuButton" href="" ...&gt;Button 3&lt;/a&gt;
+&lt;a class="menuButton" href="" ...&gt;Button 4&lt;/a&gt;
+&lt;/div&gt;
+</PRE>
+<P>and the result:</P>
+<DIV class=menuBar style="WIDTH: 80%"><A class=menuButton 
+onclick="return false;" href="http://www.brainjar.com/dhtml/menubar/">Button 
+1</A> <A class="menuButton menuButtonActive" onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Button 2</A> <A class=menuButton 
+onclick="return false;" href="http://www.brainjar.com/dhtml/menubar/">Button 
+3</A> <A class=menuButton onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Button 4</A> </DIV>
+<P>You can see how using relative positioning helps to make the button look 
+"pressed in" by moving it down and right. Note how the hover effect was 
+overridden so the active button no longer changes in appearance when moused 
+over.</P>
+<P>Next, we construct the menus to go with the bar and buttons.</P>
+<P class=footer><A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">Next</A></P></DIV>
+<DIV class=navBar><SPAN class=navCurrentPage 
+style="FLOAT: left">BrainJar.com&nbsp;·&nbsp;©1999-2004 by Mike 
+Hall&nbsp;</SPAN><A href="http://www.brainjar.com/">Home</A> | <SPAN 
+class=navCurrentPage>1</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> 
+</DIV></DIV></BODY></HTML>

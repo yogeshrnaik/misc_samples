@@ -1,0 +1,250 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0050)http://www.brainjar.com/dhtml/menubar/default2.asp -->
+<!--************************************************************************--><!--* Copyright 2000-2004 by Mike Hall                                     *--><!--* Please see http://www.brainjar.com for terms of use.                 *--><!--************************************************************************--><HTML 
+lang=en xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>BrainJar.com: Revenge of the Menu Bar</TITLE>
+<META http-equiv=Content-Type content=text/html;charset=utf-8><LINK 
+href="Revenge of the Menu Bar 2_files/article.css" type=text/css rel=stylesheet>
+<STYLE type=text/css>DIV.menuBar {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menuBar A.menuButton {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menu {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menu A.menuItem {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menuBar {
+	BORDER-RIGHT: #909090 2px solid; PADDING-RIGHT: 2px; BORDER-TOP: #f0f0f0 2px solid; PADDING-LEFT: 2px; PADDING-BOTTOM: 4px; BORDER-LEFT: #f0f0f0 2px solid; PADDING-TOP: 4px; BORDER-BOTTOM: #909090 2px solid; BACKGROUND-COLOR: #d0d0d0; TEXT-ALIGN: left
+}
+DIV.menuBar A.menuButton {
+	BORDER-RIGHT: #d0d0d0 1px solid; PADDING-RIGHT: 6px; BORDER-TOP: #d0d0d0 1px solid; PADDING-LEFT: 6px; Z-INDEX: 100; LEFT: 0px; PADDING-BOTTOM: 2px; MARGIN: 1px; BORDER-LEFT: #d0d0d0 1px solid; CURSOR: default; COLOR: #000000; PADDING-TOP: 2px; BORDER-BOTTOM: #d0d0d0 1px solid; POSITION: relative; TOP: 0px; BACKGROUND-COLOR: transparent; TEXT-DECORATION: none
+}
+DIV.menuBar A.menuButton:hover {
+	BORDER-LEFT-COLOR: #f0f0f0; BORDER-BOTTOM-COLOR: #909090; COLOR: #000000; BORDER-TOP-COLOR: #f0f0f0; BACKGROUND-COLOR: transparent; BORDER-RIGHT-COLOR: #909090
+}
+DIV.menuBar A.menuButtonActive {
+	BORDER-LEFT-COLOR: #909090; LEFT: 1px; BORDER-BOTTOM-COLOR: #f0f0f0; COLOR: #ffffff; BORDER-TOP-COLOR: #909090; TOP: 1px; BACKGROUND-COLOR: #a0a0a0; BORDER-RIGHT-COLOR: #f0f0f0
+}
+DIV.menuBar A.menuButtonActive:hover {
+	BORDER-LEFT-COLOR: #909090; LEFT: 1px; BORDER-BOTTOM-COLOR: #f0f0f0; COLOR: #ffffff; BORDER-TOP-COLOR: #909090; TOP: 1px; BACKGROUND-COLOR: #a0a0a0; BORDER-RIGHT-COLOR: #f0f0f0
+}
+DIV.menu {
+	BORDER-RIGHT: #909090 2px solid; PADDING-RIGHT: 1px; BORDER-TOP: #f0f0f0 2px solid; PADDING-LEFT: 0px; Z-INDEX: 101; LEFT: 0px; VISIBILITY: hidden; PADDING-BOTTOM: 1px; BORDER-LEFT: #f0f0f0 2px solid; PADDING-TOP: 0px; BORDER-BOTTOM: #909090 2px solid; POSITION: absolute; TOP: 0px; BACKGROUND-COLOR: #d0d0d0
+}
+DIV.menu A.menuItem {
+	PADDING-RIGHT: 1em; DISPLAY: block; PADDING-LEFT: 1em; PADDING-BOTTOM: 3px; CURSOR: default; COLOR: #000000; PADDING-TOP: 3px; WHITE-SPACE: nowrap; TEXT-DECORATION: none
+}
+DIV.menu A.menuItem:hover {
+	COLOR: #ffffff; BACKGROUND-COLOR: #000080
+}
+DIV.menu A.menuItemHighlight {
+	COLOR: #ffffff; BACKGROUND-COLOR: #000080
+}
+DIV.menu DIV.menuItemSep {
+	BORDER-TOP: #909090 1px solid; MARGIN: 4px 2px; BORDER-BOTTOM: #f0f0f0 1px solid
+}
+</STYLE>
+
+<META content="MSHTML 6.00.2900.2180" name=GENERATOR></HEAD>
+<BODY>
+<DIV id=main>
+<DIV class=navBar><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <SPAN 
+class=navCurrentPage>2</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> </DIV>
+<DIV id=content>
+<H2>Revenge of the Menu Bar</H2><SPAN class=sideBox>See the <A 
+href="http://www.brainjar.com/dhtml/menubar/demo.html">demo</A> page for the 
+finished version of the code.</SPAN> 
+<H4>Constructing the Menus</H4>
+<P>A similar approach is used for the drop down menus. Each menu will consist of 
+a DIV tag which acts as a container for several item links and possibly some 
+separator bars. As before, style classes as set up for each component of the 
+menu.</P><PRE>div.menuBar,
+div.menuBar a.menuButton,
+div.menu,
+div.menu a.menuItem {
+  font-family: "MS Sans Serif", Arial, sans-serif;
+  font-size: 8pt;
+  font-style: normal;
+  font-weight: normal;
+  color: #000000;
+}
+
+...
+
+div.menu {
+  background-color: #d0d0d0;
+  border: 2px solid;
+  border-color: #f0f0f0 #909090 #909090 #f0f0f0;
+  left: 0px;
+  padding: 0px 1px 1px 0px;
+  position: absolute;
+  top: 0px;
+  visibility: hidden;
+  z-index: 101;
+}
+
+div.menu a.menuItem {
+  color: #000000;
+  cursor: default;
+  display: block;
+  padding: 3px 1em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+div.menu a.menuItem:hover, div.menu a.menuItemHighlight {
+  background-color: #000080;
+  color: #ffffff;
+}
+
+div.menu div.menuItemSep {
+  border-top: 1px solid #909090;
+  border-bottom: 1px solid #f0f0f0;
+  margin: 4px 2px;
+}
+</PRE>
+<P>Absolute positioning is used for the menus DIVs, with <CODE>visibility</CODE> 
+set to <CODE>hidden</CODE> so that they will initially not appear on the 
+page.</P>
+<DIV class=noteBox><B>Browser Compatibility</B> 
+<P></P>Since these elements are absolutely positioned, you can define them just 
+about anywhere in your HTML source. But to avoid potential problems it's best to 
+place them just after the &lt;BODY&gt; tag or just before the &lt;/BODY&gt; tag, 
+outside of any other element. 
+<P></P>The DIV for the menu bar is not positioned. It should go where you want 
+it to appear in the page just like any other normal content. However, in IE some 
+combinations of elements and styling in a page can throw off the menu bar 
+position calculated by the script. This often happens when the bar is placed 
+inside a table. 
+<P></P>If the menus appear too far below the menu bar, try making the bar 
+relatively positioned: 
+<P></P><PRE>&lt;div class="menuBar" style="position:relative;"&gt;...&lt;/div&gt;
+</PRE>
+<P></P>Note that the <CODE>left</CODE> and <CODE>top</CODE> values will default 
+to zero. This often corrects the problem. </DIV>
+<P>For the items, the <CODE>display:block</CODE> setting will cause each link to 
+appear below the previous one. Again, both normal and mouseover styles using the 
+<CODE>:hover</CODE> pseudo-class are defined for the link tags to achieve a 
+highlight effect.</P>
+<P>Separators are built using an empty DIV element with borders to create a 
+groove. The margin settings control the spacing around this groove. Sample HTML 
+is shown below.</P><PRE>&lt;div class="menu"&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 1 Item 1&lt;/a&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 1 Item 2&lt;/a&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 1 Item 3&lt;/a&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 1 Item 4&lt;/a&gt;
+&lt;div class="menuItemSep"&gt;&lt;/div&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 1 Item 5&lt;/a&gt;
+&lt;/div&gt;
+</PRE>
+<DIV class=menu 
+style="FLOAT: left; VISIBILITY: visible; MARGIN-RIGHT: 1em; POSITION: static"><A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 1 Item 1</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 1 Item 2</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 1 Item 3</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 1 Item 4</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Menu 1 Item 5</A> </DIV>
+<P>At left is the result, with visibility turned on.</P>
+<P>The <CODE>menuItemHighlight</CODE> class will be used in a way similar to how 
+the <CODE>menuButtonActive</CODE> class is used. It will be dynamically added 
+and removed from menu item links via script code when those links have sub menus 
+displayed. This will keep them highlighted even after the mouse moves off of the 
+item.</P>
+<P>With this set up, the appearance of the menu components can be changed just 
+by modifying the style definitions. Fonts, colors, borders and spacing can all 
+be modified to create different looks.</P>
+<P>Individual buttons, menus and menu items can be added or removed just by 
+editing the HTML code. Also, since each individual menu item is a hypertext 
+link, they can be linked to any URL, specify a target and have event handlers 
+assigned to them just like any normal A tag.</P>
+<P>The use of A tags and <CODE>hover:</CODE> pseudo-classes for these components 
+also reduces the need for JavaScript code to create mouseover effects.</P>
+<P>Additional HTML and styles for sub menus will be covered later. First, we'll 
+start on the script by looking at the code behind the menu bar.</P>
+<H3>The Script Code</H3>
+<P>To deal with any incompatibilities in the script, the browser must first be 
+identified.</P>
+<P>The following is located at the beginning of the script to set up a global 
+variable called <CODE>browser</CODE> which is defined as an object describing 
+the browser name and version.</P><PRE>function Browser() {
+
+  var ua, s, i;
+
+  this.isIE    = false;  // Internet Explorer
+  this.isOP    = false;  // Opera
+  this.isNS    = false;  // Netscape
+  this.version = null;
+
+  ua = navigator.userAgent;
+
+  s = "Opera";
+  if ((i = ua.indexOf(s)) &gt;= 0) {
+    this.isOP = true;
+    this.version = parseFloat(ua.substr(i + s.length));
+    return;
+  }
+
+  s = "Netscape6/";
+  if ((i = ua.indexOf(s)) &gt;= 0) {
+    this.isNS = true;
+    this.version = parseFloat(ua.substr(i + s.length));
+    return;
+  }
+
+  // Treat any other "Gecko" browser as Netscape 6.1.
+
+  s = "Gecko";
+  if ((i = ua.indexOf(s)) &gt;= 0) {
+    this.isNS = true;
+    this.version = 6.1;
+    return;
+  }
+
+  s = "MSIE";
+  if ((i = ua.indexOf(s))) {
+    this.isIE = true;
+    this.version = parseFloat(ua.substr(i + s.length));
+    return;
+  }
+}
+
+var browser = new Browser();
+</PRE>
+<P>We can then check the <CODE>browser</CODE> variable to determine the user's 
+browser and version when needed.</P>
+<P class=footer><A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">Prev</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">Next</A> </P></DIV>
+<DIV class=navBar><SPAN class=navCurrentPage 
+style="FLOAT: left">BrainJar.com&nbsp;·&nbsp;©1999-2004 by Mike 
+Hall&nbsp;</SPAN><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <SPAN 
+class=navCurrentPage>2</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> 
+</DIV></DIV></BODY></HTML>

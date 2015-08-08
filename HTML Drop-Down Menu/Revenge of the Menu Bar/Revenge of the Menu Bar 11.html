@@ -1,0 +1,140 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0051)http://www.brainjar.com/dhtml/menubar/default11.asp -->
+<!--************************************************************************--><!--* Copyright 2000 by Mike Hall                                          *--><!--* Please see http://www.brainjar.com for terms of use.                 *--><!--************************************************************************--><HTML 
+lang=en xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>BrainJar.com: Revenge of the Menu Bar</TITLE>
+<META http-equiv=Content-Type content=text/html;charset=utf-8><LINK 
+href="Revenge of the Menu Bar 11_files/article.css" type=text/css 
+rel=stylesheet>
+<META content="MSHTML 6.00.2900.2180" name=GENERATOR></HEAD>
+<BODY>
+<DIV id=main>
+<DIV class=navBar><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <SPAN 
+class=navCurrentPage>11</SPAN> </DIV>
+<DIV id=content>
+<H2>Revenge of the Menu Bar</H2><SPAN class=sideBox>See the <A 
+href="http://www.brainjar.com/dhtml/menubar/demo.html">demo</A> page for the 
+finished version of the code.</SPAN> 
+<H3>Fixing the IE <CODE>SELECT</CODE> Overlap Problem</H3>
+<P>Browsers commonly have problems displaying absolutely positioned elements 
+when they overlap special content on a web page, such as a Java applet or a 
+plug-in. This is covered in more detail in the <A 
+href="http://www.brainjar.com/css/positioning/default5.asp">CSS Positioning</A> 
+article.</P><IMG title="IE 6.0 Screenshot" 
+style="FLOAT: right; MARGIN: 0px 0px 4px 4px" height=185 alt="IE 6.0 Screenshot" 
+src="Revenge of the Menu Bar 11_files/ie6.0.gif" width=320> 
+<P>IE in particular, has a problem with the SELECT form element. This can be 
+seen in the screen shot at right where the SELECT box appears on top of the 
+menus.</P>
+<P>As forms are pretty common and there are many IE users (unfortunately), the 
+problem should be addressed if the script is to useful.</P>
+<H4>The IFRAME Solution</H4>
+<P>One solution is to add an absolutely positioned IFRAME to the page. Unlike 
+other positioned elements in IE, a positioned IFRAME will display properly when 
+overlapping a SELECT element. That is, the SELECT element will not show through. 
+Likewise, you can position any other element above the IFRAME and it will appear 
+as expected.</P>
+<P>The trick then, is to add an IFRAME to the page for every menu DIV, give it 
+the same dimensions and position on the page as the menu and show or hide it in 
+concert with the menu.</P>
+<H4>Adding an IFRAME to the Page</H4>
+<P>To do this, the following code is added to the <CODE>menuInit()</CODE> 
+function.</P><PRE>// Fix the IE display problem (SELECT elements and other windowed controls
+// overlaying the menu) by adding an IFRAME under the menu.
+
+if (browser.isIE) {
+  var iframeEl = document.createElement("IFRAME");
+  iframeEl.frameBorder = 0;
+  iframeEl.src = "javascript:;";
+  iframeEl.style.display = "none";
+  iframeEl.style.position = "absolute";
+  iframeEl.style.filter = "progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0)";
+  menu.iframeEl = menu.parentNode.insertBefore(iframeEl, menu);
+}
+</PRE>
+<P>An IFRAME element is created and inserted into the page just before the menu 
+DIV element. Style properties are set to make it absolutely positioned and 
+hidden, just like the menu DIV.</P>
+<P>Each menu gets its own IFRAME. A reference to that IFRAME is stored as a 
+property of the menu's DIV element. This makes it easy to find the IFRAME 
+associated with any given menu.</P>
+<H4>Using the IFRAME</H4>
+<P>Now we just need display or hide the IFRAME whenever its menu is shown. 
+First, in the <CODE>depressButton()</CODE> function, we add the following code 
+to handle the IFRAME when its menu is displayed.</P><PRE>// For IE; size, position and show the menu's IFRAME as well.
+
+if (button.menu.iframeEl != null)
+{
+  button.menu.iframeEl.style.left = button.menu.style.left;
+  button.menu.iframeEl.style.top  = button.menu.style.top;
+  button.menu.iframeEl.style.width  = button.menu.offsetWidth + "px";
+  button.menu.iframeEl.style.height = button.menu.offsetHeight + "px";
+  button.menu.iframeEl.style.display = "";
+}
+</PRE>
+<P>It simply sets the position, width and height of the IFRAME element to match 
+that of the menu DIV element and make it visible.</P>
+<P>Similar code is used the <CODE>menuItemMouseover()</CODE> function where sub 
+menus are displayed.</P><PRE>// For IE; size, position and show the menu's IFRAME as well.
+
+if (item.subMenu.iframeEl != null)
+{
+  item.subMenu.iframeEl.style.left    = item.subMenu.style.left;
+  item.subMenu.iframeEl.style.top     = item.subMenu.style.top;
+  item.subMenu.iframeEl.style.width   = item.subMenu.offsetWidth + "px";
+  item.subMenu.iframeEl.style.height  = item.subMenu.offsetHeight + "px";
+  item.subMenu.iframeEl.style.display = "";
+}
+</PRE>
+<P>In <CODE>resetButton()</CODE>, where the menu is made hidden, we add this 
+code to hide the IFRAME also.</P><PRE>    // For IE, hide menu's IFRAME as well.
+
+    if (button.menu.iframeEl != null)
+      button.menu.iframeEl.style.display = "none";
+</PRE>
+<P>And again, in the <CODE>closeSubMenu()</CODE> function where sub menus are 
+made hidden, we add code to hide the IFRAME as well.</P><PRE>// For IE, hide the sub menu's IFRAME as well.
+
+if (menu.activeItem.subMenu.iframeEl != null)
+  menu.activeItem.subMenu.iframeEl.style.display = "none";
+</PRE>
+<H3>Conclusion</H3>
+<P>That's it. The full source code can be found in the <A 
+href="http://www.brainjar.com/dhtml/menubar/demo.html">demo</A> along with a 
+sample bar and menus.</P>
+<P>Hopefully this example has demonstrated the power and flexibility available 
+using standard CSS, DOM and JavaScript. Obviously, there are still some 
+compatibility issues with browsers that don't fully support these standards, but 
+many of these can be worked around fairly easily, as shown here.</P>
+<P>Two additional demos are provided. One shows how <A 
+href="http://www.brainjar.com/dhtml/menubar/demo2.html">multiple menu bars</A> 
+can be used on a page. The other contains some script modifications which makes 
+the buttons, menus and sub menus activate and deactivate on <A 
+href="http://www.brainjar.com/dhtml/menubar/demo3.html">mouseovers and 
+mouseouts</A> instead of by clicking. You can check the comments in the source 
+code of this demo to identify the changes made.</P>
+<P class=footer><A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">Prev</A></P></DIV>
+<DIV class=navBar><SPAN class=navCurrentPage 
+style="FLOAT: left">BrainJar.com&nbsp;·&nbsp;©1999-2004 by Mike 
+Hall&nbsp;</SPAN><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <SPAN 
+class=navCurrentPage>11</SPAN> </DIV></DIV></BODY></HTML>

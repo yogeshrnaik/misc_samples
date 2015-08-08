@@ -1,0 +1,392 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0050)http://www.brainjar.com/dhtml/menubar/default7.asp -->
+<!--************************************************************************--><!--* Copyright 2000-2004 by Mike Hall                                     *--><!--* Please see http://www.brainjar.com for terms of use.                 *--><!--************************************************************************--><HTML 
+lang=en xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>BrainJar.com: Revenge of the Menu Bar</TITLE>
+<META http-equiv=Content-Type content=text/html;charset=utf-8><LINK 
+href="Revenge of the Menu Bar 7_files/article.css" type=text/css rel=stylesheet>
+<STYLE type=text/css>DIV.menuBar {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menuBar A.menuButton {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menu {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menu A.menuItem {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "MS Sans Serif", Arial, sans-serif
+}
+DIV.menuBar {
+	BORDER-RIGHT: #909090 2px solid; PADDING-RIGHT: 2px; BORDER-TOP: #f0f0f0 2px solid; PADDING-LEFT: 2px; PADDING-BOTTOM: 4px; BORDER-LEFT: #f0f0f0 2px solid; PADDING-TOP: 4px; BORDER-BOTTOM: #909090 2px solid; BACKGROUND-COLOR: #d0d0d0; TEXT-ALIGN: left
+}
+DIV.menuBar A.menuButton {
+	BORDER-RIGHT: #d0d0d0 1px solid; PADDING-RIGHT: 6px; BORDER-TOP: #d0d0d0 1px solid; PADDING-LEFT: 6px; Z-INDEX: 100; LEFT: 0px; PADDING-BOTTOM: 2px; MARGIN: 1px; BORDER-LEFT: #d0d0d0 1px solid; CURSOR: default; COLOR: #000000; PADDING-TOP: 2px; BORDER-BOTTOM: #d0d0d0 1px solid; POSITION: relative; TOP: 0px; BACKGROUND-COLOR: transparent; TEXT-DECORATION: none
+}
+DIV.menuBar A.menuButton:hover {
+	BORDER-LEFT-COLOR: #f0f0f0; BORDER-BOTTOM-COLOR: #909090; COLOR: #000000; BORDER-TOP-COLOR: #f0f0f0; BACKGROUND-COLOR: transparent; BORDER-RIGHT-COLOR: #909090
+}
+DIV.menuBar A.menuButtonActive {
+	BORDER-LEFT-COLOR: #909090; LEFT: 1px; BORDER-BOTTOM-COLOR: #f0f0f0; COLOR: #ffffff; BORDER-TOP-COLOR: #909090; TOP: 1px; BACKGROUND-COLOR: #a0a0a0; BORDER-RIGHT-COLOR: #f0f0f0
+}
+DIV.menuBar A.menuButtonActive:hover {
+	BORDER-LEFT-COLOR: #909090; LEFT: 1px; BORDER-BOTTOM-COLOR: #f0f0f0; COLOR: #ffffff; BORDER-TOP-COLOR: #909090; TOP: 1px; BACKGROUND-COLOR: #a0a0a0; BORDER-RIGHT-COLOR: #f0f0f0
+}
+DIV.menu {
+	BORDER-RIGHT: #909090 2px solid; PADDING-RIGHT: 1px; BORDER-TOP: #f0f0f0 2px solid; PADDING-LEFT: 0px; Z-INDEX: 101; LEFT: 0px; VISIBILITY: hidden; PADDING-BOTTOM: 1px; BORDER-LEFT: #f0f0f0 2px solid; PADDING-TOP: 0px; BORDER-BOTTOM: #909090 2px solid; POSITION: absolute; TOP: 0px; BACKGROUND-COLOR: #d0d0d0
+}
+DIV.menu A.menuItem {
+	PADDING-RIGHT: 1em; DISPLAY: block; PADDING-LEFT: 1em; PADDING-BOTTOM: 3px; CURSOR: default; COLOR: #000000; PADDING-TOP: 3px; WHITE-SPACE: nowrap; TEXT-DECORATION: none
+}
+DIV.menu A.menuItem:hover {
+	COLOR: #ffffff; BACKGROUND-COLOR: #000080
+}
+DIV.menu A.menuItemHighlight {
+	COLOR: #ffffff; BACKGROUND-COLOR: #000080
+}
+DIV.menu A.menuItem SPAN.menuItemText {
+	BACKGROUND-COLOR: #f0f0f0
+}
+DIV.menu A.menuItem SPAN.menuItemArrow {
+	MARGIN-RIGHT: -0.75em; BACKGROUND-COLOR: #f0f0f0
+}
+DIV.menu A.menuItem:hover SPAN.menuItemText {
+	BACKGROUND-COLOR: transparent
+}
+DIV.menu A.menuItem:hover SPAN.menuItemArrow {
+	BACKGROUND-COLOR: transparent
+}
+DIV.menu DIV.menuItemSep {
+	BORDER-TOP: #909090 1px solid; MARGIN: 4px 2px; BORDER-BOTTOM: #f0f0f0 1px solid
+}
+</STYLE>
+
+<SCRIPT type=text/javascript>//<![CDATA[
+
+//----------------------------------------------------------------------------
+// Code to determine the browser and version.
+//----------------------------------------------------------------------------
+
+function Browser() {
+
+  var ua, s, i;
+
+  this.isIE    = false;  // Internet Explorer
+  this.isOP    = false;  // Opera
+  this.isNS    = false;  // Netscape
+  this.version = null;
+
+  ua = navigator.userAgent;
+
+  s = "Opera";
+  if ((i = ua.indexOf(s)) >= 0) {
+    this.isOP = true;
+    this.version = parseFloat(ua.substr(i + s.length));
+    return;
+  }
+
+  s = "Netscape6/";
+  if ((i = ua.indexOf(s)) >= 0) {
+    this.isNS = true;
+    this.version = parseFloat(ua.substr(i + s.length));
+    return;
+  }
+
+  // Treat any other "Gecko" browser as Netscape 6.1.
+
+  s = "Gecko";
+  if ((i = ua.indexOf(s)) >= 0) {
+    this.isNS = true;
+    this.version = 6.1;
+    return;
+  }
+
+  s = "MSIE";
+  if ((i = ua.indexOf(s))) {
+    this.isIE = true;
+    this.version = parseFloat(ua.substr(i + s.length));
+    return;
+  }
+}
+
+var browser = new Browser();
+
+//----------------------------------------------------------------------------
+// Code to initialize menus.
+//----------------------------------------------------------------------------
+
+function menuInit(menu) {
+
+  var itemList, spanList;
+  var textEl, arrowEl;
+  var itemWidth;
+  var w, dw;
+  var i, j;
+
+  // For IE, replace arrow characters.
+
+  if (browser.isIE) {
+    menu.style.lineHeight = "2.5ex";
+    spanList = menu.getElementsByTagName("SPAN");
+    for (i = 0; i < spanList.length; i++)
+      if (hasClassName(spanList[i], "menuItemArrow")) {
+        spanList[i].style.fontFamily = "Webdings";
+        spanList[i].firstChild.nodeValue = "4";
+      }
+  }
+
+  // Find the width of a menu item.
+
+  itemList = menu.getElementsByTagName("A");
+  if (itemList.length > 0)
+    itemWidth = itemList[0].offsetWidth;
+  else
+    return;
+
+  // For items with arrows, add padding to item text to make the
+  // arrows flush right.
+
+  for (i = 0; i < itemList.length; i++) {
+    spanList = itemList[i].getElementsByTagName("SPAN");
+    textEl  = null;
+    arrowEl = null;
+    for (j = 0; j < spanList.length; j++) {
+      if (hasClassName(spanList[j], "menuItemText"))
+        textEl = spanList[j];
+      if (hasClassName(spanList[j], "menuItemArrow"))
+        arrowEl = spanList[j];
+    }
+    if (textEl != null && arrowEl != null) {
+      textEl.style.paddingRight = (itemWidth 
+        - (textEl.offsetWidth + arrowEl.offsetWidth)) + "px";
+      // For Opera, remove the negative right margin to fix a display bug.
+      if (browser.isOP)
+        arrowEl.style.marginRight = "0px";
+    }
+  }
+
+  // Fix IE hover problem by setting an explicit width on first item of
+  // the menu.
+
+  if (browser.isIE) {
+    w = itemList[0].offsetWidth;
+    itemList[0].style.width = w + "px";
+    dw = itemList[0].offsetWidth - w;
+    w -= dw;
+    itemList[0].style.width = w + "px";
+  }
+
+  // Mark menu as initialized.
+
+  menu.isInitialized = true;
+}
+
+//----------------------------------------------------------------------------
+// General utility functions.
+//----------------------------------------------------------------------------
+
+function hasClassName(el, name) {
+
+  var i, list;
+
+  // Return true if the given element currently has the given class
+  // name.
+
+  list = el.className.split(" ");
+  for (i = 0; i < list.length; i++)
+    if (list[i] == name)
+      return true;
+
+  return false;
+}
+
+function initSample(event) {
+
+  menuInit(document.getElementById("menu2"));
+}
+
+window.onload = initSample;
+
+//]]></SCRIPT>
+
+<META content="MSHTML 6.00.2900.2180" name=GENERATOR></HEAD>
+<BODY>
+<DIV id=main>
+<DIV class=navBar><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <SPAN 
+class=navCurrentPage>7</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> </DIV>
+<DIV id=content>
+<H2>Revenge of the Menu Bar</H2><SPAN class=sideBox>See the <A 
+href="http://www.brainjar.com/dhtml/menubar/demo.html">demo</A> page for the 
+finished version of the code.</SPAN> 
+<H4>Fixing the Menu Display</H4>
+<P>If you recall, the first time a given menu needs to be displayed, 
+<CODE>menuInit()</CODE> is called for it. The first step in this function is to 
+replace the arrow character for IE browsers.</P><PRE>function menuInit(menu) {
+
+  var itemList, spanList;
+  var textEl, arrowEl;
+  var itemWidth;
+  var w, dw;
+  var i, j;
+
+  // For IE, replace arrow characters.
+
+  if (browser.isIE) {
+    menu.style.lineHeight = "2.5ex";
+    spanList = menu.getElementsByTagName("SPAN");
+    for (i = 0; i &lt; spanList.length; i++)
+      if (hasClassName(spanList[i], "menuItemArrow")) {
+        spanList[i].style.fontFamily = "Webdings";
+        spanList[i].firstChild.nodeValue = "4";
+      }
+  }
+</PRE>
+<P>It does this first setting an explicit line height for the menu. This is 
+necessary because the replacement arrow character will increase the text height 
+when used. Forcing a line height will keep all the menu items evenly spaced, 
+regardless of whether they have the arrow or not.</P>
+<P>It then checks every SPAN element in the menu DIV for the 
+<CODE>menuItemArrow</CODE> class name. For these, it changes the 
+<CODE>font-family</CODE> style to "Webdings" and the actual text is replaced 
+with the '4' character. In this font, that character represents a right-pointing 
+triangle very similar to the original Unicode character.</P>
+<DIV class=noteBox>The "Webdings" font has been included with Internet Explorer 
+since version 4, so it's fairly safe to assume IE users will have it installed. 
+But you can always use some other character if you want, such as '&gt;' or '»'. 
+</DIV>
+<P>Next it works on making the arrows flush to the right. To do so, it must 
+first find out how wide the items are.</P><PRE>  // Find the width of a menu item.
+
+  itemList = menu.getElementsByTagName("A");
+  if (itemList.length &gt; 0)
+    itemWidth = itemList[0].offsetWidth;
+  else
+    return;
+</PRE>
+<P>Since the style class for the A tags within a menu DIV specify 
+<CODE>display:block,</CODE> they should all be the same width. So the width of 
+the first item element can be used.</P>
+<P>Now it goes through each item link, one at a time, looking for those with 
+both a <CODE>menuItemText</CODE>-class SPAN and a 
+<CODE>menuItemArrow</CODE>-class SPAN.</P><PRE>  // For items with arrows, add padding to item text to make the
+  // arrows flush right.
+
+  for (i = 0; i &lt; itemList.length; i++) {
+    spanList = itemList[i].getElementsByTagName("SPAN");
+    textEl  = null;
+    arrowEl = null;
+    for (j = 0; j &lt; spanList.length; j++) {
+      if (hasClassName(spanList[j], "menuItemText"))
+        textEl = spanList[j];
+      if (hasClassName(spanList[j], "menuItemArrow"))
+        arrowEl = spanList[j];
+    }
+    if (textEl != null &amp;&amp; arrowEl != null) {
+      textEl.style.paddingRight = (itemWidth 
+        - (textEl.offsetWidth + arrowEl.offsetWidth)) + "px";
+      // For Opera, remove the negative right margin to fix a display bug.
+      if (browser.isOP)
+        arrowEl.style.marginRight = "0px";
+    }
+  }
+</PRE>
+<P>When it finds one, it measures the width of both SPAN elements and adds just 
+enough padding to the item text SPAN to match the item width found earlier.</P>
+<P>Additionally, for Opera browsers, the <CODE>margin-right</CODE> style of the 
+SPAN containing the arrow character is set to zero. This will leave some extra 
+space to the right of the arrow when viewed with that browser, but it's better 
+than no arrow at all.</P>
+<P>The next step is to address the hover problem in IE. For whatever reason, 
+setting an explicit style <CODE>width</CODE> on any link tag within the menu 
+seems to correct it.</P><PRE>  // Fix IE hover problem by setting an explicit width on first item of
+  // the menu.
+
+  if (browser.isIE) {
+    w = itemList[0].offsetWidth;
+    itemList[0].style.width = w + "px";
+    dw = itemList[0].offsetWidth - w;
+    w -= dw;
+    itemList[0].style.width = w + "px";
+  }
+}
+</PRE>
+<P>The function does this with the first item link in the menu. Using the item 
+element's <CODE>offsetWidth</CODE> property it calculates a corresponding pixel 
+value for its <CODE>style.width</CODE> property.</P>
+<DIV class=noteBox>Note that in CSS, the <CODE>width</CODE> style applies to the 
+content of an element. This does not include any padding or borders. The value 
+of an element's <CODE>offsetWidth</CODE> property does include padding and 
+borders, however. 
+<P></P>The code above accounts for this by setting an arbitrary value on the 
+style <CODE>width</CODE> and comparing that to the resulting 
+<CODE>offsetWidth</CODE> of the element. The difference equals the width of any 
+padding and borders. 
+<P></P>It can then subtract that difference from the original 
+<CODE>offsetWidth</CODE> to get a value for the style <CODE>width</CODE> that 
+leaves the element the size unchanged. </DIV>
+<P>Finally, a user defined property is set on the menu element to mark it as 
+having been initialized.</P><PRE>  // Mark menu as initialized.
+
+  menu.isInitialized = true;
+</PRE>
+<P>Below, you can see the result, both before and after <CODE>menuInit()</CODE> 
+has been called. The background color of the item and arrow SPAN elements has 
+been altered so that you can better see the space occupied by each.</P>
+<DIV style="POSITION: relative; HEIGHT: 10.5em">
+<DIV class=menu id=menu1 style="VISIBILITY: visible"><A class=menuItem 
+onclick="return false;" href="http://www.brainjar.com/dhtml/menubar/">Item 
+Number One</A> <A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Second Item</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Number 3</A> <A class=menuItem 
+onclick="return false;" href="http://www.brainjar.com/dhtml/menubar/"><SPAN 
+class=menuItemText>Item 4</SPAN> <SPAN class=menuItemArrow>▶</SPAN> </A><A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Fifth Item</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/"><SPAN class=menuItemText>Menu Item 
+Number 6</SPAN> <SPAN class=menuItemArrow>▶</SPAN> </A></DIV>
+<DIV class=menu id=menu2 style="LEFT: 50%; VISIBILITY: visible"><A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Item Number One</A> <A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Second Item</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Number 3</A> <A class=menuItem 
+onclick="return false;" href="http://www.brainjar.com/dhtml/menubar/"><SPAN 
+class=menuItemText>Item 4</SPAN> <SPAN class=menuItemArrow>▶</SPAN> </A><A 
+class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/">Fifth Item</A> 
+<DIV class=menuItemSep></DIV><A class=menuItem onclick="return false;" 
+href="http://www.brainjar.com/dhtml/menubar/"><SPAN class=menuItemText>Menu Item 
+Number 6</SPAN> <SPAN class=menuItemArrow>▶</SPAN> </A></DIV></DIV>
+<P>With the menus looking presentable, and the hover effect acting as expected 
+in IE, we can go about setting up the event handling and code to control 
+them.</P>
+<P class=footer><A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">Prev</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">Next</A> </P></DIV>
+<DIV class=navBar><SPAN class=navCurrentPage 
+style="FLOAT: left">BrainJar.com&nbsp;·&nbsp;©1999-2004 by Mike 
+Hall&nbsp;</SPAN><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <SPAN 
+class=navCurrentPage>7</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default8.asp">8</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> 
+</DIV></DIV></BODY></HTML>

@@ -1,0 +1,167 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0050)http://www.brainjar.com/dhtml/menubar/default8.asp -->
+<!--************************************************************************--><!--* Copyright 2000-2004 by Mike Hall                                     *--><!--* Please see http://www.brainjar.com for terms of use.                 *--><!--************************************************************************--><HTML 
+lang=en xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>BrainJar.com: Revenge of the Menu Bar</TITLE>
+<META http-equiv=Content-Type content=text/html;charset=utf-8><LINK 
+href="Revenge of the Menu Bar 8_files/article.css" type=text/css rel=stylesheet>
+<META content="MSHTML 6.00.2900.2180" name=GENERATOR></HEAD>
+<BODY>
+<DIV id=main>
+<DIV class=navBar><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <SPAN 
+class=navCurrentPage>8</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> </DIV>
+<DIV id=content>
+<H2>Revenge of the Menu Bar</H2><SPAN class=sideBox>See the <A 
+href="http://www.brainjar.com/dhtml/menubar/demo.html">demo</A> page for the 
+finished version of the code.</SPAN> 
+<H4>Event Handlers for Menus</H4>
+<P>As with the menu bar buttons, we start by setting some event handlers in the 
+tags for the menus.</P><PRE>&lt;div id="<I>menu3</I>" class="menu"
+     onmouseover="menuMouseover(event)"&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 3 Item 1&lt;/a&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 3 Item 2&lt;/a&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 3 Item 3&lt;/a&gt;
+&lt;a class="menuItem" href="..."
+   onclick="return false;"
+   onmouseover="menuItemMouseover(event, '<I>menu3_4</I>');"&gt;
+  &lt;span class="menuItemText"&gt;Menu 3 Item 4&lt;/span&gt;
+  &lt;span class="menuItemArrow"&gt;&amp;#9654;&lt;/span&gt;&lt;/a&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 3 Item 5&lt;/a&gt;
+&lt;a class="menuItem" href="..."
+   onclick="return false;"
+   onmouseover="menuItemMouseover(event, '<I>menu3_6</I>');"&gt;
+  &lt;span class="menuItemText"&gt;Menu 3 Item 6&lt;/span&gt;
+  &lt;span class="menuItemArrow"&gt;&amp;#9654;&lt;/span&gt;
+&lt;/a&gt;
+&lt;/div&gt;
+</PRE>
+<P>On each of the items that will have a sub menu we set the link's 
+<CODE>onmouseover</CODE> event to call the function 
+<CODE>menuItemMouseover().</CODE> As usual, the first argument is the event 
+object. The second gives the ID of the sub menu to be associated with the 
+item.</P>
+<P>Also note the use of <CODE>onclick="return false;"</CODE> on the item link. 
+This simply prevents the browser from trying to load the link's URL when it is 
+clicked on. This can be omitted should you want to actually link a page to the 
+item.</P>
+<P>On the menu DIV itself, <CODE>onmousover</CODE> is set to call the function 
+<CODE>menuMouseover().</CODE> This time, only the event object needs to be 
+passed.</P>
+<P>The sub menus are defined just like the main menus, using the same HTML 
+format and style classes. They can in turn have items with sub menus assigned to 
+them. Below is an example.</P><PRE>&lt;div id="<I><I>menu3_4</I></I>" class="menu"&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 3-4 Item 1&lt;/a&gt;
+&lt;div class="menuItemSep"&gt;&lt;/div&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 3-4 Item 2&lt;/a&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 3-4 Item 3&lt;/a&gt;
+&lt;div class="menuItemSep"&gt;&lt;/div&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 3-4 Item 4&lt;/a&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 3-4 Item 5&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div id="<I>menu3_6</I>" class="menu"
+     onmouseover="menuMouseover(event)"&gt;
+&lt;a class="menuItem" href="..."
+   onclick="return false;"
+   onmouseover="menuItemMouseover(event, '<I>menu3_6_1</I>');"&gt;
+  &lt;span class="menuItemText"&gt;Menu 3-6 Item 1&lt;/span&gt;
+  &lt;span class="menuItemArrow"&gt;&amp;#9654;&lt;/span&gt;&lt;/a&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 3-6 Item 2&lt;/a&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 3-6 Item 3&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div id="<I>menu3_6_1</I>" class="menu"&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 3-6-1 Item 1&lt;/a&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 3-6-1 Item 2&lt;/a&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 3-6-1 Item 3&lt;/a&gt;
+&lt;a class="menuItem" href="..."&gt;Menu 3-6-1 Item 4&lt;/a&gt;
+&lt;/div&gt;
+</PRE>
+<P>Note that the <CODE>onmouseover</CODE> handler on the menu DIV is only 
+required if the any of its items have sub menus. Otherwise it can be left 
+off.</P>
+<P>The <CODE>menuItemMouseover()</CODE> function will handle the task of 
+displaying an item's sub menu while the <CODE>menuMouseover()</CODE> function 
+will take care of hiding those same sub menus when they are not needed.</P>
+<H4>The Menu Item <CODE>mouseover</CODE> Event Handler</H4>
+<P>This function is similar to the one that displays the main menu under a 
+button. It must deactivate any currently active sub menu, position the 
+designated sub menu and make it visible.</P>
+<P>Again, it first identifies the item link element that fired the event. 
+Calling on the <CODE>getContainerWith()</CODE> function it also identifies the 
+owning menu DIV element.</P><PRE>function menuItemMouseover(event, menuId) {
+
+  var item, menu, x, y;
+
+  // Find the target item element and its parent menu element.
+
+  if (browser.isIE)
+    item = getContainerWith(window.event.srcElement, "A", "menuItem");
+  else
+    item = event.currentTarget;
+  menu = getContainerWith(item, "DIV", "menu");
+</PRE>
+<P>The menu element is needed because we'll be adding a user defined property to 
+it for keeping track of which sub menu is active. This is analogous to how the 
+<CODE>activeButton</CODE> global variable was used to track the currently active 
+button on the menu bar.</P>
+<P>In fact, the next step is to check this property, named 
+<CODE>activeItem,</CODE> and close any sub menu it may be referencing. Then the 
+current item is recorded as the active one.</P><PRE>  // Close any active sub menu and mark this one as active.
+
+  if (menu.activeItem != null)
+    closeSubMenu(menu);
+  menu.activeItem = item;
+</PRE>
+<P>As with the active button, we change the item's appearance by adding the 
+<CODE>menuItemHighlight</CODE> style class to its <CODE>className</CODE> 
+property.</P><PRE>  // Highlight the item element.
+
+  item.className += " menuItemHighlight";
+</PRE>
+<P>As this class was has the same settings as the link's <CODE>:hover</CODE> 
+pseudo-class, the item will appear remain highlighted even if the user moves the 
+mouse off of it.</P>
+<P>The sub menu, just like the menus for the buttons, needs to be initialized 
+the first time it is displayed.</P><PRE>  // Initialize the sub menu, if not already done.
+
+  if (item.subMenu == null) {
+    item.subMenu = document.getElementById(menuId);
+    if (item.subMenu.isInitialized == null)
+      menuInit(item.subMenu);
+  }
+</PRE>
+<P>The code also saves a reference to the sub menu as a user defined property on 
+the item named <CODE>subMenu.</CODE> This creates a chain of references: 
+<CODE>activeButton</CODE> -&gt; <CODE>menu</CODE> -&gt; <CODE>activeItem</CODE> 
+-&gt; <CODE>subMenu</CODE> -&gt; <CODE>activeItem</CODE> -&gt; 
+<CODE>subMenu,</CODE> etc., which will be helpful in closing menus when needed. 
+But first, we still need to position the requested sub menu and make it 
+visible.</P>
+<P class=footer><A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">Prev</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">Next</A> </P></DIV>
+<DIV class=navBar><SPAN class=navCurrentPage 
+style="FLOAT: left">BrainJar.com&nbsp;·&nbsp;©1999-2004 by Mike 
+Hall&nbsp;</SPAN><A href="http://www.brainjar.com/">Home</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default.asp">1</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default2.asp">2</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default3.asp">3</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default4.asp">4</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default5.asp">5</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default6.asp">6</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default7.asp">7</A> | <SPAN 
+class=navCurrentPage>8</SPAN> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default9.asp">9</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default10.asp">10</A> | <A 
+href="http://www.brainjar.com/dhtml/menubar/default11.asp">11</A> 
+</DIV></DIV></BODY></HTML>

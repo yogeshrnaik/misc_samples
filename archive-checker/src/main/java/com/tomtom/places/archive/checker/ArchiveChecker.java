@@ -24,19 +24,19 @@ import com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace;
 
 public class ArchiveChecker extends Configured implements Tool {
 
-    private final String inputPath;
-    private final String outputPath;
+    private final String archivePlacesPath;
+    private final String archiveCheckerReportsPath;
 
     public ArchiveChecker(String inputPath, String outputPath) {
-        this.inputPath = inputPath;
-        this.outputPath = outputPath;
+        archivePlacesPath = inputPath;
+        archiveCheckerReportsPath = outputPath;
     }
 
     public int run(String[] args) throws Exception {
         Pipeline pipeline = new MRPipeline(ArchiveChecker.class, getConf());
 
         PCollection<ArchivePlace> archivePlaces = pipeline.read(
-            new AvroFileSource<ArchivePlace>(new Path(inputPath), Avros.records(ArchivePlace.class)));
+            new AvroFileSource<ArchivePlace>(new Path(archivePlacesPath), Avros.records(ArchivePlace.class)));
 
         PCollection<CheckResult> results =
             archivePlaces.parallelDo(new ApplyArchiveChecks(), Writables.records(CheckResult.class));
@@ -48,9 +48,10 @@ public class ArchiveChecker extends Configured implements Tool {
     }
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 5) {
+        if (args.length != 2) {
             System.err.println("Invalid arguments: " + Arrays.toString(args));
-            System.err.println("Usage: hadoop jar archive-checker-X.y-SNAPSHOT-job.jar <input-delta-path> <output-delta-path>");
+            System.err.println("Usage: hadoop jar archive-checker-X.y-SNAPSHOT-job.jar "
+                + "<input-archive-places-path> <archive-checker-reports-path>");
             System.err.println();
             System.exit(1);
         }

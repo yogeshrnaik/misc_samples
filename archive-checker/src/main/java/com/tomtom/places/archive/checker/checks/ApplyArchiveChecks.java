@@ -13,7 +13,10 @@ public class ApplyArchiveChecks extends DoFn<ArchivePlace, CheckResult> {
     public void process(ArchivePlace place, Emitter<CheckResult> emitter) {
         for (ArchiveCheck check : ArchiveChecksFactory.getChecks()) {
             if (check.isApplicable(place)) {
-                emitter.emit(check.check(place));
+                CheckResult checkResult = check.check(place);
+                if (checkResult != null) {
+                    emitter.emit(checkResult);
+                }
             }
         }
     }

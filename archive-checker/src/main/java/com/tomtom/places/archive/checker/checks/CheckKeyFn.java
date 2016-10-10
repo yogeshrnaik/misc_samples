@@ -1,14 +1,15 @@
 package com.tomtom.places.archive.checker.checks;
 
 import com.cloudera.crunch.MapFn;
-import com.tomtom.places.archive.checker.result.CheckResult;
+import com.cloudera.crunch.Pair;
+import com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace;
 
-public class CheckKeyFn extends MapFn<CheckResult, String> {
+public class CheckKeyFn extends MapFn<Pair<String, ArchivePlace>, String> {
 
     private static final long serialVersionUID = 83734979913240904L;
 
     @Override
-    public String map(CheckResult result) {
-        return result.getCheck().getCheckId();
+    public String map(Pair<String, ArchivePlace> result) {
+        return result.first();
     }
 }

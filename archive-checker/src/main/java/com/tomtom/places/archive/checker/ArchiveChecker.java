@@ -1,6 +1,7 @@
 package com.tomtom.places.archive.checker;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
@@ -10,17 +11,18 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 import com.cloudera.crunch.PCollection;
+import com.cloudera.crunch.PGroupedTable;
+import com.cloudera.crunch.Pair;
 import com.cloudera.crunch.Pipeline;
 import com.cloudera.crunch.PipelineResult;
 import com.cloudera.crunch.PipelineResult.StageResult;
 import com.cloudera.crunch.impl.mr.MRPipeline;
 import com.cloudera.crunch.io.avro.AvroFileSource;
 import com.cloudera.crunch.types.avro.Avros;
-import com.cloudera.crunch.types.writable.Writables;
 import com.tomtom.places.archive.checker.checks.ApplyArchiveChecks;
-import com.tomtom.places.archive.checker.checks.ArchiveCheck;
-import com.tomtom.places.archive.checker.checks.ArchiveChecksFactory;
-import com.tomtom.places.archive.checker.result.CheckResult;
+import com.tomtom.places.archive.checker.checks.CheckKeyFn;
+import com.tomtom.places.archive.checker.report.ValidationResultsConsolidator;
+import com.tomtom.places.archive.checker.util.ArchivePlaceCounter;
 import com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace;
 
 public class ArchiveChecker extends Configured implements Tool {
@@ -42,11 +44,13 @@ public class ArchiveChecker extends Configured implements Tool {
         PCollection<ArchivePlace> archivePlaces = pipeline.read(
             new AvroFileSource<ArchivePlace>(new Path(archivePlacesPath), Avros.records(ArchivePlace.class)));
 
-        PCollection<CheckResult> results =
-            archivePlaces.parallelDo(new ApplyArchiveChecks(), Writables.records(CheckResult.class));
+        PCollection<Pair<String, ArchivePlace>> results =
+            archivePlaces.parallelDo(new ApplyArchiveChecks(), Avros.pairs(Avros.strings(), Avros.records(ArchivePlace.class)));
 
-        // PCollection<CheckReport> checkReports = results.by(new CheckKeyFn(), Avros.strings()).groupByKey()
-        // .parallelDo(new ValidationResultsConsolidator(), Writables.records(CheckReport.class));
+        PGroupedTable<String, Pair<String, ArchivePlace>> groupByKey = results.by(new CheckKeyFn(), Avros.strings()).groupByKey();
+
+        PCollection<Pair<String, Collection<ArchivePlace>>> finalResults = groupByKey.parallelDo(new ValidationResultsConsolidator(),
+            Avros.pairs(Avros.strings(), Avros.collections(Avros.records(ArchivePlace.class))));
 
         PipelineResult result = pipeline.done();
 
@@ -57,12 +61,10 @@ public class ArchiveChecker extends Configured implements Tool {
 
     private static void printCounters(PipelineResult result) {
         for (StageResult stageResult : result.getStageResults()) {
-            for (ArchiveCheck check : ArchiveChecksFactory.getChecks()) {
-                Counter counter = stageResult.getCounters().findCounter(check.getCheckId(), "Applicable");
-                System.out.println(check.getCheckId() + " : Applicable : " + counter);
-
-                counter = stageResult.getCounters().findCounter(check.getCheckId(), "GotResult");
-                System.out.println(check.getCheckId() + " : GotResult : " + counter);
+            for (ArchivePlaceCounter counterName : ArchivePlaceCounter.values()) {
+                Counter counter = stageResult.findCounter(counterName);
+                long value = counter.getValue();
+                System.out.println(counterName + " : " + value);
             }
         }
     }

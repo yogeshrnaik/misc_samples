@@ -21,4 +21,10 @@ public class OccurrenceCheck extends ArchiveCheck {
     public int getExpectedOccurences() {
         return expectedOccurences;
     }
+
+    @Override
+    public String toString() {
+        return "OccurrenceCheck [expectedOccurences=" + expectedOccurences + ", " + super.toString() + "]";
+    }
+
 }

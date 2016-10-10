@@ -7,6 +7,7 @@ import org.apache.commons.collections.CollectionUtils;
 
 import com.tomtom.places.archive.checker.criteria.ArchiveCriteria;
 import com.tomtom.places.archive.checker.result.CheckResult;
+import com.tomtom.places.archive.checker.util.Utils;
 import com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace;
 import com.tomtom.places.unicorn.domain.avro.archive.ArchiveStreetCity;
 
@@ -32,7 +33,7 @@ public class StreetNamesCheck extends ArchiveCheck {
         String firstStreet = streetAndCities.get(0).getStreet().toString();
 
         for (int i = 1; i < streetAndCities.size(); i++) {
-            String currStreet = streetAndCities.get(i).getStreet().toString();
+            String currStreet = Utils.toString(streetAndCities.get(i).getStreet());
             if (!areAnagrams(keepDigitsOnly(currStreet), keepDigitsOnly(firstStreet))) {
                 return true;
             }
@@ -51,4 +52,10 @@ public class StreetNamesCheck extends ArchiveCheck {
         Arrays.sort(ch2);
         return Arrays.equals(ch1, ch2);
     }
+
+    @Override
+    public String toString() {
+        return "StreetNamesCheck=[" + super.toString() + "]";
+    }
+
 }

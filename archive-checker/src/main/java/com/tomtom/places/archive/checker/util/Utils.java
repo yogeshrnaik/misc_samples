@@ -4,6 +4,10 @@ import org.apache.commons.lang.StringUtils;
 
 public final class Utils {
 
+    public static String toString(CharSequence val) {
+        return val != null ? val.toString() : "";
+    }
+
     public static double getScaledLevenshteinDistance(CharSequence name1, CharSequence name2) {
         if (name1 == null || name2 == null) {
             throw new IllegalArgumentException("CharSequence must not be null for Scaled Levenshtein Distance calculation");

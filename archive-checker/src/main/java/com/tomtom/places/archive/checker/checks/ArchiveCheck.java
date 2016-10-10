@@ -41,4 +41,10 @@ public abstract class ArchiveCheck {
     protected POI getPOI(ArchivePlace place) {
         return ArchivePlaces.getPoi(place);
     }
+
+    @Override
+    public String toString() {
+        return "checkId=" + checkId + ", criteria=" + criteria;
+    }
+
 }

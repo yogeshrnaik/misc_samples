@@ -1,7 +1,7 @@
 package com.tomtom.places.archive.checker;
 
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
@@ -19,9 +19,10 @@ import com.cloudera.crunch.PipelineResult.StageResult;
 import com.cloudera.crunch.impl.mr.MRPipeline;
 import com.cloudera.crunch.io.avro.AvroFileSource;
 import com.cloudera.crunch.types.avro.Avros;
+import com.google.common.collect.Lists;
 import com.tomtom.places.archive.checker.checks.ApplyArchiveChecks;
 import com.tomtom.places.archive.checker.checks.CheckKeyFn;
-import com.tomtom.places.archive.checker.report.ValidationResultsConsolidator;
+import com.tomtom.places.archive.checker.report.CheckResultsWriter;
 import com.tomtom.places.archive.checker.util.ArchivePlaceCounter;
 import com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace;
 
@@ -49,8 +50,9 @@ public class ArchiveChecker extends Configured implements Tool {
 
         PGroupedTable<String, Pair<String, ArchivePlace>> groupByKey = results.by(new CheckKeyFn(), Avros.strings()).groupByKey();
 
-        PCollection<Pair<String, Collection<ArchivePlace>>> finalResults = groupByKey.parallelDo(new ValidationResultsConsolidator(),
-            Avros.pairs(Avros.strings(), Avros.collections(Avros.records(ArchivePlace.class))));
+        PCollection<String> checksHavingResult = groupByKey.parallelDo(new CheckResultsWriter(), Avros.strings());
+
+        List<String> checks = Lists.newArrayList(checksHavingResult.materialize());
 
         PipelineResult result = pipeline.done();
 

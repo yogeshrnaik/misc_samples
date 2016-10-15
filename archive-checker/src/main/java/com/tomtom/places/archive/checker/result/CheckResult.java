@@ -24,5 +24,4 @@ public class CheckResult implements Serializable {
     public ArchivePlace getCheckedPlace() {
         return checkedPlace;
     }
-
 }

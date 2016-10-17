@@ -1,5 +1,12 @@
 package com.tomtom.places.archive.checker.util;
 
+import java.io.IOException;
+
+import org.apache.avro.Schema;
+import org.apache.avro.io.DecoderFactory;
+import org.apache.avro.io.JsonDecoder;
+import org.apache.avro.specific.SpecificDatumReader;
+import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.commons.lang.StringUtils;
 
 public final class Utils {
@@ -30,5 +37,11 @@ public final class Utils {
 
     private static double roundTo2Decimals(double value) {
         return Math.round(value * 100d) / 100d;
+    }
+
+    public static <T extends SpecificRecordBase> T convertToAvroObject(final Schema avroSchema, final String json) throws IOException {
+        final JsonDecoder decoder = DecoderFactory.get().jsonDecoder(avroSchema, json);
+        final SpecificDatumReader<T> reader = new SpecificDatumReader<T>(avroSchema);
+        return reader.read(null, decoder);
     }
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.google.common.collect.Lists;
 import com.tomtom.places.archive.checker.criteria.CoordiantesInRangeCriteria;
+import com.tomtom.places.archive.checker.criteria.ForAllCriteria;
 import com.tomtom.places.archive.checker.criteria.GdfCodeCriteria;
 import com.tomtom.places.archive.checker.criteria.OfficialNameCriteria;
 
@@ -19,7 +20,7 @@ public class ArchiveChecksFactory {
             new CoordiantesInRangeCriteria(-76.186174, 42.608928, 0.005),
             new OfficialNameCriteria("Cortland Regional Medical Center", 75)));
 
-        checks.put("SRC_1.18", new StreetNamesCheck("SRC_1.18"));
+        checks.put("SRC_1.18", new StreetNamesCheck("SRC_1.18", new ForAllCriteria()));
     }
 
     public static final List<ArchiveCheck> getChecks() {

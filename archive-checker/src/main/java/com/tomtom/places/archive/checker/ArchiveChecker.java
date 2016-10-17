@@ -12,17 +12,18 @@ import org.apache.hadoop.util.ToolRunner;
 
 import com.cloudera.crunch.PCollection;
 import com.cloudera.crunch.PGroupedTable;
-import com.cloudera.crunch.Pair;
 import com.cloudera.crunch.Pipeline;
 import com.cloudera.crunch.PipelineResult;
 import com.cloudera.crunch.PipelineResult.StageResult;
 import com.cloudera.crunch.impl.mr.MRPipeline;
 import com.cloudera.crunch.io.avro.AvroFileSource;
 import com.cloudera.crunch.types.avro.Avros;
+import com.cloudera.crunch.types.writable.Writables;
 import com.google.common.collect.Lists;
 import com.tomtom.places.archive.checker.checks.ApplyArchiveChecks;
 import com.tomtom.places.archive.checker.checks.CheckKeyFn;
 import com.tomtom.places.archive.checker.report.CheckResultsWriter;
+import com.tomtom.places.archive.checker.result.CheckResult;
 import com.tomtom.places.archive.checker.util.ArchivePlaceCounter;
 import com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace;
 
@@ -45,10 +46,10 @@ public class ArchiveChecker extends Configured implements Tool {
         PCollection<ArchivePlace> archivePlaces = pipeline.read(
             new AvroFileSource<ArchivePlace>(new Path(archivePlacesPath), Avros.records(ArchivePlace.class)));
 
-        PCollection<Pair<String, ArchivePlace>> results =
-            archivePlaces.parallelDo(new ApplyArchiveChecks(), Avros.pairs(Avros.strings(), Avros.records(ArchivePlace.class)));
+        PCollection<CheckResult> results =
+            archivePlaces.parallelDo(new ApplyArchiveChecks(), Writables.records(CheckResult.class));
 
-        PGroupedTable<String, Pair<String, ArchivePlace>> groupByKey = results.by(new CheckKeyFn(), Avros.strings()).groupByKey();
+        PGroupedTable<String, CheckResult> groupByKey = results.by(new CheckKeyFn(), Writables.strings()).groupByKey();
 
         PCollection<String> checksHavingResult = groupByKey.parallelDo(new CheckResultsWriter(), Avros.strings());
 

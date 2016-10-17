@@ -11,4 +11,8 @@ public class ForAllCriteria extends ArchiveCriteria {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "ForAll";
+    }
 }

@@ -2,17 +2,16 @@ package com.tomtom.places.archive.checker.checks;
 
 import com.cloudera.crunch.DoFn;
 import com.cloudera.crunch.Emitter;
-import com.cloudera.crunch.Pair;
 import com.tomtom.places.archive.checker.result.CheckResult;
 import com.tomtom.places.archive.checker.util.ArchivePlaceCounter;
 import com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace;
 
-public class ApplyArchiveChecks extends DoFn<ArchivePlace, Pair<String, ArchivePlace>> {
+public class ApplyArchiveChecks extends DoFn<ArchivePlace, CheckResult> {
 
     private static final long serialVersionUID = -1149202795362173218L;
 
     @Override
-    public void process(ArchivePlace place, Emitter<Pair<String, ArchivePlace>> emitter) {
+    public void process(ArchivePlace place, Emitter<CheckResult> emitter) {
         for (ArchiveCheck check : ArchiveChecksFactory.getChecks()) {
             if (check.isApplicable(place)) {
                 increment(ArchivePlaceCounter.Applicable);
@@ -22,7 +21,7 @@ public class ApplyArchiveChecks extends DoFn<ArchivePlace, Pair<String, ArchiveP
                 if (checkResult != null) {
                     increment(ArchivePlaceCounter.GotResult);
                     getCounter(check.getCheckId(), "GotResult").increment(1);
-                    emitter.emit(Pair.of(check.getCheckId(), place));
+                    emitter.emit(checkResult);
                 }
             }
         }

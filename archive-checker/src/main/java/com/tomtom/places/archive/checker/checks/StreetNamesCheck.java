@@ -18,11 +18,9 @@ public class StreetNamesCheck extends ArchiveCheck {
     }
 
     @Override
-    public CheckResult check(ArchivePlace place) {
-        if (streetNumberDescripancy(getPOI(place).getStreetsAndCities())) {
-            return new CheckResult(this, place);
-        }
-        return null;
+    protected CheckResult executeCheck(ArchivePlace place) {
+        return streetNumberDescripancy(getPOI(place).getStreetsAndCities()) ?
+            new CheckResult(this, place) : null;
     }
 
     private boolean streetNumberDescripancy(List<ArchiveStreetCity> streetAndCities) {
@@ -57,5 +55,4 @@ public class StreetNamesCheck extends ArchiveCheck {
     public String toString() {
         return "StreetNamesCheck=[" + super.toString() + "]";
     }
-
 }

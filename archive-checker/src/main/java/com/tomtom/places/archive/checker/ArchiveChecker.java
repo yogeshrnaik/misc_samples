@@ -22,7 +22,8 @@ import com.cloudera.crunch.types.writable.Writables;
 import com.google.common.collect.Lists;
 import com.tomtom.places.archive.checker.checks.ApplyArchiveChecks;
 import com.tomtom.places.archive.checker.checks.CheckKeyFn;
-import com.tomtom.places.archive.checker.report.CheckResultsWriter;
+import com.tomtom.places.archive.checker.report.CheckReport;
+import com.tomtom.places.archive.checker.report.CheckReportDoFn;
 import com.tomtom.places.archive.checker.result.CheckResult;
 import com.tomtom.places.archive.checker.util.ArchivePlaceCounter;
 import com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace;
@@ -51,14 +52,19 @@ public class ArchiveChecker extends Configured implements Tool {
 
         PGroupedTable<String, CheckResult> groupByKey = results.by(new CheckKeyFn(), Writables.strings()).groupByKey();
 
-        PCollection<String> checksHavingResult = groupByKey.parallelDo(new CheckResultsWriter(), Avros.strings());
+        // PCollection<String> checksHavingResult = groupByKey.parallelDo(new CheckResultsWriter(), Avros.strings());
+        // List<String> checks = Lists.newArrayList(checksHavingResult.materialize());
 
-        List<String> checks = Lists.newArrayList(checksHavingResult.materialize());
+        PCollection<CheckReport> pReports = groupByKey.parallelDo(new CheckReportDoFn(), Writables.records(CheckReport.class));
+        // pipeline.writeTextFile(pReports, archiveCheckerReportsPath + File.separator + "reports.txt");
+
+        List<CheckReport> reports = Lists.newArrayList(pReports.materialize());
+        for (CheckReport report : reports) {
+            System.out.println(report);
+        }
 
         PipelineResult result = pipeline.done();
-
         printCounters(result);
-
         return result.succeeded() ? 0 : 1;
     }
 

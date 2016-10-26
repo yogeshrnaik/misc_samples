@@ -8,11 +8,11 @@ public class OccurrenceCheckReport extends CheckReport {
 
     private static final long serialVersionUID = -2281661406852236352L;
 
-    private final List<CheckResult> results;
+    private final String message;
 
-    protected OccurrenceCheckReport(String checkId, List<CheckResult> results) {
-        super(checkId);
-        this.results = results;
+    protected OccurrenceCheckReport(String checkId, String message, List<CheckResult> results) {
+        super(checkId, results);
+        this.message = message;
     }
 
 }

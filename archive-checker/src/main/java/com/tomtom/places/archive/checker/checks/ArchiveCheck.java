@@ -36,7 +36,15 @@ public abstract class ArchiveCheck {
         });
     }
 
-    public abstract CheckResult check(ArchivePlace place);
+    protected CheckResult check(ArchivePlace place) {
+        return isApplicable(place) ? executeCheck(place) : skipCheck(place);
+    }
+
+    protected abstract CheckResult executeCheck(ArchivePlace place);
+
+    protected CheckResult skipCheck(ArchivePlace place) {
+        return null;
+    }
 
     protected POI getPOI(ArchivePlace place) {
         return ArchivePlaces.getPoi(place);

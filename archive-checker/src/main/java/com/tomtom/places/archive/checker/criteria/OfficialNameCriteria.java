@@ -35,4 +35,9 @@ public class OfficialNameCriteria extends ArchiveCriteria {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "OfficialNameCriteria [officialNameToMatch=" + officialNameToMatch + ", similarityThreshold=" + similarityThreshold + "]";
+    }
 }

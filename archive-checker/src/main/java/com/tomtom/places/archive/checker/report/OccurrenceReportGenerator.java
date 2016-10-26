@@ -18,11 +18,11 @@ public class OccurrenceReportGenerator extends CheckReportGenerator {
         List<CheckResult> results = Lists.newArrayList(relevant);
         OccurrenceCheck check = (OccurrenceCheck)ArchiveChecksFactory.getCheck(checkId);
         String message = getMessage(check, results);
-        return new OccurrenceCheckReport(checkId, message, results);
+        return new OccurrenceCheckReport(checkId, results, message);
     }
 
     private Iterable<CheckResult> getRelevantResults(Iterable<CheckResult> checkResults) {
-        Iterable<CheckResult> results = Iterables.filter(checkResults, new Predicate<CheckResult>() {
+        return Iterables.filter(checkResults, new Predicate<CheckResult>() {
 
             public boolean apply(CheckResult input) {
                 if (input instanceof OccurrenceCheckResult) {
@@ -32,12 +32,11 @@ public class OccurrenceReportGenerator extends CheckReportGenerator {
                 return false;
             }
         });
-        return results;
     }
 
     private String getMessage(OccurrenceCheck check, List<CheckResult> results) {
         if (results.size() == check.getExpectedOccurences()) {
-            return String.format("Expected number of occurrences [%s] of POI match.", check.getExpectedOccurences());
+            return String.format("Expected number of occurrences [%s] match with actual POIs count.", check.getExpectedOccurences());
         }
         return String.format("Expected number of occurrences of POI [%s] do not match with actual [%d].",
             check.getExpectedOccurences(), results.size());

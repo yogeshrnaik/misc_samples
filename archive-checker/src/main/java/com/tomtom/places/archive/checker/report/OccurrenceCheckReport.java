@@ -6,13 +6,14 @@ import com.tomtom.places.archive.checker.result.CheckResult;
 
 public class OccurrenceCheckReport extends CheckReport {
 
-    private static final long serialVersionUID = -2281661406852236352L;
-
     private final String message;
 
-    protected OccurrenceCheckReport(String checkId, String message, List<CheckResult> results) {
+    protected OccurrenceCheckReport(String checkId, List<CheckResult> results, String message) {
         super(checkId, results);
         this.message = message;
     }
 
+    public String getMessage() {
+        return message;
+    }
 }

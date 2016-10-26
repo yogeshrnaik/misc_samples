@@ -3,8 +3,6 @@ package com.tomtom.places.archive.checker.report;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-import com.tomtom.places.archive.checker.checks.ArchiveCheck;
-import com.tomtom.places.archive.checker.checks.ArchiveChecksFactory;
 import com.tomtom.places.archive.checker.result.CheckResult;
 
 public class CheckReportGenerator {

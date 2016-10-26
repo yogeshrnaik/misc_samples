@@ -26,4 +26,10 @@ public class CoordiantesInRangeCriteria extends ArchiveCriteria {
         return Math.abs(Double.parseDouble(poi.getLongitudeOfPoi().toString()) - longitudeOfPoi) < range
             && Math.abs(Double.parseDouble(poi.getLatitudeOfPoi().toString()) - latitudeOfPoi) < range;
     }
+
+    @Override
+    public String toString() {
+        return "CoordiantesInRangeCriteria [longitudeOfPoi=" + longitudeOfPoi + ", latitudeOfPoi=" + latitudeOfPoi
+            + ", range=" + range + "]";
+    }
 }

@@ -12,8 +12,6 @@ import com.tomtom.places.archive.checker.result.CheckResult;
 
 public class CheckReport implements Writable {
 
-    private static final long serialVersionUID = -821292876090056232L;
-
     private String checkId;
     private List<CheckResult> results;
 

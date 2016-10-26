@@ -17,4 +17,8 @@ public class GdfCodeCriteria extends ArchiveCriteria {
         return gdfCodeToMatch.equals(getPOI(place).getGdfFeatureCode().toString());
     }
 
+    @Override
+    public String toString() {
+        return "GdfCodeCriteria [gdfCodeToMatch=" + gdfCodeToMatch + "]";
+    }
 }

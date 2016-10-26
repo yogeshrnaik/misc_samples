@@ -27,6 +27,11 @@ public class LocalityCriteria extends ArchiveCriteria {
         return localities.contains(loc.toString().toUpperCase());
     }
 
+    @Override
+    public String toString() {
+        return "LocalityCriteria [localities=" + localities + "]";
+    }
+
     private static final class Locality {
 
         private static final String COUNTRY_STATE_SEPARATOR = "+";

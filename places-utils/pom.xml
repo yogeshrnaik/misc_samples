@@ -9,7 +9,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <places-core-version>4.19-SNAPSHOT</places-core-version>
+        <places-core-version>4.18</places-core-version>
         <crunch-version>0.3.0-3-cdh-5.2.1</crunch-version>
         <hadoop-version>2.5.0-cdh5.3.3</hadoop-version>
         <geohash-version>1.3.0</geohash-version>

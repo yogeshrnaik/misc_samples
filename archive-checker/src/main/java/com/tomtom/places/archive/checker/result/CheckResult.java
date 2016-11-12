@@ -15,11 +15,13 @@ import com.tomtom.places.unicorn.domain.util.SerializationUtil;
 public class CheckResult implements Writable {
 
     protected ArchiveCheck check;
+    private boolean isCheckedPlacePresent;
     protected ArchivePlace checkedPlace;
 
-    public CheckResult(ArchiveCheck check, ArchivePlace validatedPlace) {
+    public CheckResult(ArchiveCheck check, ArchivePlace checkedPlace) {
         this.check = check;
-        checkedPlace = validatedPlace;
+        this.checkedPlace = checkedPlace;
+        isCheckedPlacePresent = checkedPlace != null;
     }
 
     public ArchiveCheck getCheck() {
@@ -32,17 +34,25 @@ public class CheckResult implements Writable {
 
     public void write(DataOutput out) throws IOException {
         out.writeChars(check.getCheckId());
-        out.writeChars(SerializationUtil.convertToJson(checkedPlace));
+        out.writeBoolean(isCheckedPlacePresent);
+        if (isCheckedPlacePresent) {
+            out.writeChars(SerializationUtil.convertToJson(checkedPlace));
+        }
 
     }
 
     public void readFields(DataInput in) throws IOException {
         check = ArchiveChecksFactory.getCheck(in.readLine());
-        checkedPlace = Utils.convertToAvroObject(ArchivePlace.SCHEMA$, in.readLine());
+        isCheckedPlacePresent = in.readBoolean();
+        if (isCheckedPlacePresent) {
+            checkedPlace = Utils.convertToAvroObject(ArchivePlace.SCHEMA$, in.readLine());
+        } else {
+            checkedPlace = null;
+        }
     }
 
     @Override
     public String toString() {
-        return checkedPlace.toString();
+        return checkedPlace != null ? checkedPlace.toString() : null;
     }
 }

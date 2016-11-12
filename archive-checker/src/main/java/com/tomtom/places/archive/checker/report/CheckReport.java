@@ -39,4 +39,9 @@ public class CheckReport implements Writable {
             results.add(result);
         }
     }
+
+    @Override
+    public String toString() {
+        return "CheckReport [checkId=" + checkId + ", results=" + results + "]";
+    }
 }

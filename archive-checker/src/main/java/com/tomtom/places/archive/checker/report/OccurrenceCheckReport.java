@@ -16,4 +16,9 @@ public class OccurrenceCheckReport extends CheckReport {
     public String getMessage() {
         return message;
     }
+
+    @Override
+    public String toString() {
+        return "OccurrenceCheckReport [message=" + message + ", toString()=" + super.toString() + "]";
+    }
 }

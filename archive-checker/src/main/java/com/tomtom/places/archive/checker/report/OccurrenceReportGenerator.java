@@ -27,7 +27,7 @@ public class OccurrenceReportGenerator extends CheckReportGenerator {
             public boolean apply(CheckResult input) {
                 if (input instanceof OccurrenceCheckResult) {
                     OccurrenceCheckResult result = (OccurrenceCheckResult)input;
-                    return result.getNoOfOccurrences() > 0;
+                    return result.getNoOfOccurrences() > 0 && result.getCheckedPlace() != null;
                 }
                 return false;
             }

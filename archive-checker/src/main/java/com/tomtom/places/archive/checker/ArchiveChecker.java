@@ -15,16 +15,19 @@ import com.cloudera.crunch.PGroupedTable;
 import com.cloudera.crunch.Pipeline;
 import com.cloudera.crunch.PipelineResult;
 import com.cloudera.crunch.PipelineResult.StageResult;
+import com.cloudera.crunch.impl.mem.MemPipeline;
 import com.cloudera.crunch.impl.mr.MRPipeline;
 import com.cloudera.crunch.io.avro.AvroFileSource;
 import com.cloudera.crunch.types.avro.Avros;
 import com.cloudera.crunch.types.writable.Writables;
 import com.google.common.collect.Lists;
 import com.tomtom.places.archive.checker.checks.ApplyArchiveChecks;
+import com.tomtom.places.archive.checker.checks.ArchiveChecksFactory;
 import com.tomtom.places.archive.checker.checks.CheckKeyFn;
 import com.tomtom.places.archive.checker.report.CheckReport;
 import com.tomtom.places.archive.checker.report.CheckReportDoFn;
 import com.tomtom.places.archive.checker.result.CheckResult;
+import com.tomtom.places.archive.checker.result.OccurrenceCheckResult;
 import com.tomtom.places.archive.checker.util.ArchivePlaceCounter;
 import com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace;
 
@@ -49,6 +52,12 @@ public class ArchiveChecker extends Configured implements Tool {
 
         PCollection<CheckResult> results =
             archivePlaces.parallelDo(new ApplyArchiveChecks(), Writables.records(CheckResult.class));
+
+        PCollection<CheckResult> nullCheckResults =
+            MemPipeline.collectionOf(Lists.<CheckResult>newArrayList(new OccurrenceCheckResult(0, ArchiveChecksFactory.getCheck("CI_1.47"),
+                null)));
+
+        results = nullCheckResults.union(results);
 
         PGroupedTable<String, CheckResult> groupByKey = results.by(new CheckKeyFn(), Writables.strings()).groupByKey();
 

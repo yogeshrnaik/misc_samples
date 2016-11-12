@@ -19,10 +19,10 @@ public class OccurrenceCheck extends ArchiveCheck {
         return new OccurrenceCheckResult(1, this, place);
     }
 
-    @Override
-    protected CheckResult skipCheck(ArchivePlace place) {
-        return new OccurrenceCheckResult(0, this, place);
-    }
+    // @Override
+    // protected CheckResult skipCheck(ArchivePlace place) {
+    // return new OccurrenceCheckResult(0, this, place);
+    // }
 
     public int getExpectedOccurences() {
         return expectedOccurences;

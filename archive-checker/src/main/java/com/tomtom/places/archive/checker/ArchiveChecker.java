@@ -42,7 +42,7 @@ public class ArchiveChecker extends Configured implements Tool {
     }
 
     public int run(String[] args) throws Exception {
-        Pipeline pipeline = new MRPipeline(ArchiveCheckerTest.class, getConf());
+        Pipeline pipeline = new MRPipeline(ArchiveChecker.class, getConf());
         return run(pipeline);
     }
 

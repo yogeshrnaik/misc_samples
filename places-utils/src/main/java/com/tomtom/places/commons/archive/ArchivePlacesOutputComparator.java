@@ -1,14 +1,13 @@
 package com.tomtom.places.commons.archive;
 
-import java.util.ArrayList;
+import static com.tomtom.places.commons.avro.CrunchUtils.materialize;
+
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.hadoop.fs.Path;
 
-import com.cloudera.crunch.PCollection;
 import com.cloudera.crunch.impl.mem.MemPipeline;
 import com.cloudera.crunch.io.avro.AvroFileSource;
 import com.cloudera.crunch.types.avro.Avros;
@@ -64,15 +63,5 @@ public class ArchivePlacesOutputComparator {
         for (E e : list) {
             System.out.println(e);
         }
-    }
-
-    public static <E> List<E> materialize(PCollection<E> pcollection) {
-        List<E> result = new ArrayList<E>();
-        Iterator<E> iterator = pcollection.materialize().iterator();
-
-        while (iterator.hasNext()) {
-            result.add(iterator.next());
-        }
-        return result;
     }
 }

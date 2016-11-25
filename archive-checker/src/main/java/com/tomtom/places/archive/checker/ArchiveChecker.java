@@ -1,7 +1,7 @@
 package com.tomtom.places.archive.checker;
 
+import java.io.File;
 import java.util.Arrays;
-import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
@@ -18,6 +18,7 @@ import com.cloudera.crunch.PipelineResult.StageResult;
 import com.cloudera.crunch.impl.mem.MemPipeline;
 import com.cloudera.crunch.impl.mr.MRPipeline;
 import com.cloudera.crunch.io.avro.AvroFileSource;
+import com.cloudera.crunch.io.seq.SeqFileSourceTarget;
 import com.cloudera.crunch.types.avro.Avros;
 import com.cloudera.crunch.types.writable.Writables;
 import com.google.common.collect.Lists;
@@ -30,6 +31,7 @@ import com.tomtom.places.archive.checker.result.CheckResult;
 import com.tomtom.places.archive.checker.result.OccurrenceCheckResult;
 import com.tomtom.places.archive.checker.util.ArchivePlaceCounter;
 import com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace;
+import com.tomtom.places.unicorn.pipelineutil.PipelineUtil;
 
 public class ArchiveChecker extends Configured implements Tool {
 
@@ -41,6 +43,7 @@ public class ArchiveChecker extends Configured implements Tool {
         archiveCheckerReportsPath = outputPath;
     }
 
+    @Override
     public int run(String[] args) throws Exception {
         Pipeline pipeline = new MRPipeline(ArchiveChecker.class, getConf());
         return run(pipeline);
@@ -57,7 +60,9 @@ public class ArchiveChecker extends Configured implements Tool {
             MemPipeline.collectionOf(Lists.<CheckResult>newArrayList(new OccurrenceCheckResult(0, ArchiveChecksFactory.getCheck("CI_1.47"),
                 null)));
 
-        results = nullCheckResults.union(results);
+        results =
+            PipelineUtil.avoidCrunch102Bug(nullCheckResults, CheckResult.class).union(
+                PipelineUtil.avoidCrunch102Bug(results, CheckResult.class));
 
         PGroupedTable<String, CheckResult> groupByKey = results.by(new CheckKeyFn(), Writables.strings()).groupByKey();
 
@@ -65,12 +70,14 @@ public class ArchiveChecker extends Configured implements Tool {
         // List<String> checks = Lists.newArrayList(checksHavingResult.materialize());
 
         PCollection<CheckReport> pReports = groupByKey.parallelDo(new CheckReportDoFn(), Writables.records(CheckReport.class));
-        // pipeline.writeTextFile(pReports, archiveCheckerReportsPath + File.separator + "reports.txt");
+        pipeline.writeTextFile(pReports, archiveCheckerReportsPath + File.separator + "reports.txt");
 
-        List<CheckReport> reports = Lists.newArrayList(pReports.materialize());
-        for (CheckReport report : reports) {
-            System.out.println(report);
-        }
+        pipeline.write(pReports, new SeqFileSourceTarget<CheckReport>(archiveCheckerReportsPath, Writables.records(CheckReport.class)));
+
+        // List<CheckReport> reports = Lists.newArrayList(pReports.materialize());
+        // for (CheckReport report : reports) {
+        // System.out.println(report);
+        // }
 
         PipelineResult result = pipeline.done();
         printCounters(result);

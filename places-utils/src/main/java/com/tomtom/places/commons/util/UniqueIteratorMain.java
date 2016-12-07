@@ -8,23 +8,19 @@ import org.apache.commons.io.IOUtils;
 
 import com.google.common.collect.Lists;
 import com.tomtom.places.commons.avro.AvroFileReader;
+import com.tomtom.places.commons.avro.AvroFileWriter;
 import com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace;
 
 public class UniqueIteratorMain {
 
     public static void main(String[] args) throws IOException {
-        uniqueIntegerIterator();
+        // uniqueIntegerIterator();
         // uniqueStringIterator();
-        // uniqueArchivePlaceIterator();
+        uniqueArchivePlaceIterator();
     }
 
     private static void uniqueArchivePlaceIterator() throws IOException {
-        AvroFileReader<ArchivePlace> reader = new AvroFileReader<ArchivePlace>("E:/TEMP/GAPFM/LIE");
-        print(reader.iterator());
-        IOUtils.closeQuietly(reader);
-
-        System.out.println("***************************");
-        reader = new AvroFileReader<ArchivePlace>("E:/TEMP/GAPFM/LIE");
+        AvroFileReader<ArchivePlace> reader = new AvroFileReader<ArchivePlace>("E:/Places/documents/GAPFM/Tickets/USA+MI-NullPointer/tmp");
         UniqueIterator<ArchivePlace> uItr = new UniqueIterator<ArchivePlace>(reader) {
 
             @Override
@@ -32,8 +28,20 @@ public class UniqueIteratorMain {
                 return t.getPois().iterator().next().getExternalIdentifier().toString();
             }
         };
-        print(uItr);
+
+        write(uItr, "E:/Places/documents/GAPFM/Tickets/USA+MI-NullPointer/tmp/unique_records/archive-places.avro");
         IOUtils.closeQuietly(reader);
+    }
+
+    private static void write(UniqueIterator<ArchivePlace> uItr, String outputFilePath) throws IOException {
+        AvroFileWriter<ArchivePlace> writer = new AvroFileWriter<ArchivePlace>(outputFilePath, ArchivePlace.SCHEMA$, ArchivePlace.class);
+        int counter = 0;
+        while (uItr.hasNext()) {
+            counter++;
+            writer.write(uItr.next());
+        }
+        System.out.println("Total Unique Archive Places = " + counter);
+        IOUtils.closeQuietly(writer);
     }
 
     private static void uniqueStringIterator() {

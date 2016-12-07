@@ -14,7 +14,7 @@ public class DuplicateDetector {
     public static void main(String[] args) throws IOException {
         AvroFileReader<ArchivePlace> places =
             new AvroFileReader<ArchivePlace>(
-                "E:/Places/documents/GAPFM/Tickets/USA+CA_Issue/REL_BASELINE_GLOB/tmp-archive-places/archive-places");
+                "E:/Places/documents/GAPFM/Tickets/USA+MI-NullPointer/tmp");
         Set<String> unique = Sets.newHashSet();
 
         int counter = 0;
@@ -22,14 +22,13 @@ public class DuplicateDetector {
         for (ArchivePlace place : places) {
             counter++;
             String externalId = place.getPois().iterator().next().getExternalIdentifier().toString();
-            // if (!unique.add(externalId)) {
-            // System.out.println("*************** Duplicate POI: " + externalId);
-            // }
-            //
-            // if (counter % 10000 == 0) {
-            // System.out.println("processed " + counter);
-            // }
-            System.out.println(externalId);
+            if (!unique.add(externalId)) {
+                System.out.println("*************** Duplicate POI: " + externalId);
+            }
+
+            if (counter % 1000 == 0) {
+                System.out.println("processed " + counter);
+            }
         }
 
         System.out.println("Total count: " + counter);

@@ -1,4 +1,4 @@
-package com.tomtom.places.misc;
+package com.tomtom.places.misc.coredb;
 
 import java.util.Arrays;
 import java.util.Collection;

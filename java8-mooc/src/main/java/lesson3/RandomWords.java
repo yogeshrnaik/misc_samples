@@ -1,7 +1,5 @@
 /**
- * Copyright © 2014, Oracle and/or its affiliates. All rights reserved.
- * 
- * JDK 8 MOOC Lesson 3 homework
+ * Copyright © 2014, Oracle and/or its affiliates. All rights reserved. JDK 8 MOOC Lesson 3 homework
  */
 package lesson3;
 
@@ -20,40 +18,42 @@ import java.util.stream.Collectors;
  * @author Simon Ritter (@speakjava)
  */
 public class RandomWords {
-  private final List<String> sourceWords;
 
-  /**
-   * Constructor
-   * 
-   * @throws IOException If the source words file cannot be read
-   */
-  public RandomWords() throws IOException {   
-    try (BufferedReader reader = Files.newBufferedReader(Paths.get("words"))) {
-      sourceWords = null;    // YOUR CODE HERE
-      
-      System.out.println("Loaded " + sourceWords.size() + " words");
+    private final List<String> sourceWords;
+
+    /**
+     * Constructor
+     *
+     * @throws IOException If the source words file cannot be read
+     */
+    public RandomWords() throws IOException {
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get("src/main/resources/words"))) {
+            sourceWords = reader.lines().collect(Collectors.toList()); // YOUR CODE HERE
+
+            System.out.println("Loaded " + sourceWords.size() + " words");
+        }
     }
-  }
 
-  /**
-   * Create a list of a given size containing random words
-   *
-   * @param listSize The size of the list to create
-   * @return The created list
-   */
-  public List<String> createList(int listSize) {
-    Random rand = new Random();
-    List<String> wordList = null; // YOUR CODE HERE
+    /**
+     * Create a list of a given size containing random words
+     *
+     * @param listSize The size of the list to create
+     * @return The created list
+     */
+    public List<String> createList(int listSize) {
+        Random rand = new Random();
 
-    return wordList;
-  }
+        // YOUR CODE HERE
+        List<String> wordList = rand.ints(listSize, 0, sourceWords.size()).mapToObj(i -> sourceWords.get(i)).collect(Collectors.toList());
+        return wordList;
+    }
 
-  /**
-   * Return the list of all source words, which cannot be modified
-   *
-   * @return The unmodifiable list of all source words
-   */
-  public List<String> allWords() {
-    return Collections.unmodifiableList(sourceWords);
-  }
+    /**
+     * Return the list of all source words, which cannot be modified
+     *
+     * @return The unmodifiable list of all source words
+     */
+    public List<String> allWords() {
+        return Collections.unmodifiableList(sourceWords);
+    }
 }

@@ -58,8 +58,8 @@ import com.tomtom.cpu.coredb.writeapi.logicaltransactions.MetaDataForVersion;
 
 public class VersionViewer {
 
-    private static final String POI_FEATURE_ID = "00005452-3300-2800-0000-00000c092d3b";
-    private static final String[] POI_FEATURE_IDS = {"00005452-3300-2800-0000-00000c092d3b"};
+    private static final String POI_FEATURE_ID = "f8a1a48d-3731-4cff-9504-443edf9478f2";
+    private static final String[] POI_FEATURE_IDS = {"f8a1a48d-3731-4cff-9504-443edf9478f2"};
     private static final String BRANCH_ID = "233b38a4-f0bf-4289-bfdc-7f2a04fc4ab3";
     // private static final String BRANCH_ID = "99d05099-dce4-4afc-bacc-a88c6b7a96ab";
 

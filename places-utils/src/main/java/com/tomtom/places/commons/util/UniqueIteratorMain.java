@@ -20,7 +20,7 @@ public class UniqueIteratorMain {
     }
 
     private static void uniqueArchivePlaceIterator() throws IOException {
-        AvroFileReader<ArchivePlace> reader = new AvroFileReader<ArchivePlace>("E:/Places/documents/GAPFM/Tickets/USA+MI-NullPointer/tmp");
+        AvroFileReader<ArchivePlace> reader = new AvroFileReader<ArchivePlace>("E:/TEMP/GAPFM/LIE/tmp/completed");
         UniqueIterator<ArchivePlace> uItr = new UniqueIterator<ArchivePlace>(reader) {
 
             @Override
@@ -29,7 +29,7 @@ public class UniqueIteratorMain {
             }
         };
 
-        write(uItr, "E:/Places/documents/GAPFM/Tickets/USA+MI-NullPointer/tmp/unique_records/archive-places.avro");
+        write(uItr, "E:/TEMP/GAPFM/LIE/tmp/archive-places.avro");
         IOUtils.closeQuietly(reader);
     }
 

@@ -11,7 +11,7 @@
 		<coredb.mapdata.version>4.3.6</coredb.mapdata.version>
 		<accesspoint.version>3.1.57.6</accesspoint.version>
 		<committer.service.client.version>1.52</committer.service.client.version>
-		<ppp.version>4.19-SNAPSHOT</ppp.version>
+		<ppp.version>4.20</ppp.version>
 		<ppp.ct.version>4.15</ppp.ct.version>
 		<hadoop.version>2.5.0-cdh5.3.3</hadoop.version>
 		<http-client.version>4.5.2</http-client.version>

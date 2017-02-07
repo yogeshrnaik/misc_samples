@@ -85,7 +85,7 @@
 					</descriptors>
 					<archive>
 						<manifest>
-							<mainClass>com.tomtom.places.delta.DeltaClusterer</mainClass>
+							<mainClass>com.tomtom.places.trace.PlaceTracer</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

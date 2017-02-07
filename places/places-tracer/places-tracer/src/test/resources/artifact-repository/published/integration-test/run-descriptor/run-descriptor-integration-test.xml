@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<run-descriptor xmlns="http://unicorn.places.tomtom.com/rundescriptor"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://unicorn.places.tomtom.com/rundescriptor run-descriptor.xsd "
+	version="integration-test" alias="run-descriptor-integration-test.xml" releasable="true">
+
+	<artifact-repository-details
+		repository-root-path="src/test/resources/artifact-repository"
+		release-directory="published"
+		build-root-path="target/pipeline/results/unicorn_integration_test" />
+
+	<!-- Input (build) artifact details -->
+	<input-artifact id="pipeline" version="mock"
+		alias="mock-pipeline-job.txt" />
+	<input-artifact id="intake-delivery-list" version="integration-test"
+		alias="deliveryListIntegrationTest.txt" />
+	<input-artifact id="gp3-unicorn-configuration" version="integration-test"
+		alias="Configuration-Unicorn" symlink="config/integration-test/Configuration-Unicorn"
+		relative-path="LoadData-EU" type="cache" />
+	<input-artifact id="geocoding-configuration" version="integration-test"
+		alias="geocoding-config.zip" type="cache" />
+	<input-artifact id="geocoding-server-configuration"
+		version="integration-test" alias="geocodingServerLocal.txt" />
+    <input-artifact id="geocoding-client" version="integration-test" 
+        alias="geocoding-distribution-SNAPSHOT.zip" />
+	<input-artifact id="geocode-map-data" 
+		version="integration-test" alias="countries"/>
+	<input-artifact id="productization-configuration"
+		version="integration-test" alias="gp3archive.config.properties"
+		symlink="productization-config" type="cache" />
+	<input-artifact id="valid-regions-list" version="integration-test"
+		alias="validRegionsList.txt" />
+		<input-artifact id="unicorn-reporting-server-configuration" version="integration-test"
+		alias="unicornReportingServerLocal.txt" />
+	
+</run-descriptor>

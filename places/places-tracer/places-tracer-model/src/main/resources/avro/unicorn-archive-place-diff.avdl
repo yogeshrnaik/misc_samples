@@ -1,0 +1,16 @@
+/**
+ * TYPE:    Archive Diff Avro IDL
+ * FILE:    unicorn-archive-place-diff.avdl 
+ * VERSION: 3.5-SNAPSHOT
+ */
+
+@namespace("com.tomtom.places.unicorn.domain.avro.archive")
+protocol ArchiveDiffDefinition {
+
+	import idl "unicorn-archive-place.avdl";
+	
+	record ArchivePlaceDiff {
+		union { null, com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace } before = null;
+		union { null, com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace} after = null;
+	}
+}

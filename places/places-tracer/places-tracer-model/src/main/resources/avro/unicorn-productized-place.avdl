@@ -1,0 +1,29 @@
+/**
+ * Productized place protocol in Avro IDL
+ *
+ * A container that holds a union of Unicorn product classes
+ * (e.g. GP3Archive, ONLINE_PRODUCT, ...)
+ */
+@namespace("com.tomtom.places.unicorn.domain.avro.productized")
+protocol ProductizedPlaceDefinition {
+	import idl "unicorn-archive-place.avdl";
+
+	enum ProductType {
+		GP3_ARCHIVE,    // Normal POI archive
+		ONLINE_PRODUCT,	// OBSOLETE
+		ARCHIVE_IG,     // POI archive for InfoGroup in NAM
+		GP3_ARCHIVE_2   // POI archive for Connect India and Israel
+	}
+
+	
+	// Generic type to use in interfaces and the pipeline.
+	
+	record ProductizedPlace {
+	
+		union { null, ProductType } productType = null;
+
+		union { null,
+				com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace
+			  } product = null;
+	}
+}

@@ -1,0 +1,16 @@
+/**
+ * TYPE:    PartialCommitCriteriaRecord  Avro IDL
+ * FILE:    unicorn-partial-commit.avdl
+ * VERSION: 3.5-SNAPSHOT
+ */
+
+@namespace("com.tomtom.places.unicorn.domain.avro.archive")
+protocol PartialCommitCriteriaRecordDefinition {
+	record PartialCommitCriteriaRecord {				
+		union { null, string } category= null;
+		union { null, string } subCategory= null;
+		union { null, string } brandName= null;
+		union { null, string } country= null;
+		union { null, string } state= null;
+	}
+}

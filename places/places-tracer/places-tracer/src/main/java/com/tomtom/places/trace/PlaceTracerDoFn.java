@@ -17,7 +17,6 @@ import com.tomtom.places.unicorn.domain.avro.normalized.NormalizedPlace;
 import com.tomtom.places.unicorn.domain.avro.trace.Trace;
 import com.tomtom.places.unicorn.domain.avro.tracer.PlaceTrace;
 
-
 public class PlaceTracerDoFn extends DoFn<Pair<String, Iterable<Pair<String, SpecificRecordBase>>>, PlaceTrace> {
 
     private static final long serialVersionUID = -956735151112380467L;
@@ -28,7 +27,7 @@ public class PlaceTracerDoFn extends DoFn<Pair<String, Iterable<Pair<String, Spe
         sortTracesByTimestamp(placeTrace);
         if (placeTrace.getMappedPlace() != null) {
             emitter.emit(placeTrace);
-            System.out.println(placeTrace);
+            // System.out.println(placeTrace);
         }
     }
 

@@ -1,0 +1,18 @@
+/**
+ * TYPE:    Archive Pipeline To Mds Avro IDL
+ * FILE:    unicorn-archive-id-mapping.avdl 
+ * VERSION: 3.5-SNAPSHOT
+ */
+
+@namespace("com.tomtom.places.unicorn.domain.avro.archive")
+protocol ArchiveIdMappingDefinition {
+	
+	record ArchiveIdMapping {
+		string pppId;
+		string cppId;
+		long timestamp;
+		int coordinateX;
+		int coordinateY;
+		string featureType;
+	}
+}

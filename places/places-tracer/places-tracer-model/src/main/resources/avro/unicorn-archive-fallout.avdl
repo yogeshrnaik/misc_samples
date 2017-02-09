@@ -1,0 +1,32 @@
+/**
+ * TYPE:    Archive Fallout Avro IDL
+ * FILE:    unicorn-archive-fallout.avdl 
+ * VERSION: 3.5-SNAPSHOT
+ */
+
+@namespace("com.tomtom.places.unicorn.domain.avro.archive")
+protocol ArchiveFalloutDefinition {
+
+	import idl "unicorn-related-archive-place-diff.avdl";
+	import idl "unicorn-archive-violation.avdl";
+	
+	enum ErrorType {
+		System_Exception,
+		QC_Violation,
+		Filtered,
+		Invalid
+	}
+	record ArchiveFallout {
+		RelatedArchivePlaceDiff fallout;
+		union {null,ErrorType} errorType = null;
+		union { null, string } reason= null;
+		union { null, string } transactionId= null;
+
+        union { null, array<string> } failures  = null;
+        union { null, array<Violation> } violations  = null;
+	}
+	
+	
+	
+	
+}

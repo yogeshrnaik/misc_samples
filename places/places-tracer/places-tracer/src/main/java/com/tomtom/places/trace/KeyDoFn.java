@@ -12,6 +12,7 @@ import com.tomtom.places.unicorn.domain.avro.composite.CompositePlace;
 import com.tomtom.places.unicorn.domain.avro.normalized.NormalizedPlace;
 import com.tomtom.places.unicorn.domain.avro.source.AVUUID;
 import com.tomtom.places.unicorn.domain.avro.trace.Trace;
+import com.tomtom.places.unicorn.domain.avro.tracer.PlaceTrace;
 
 public class KeyDoFn<S extends SpecificRecordBase> extends DoFn<S, Pair<String, SpecificRecordBase>> {
 
@@ -20,11 +21,6 @@ public class KeyDoFn<S extends SpecificRecordBase> extends DoFn<S, Pair<String, 
         if (input instanceof NormalizedPlace) {
             NormalizedPlace place = (NormalizedPlace)input;
             emitter.emit(Pair.of(place.getDeliveryPlaceId().toString(), (SpecificRecordBase)NormalizedPlace.newBuilder(place).build()));
-        } else if (input instanceof ArchivePlace) {
-            ArchivePlace place = (ArchivePlace)input;
-            for (AVUUID id : place.getDeliveryPlaceIds()) {
-                emitter.emit(Pair.of(id.toString(), (SpecificRecordBase)place));
-            }
         } else if (input instanceof ClusteredPlace) {
             ClusteredPlace place = ClusteredPlace.newBuilder((ClusteredPlace)input).build();
             for (CompositePlace cp : place.getMatchingPlaces()) {
@@ -47,6 +43,16 @@ public class KeyDoFn<S extends SpecificRecordBase> extends DoFn<S, Pair<String, 
                         emitter.emit(Pair.of(id.toString(), (SpecificRecordBase)trace));
                     }
                 }
+            }
+        } else if (input instanceof ArchivePlace) {
+            ArchivePlace place = (ArchivePlace)input;
+            for (AVUUID id : place.getDeliveryPlaceIds()) {
+                emitter.emit(Pair.of(id.toString(), (SpecificRecordBase)place));
+            }
+        } else if (input instanceof PlaceTrace) {
+            PlaceTrace placeTrace = (PlaceTrace)input;
+            if (placeTrace.getClusteredPlace() != null) {
+                emitter.emit(Pair.of(placeTrace.getClusteredPlace().getClusteredPlaceId().toString(), (SpecificRecordBase)placeTrace));
             }
         }
     }

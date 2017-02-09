@@ -1,0 +1,64 @@
+/**
+ * TYPE:    StableId History AVRO IDL
+ * FILE:    unicorn-stable-id-history.avdl 
+ * VERSION: 
+ */
+ 
+@namespace("com.tomtom.places.unicorn.domain.avro.stableid")
+protocol StableIdPlaceDefinition {
+	import idl "unicorn-source-place.avdl";
+	import idl "unicorn-normalized-place.avdl";
+
+	record PostalCode {
+		string main;
+		string sub;
+	}
+	
+	record House {
+		string number;
+		string extension;
+		string building;
+		string suite;
+	}	
+	
+	record Address {
+		string city;
+		PostalCode postalCode;
+		string street;
+		House housenumber;
+	}
+	
+	record Point {
+		double lat;
+		double lon;
+	}
+	
+	record KeyValuesPair {
+		string key;
+		array<string> values;
+	}
+
+	record StableIdEntry {
+		com.tomtom.places.unicorn.domain.avro.source.AVUUID deliveryPlaceId; 
+		union { null, com.tomtom.places.unicorn.domain.avro.normalized.NormalizedPlace } currentDeliveryPlace; // Used during processing, must be null when stored
+		
+		union { null, com.tomtom.places.unicorn.domain.avro.source.AVUUID } stablePlaceId; // Stored ID for this place
+		
+		string supplierId;	// Unique ID for the supplier. Should not change
+		string localityCode; // Iso code or likewise (not internal numeric id) 
+
+		long creationTime;
+		
+		// Any "simple" values stored in extensible way without need of changing domain
+		// ExternalId ; only stables
+		// Names
+		// PhoneNumbers
+		// Brands
+		array<KeyValuesPair> values; 
+	
+		array<Address> addresses;
+		array<Point> points;
+		array<long> categories;
+		array<com.tomtom.places.unicorn.domain.avro.source.ProcessingFlag> processingFlags;
+	}
+}

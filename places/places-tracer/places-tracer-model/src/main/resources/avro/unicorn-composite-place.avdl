@@ -1,0 +1,17 @@
+/**
+ * TYPE:    Composite Places Avro IDL
+ * FILE:    unicorn-composite-place.avdl 
+ * VERSION: 2.1.2-SNAPSHOT
+ */
+
+@namespace("com.tomtom.places.unicorn.domain.avro.composite")
+protocol CompositePlaceDefinition {
+
+	import idl "unicorn-source-place.avdl";
+	import idl "unicorn-normalized-place.avdl";
+
+	record CompositePlace {
+		com.tomtom.places.unicorn.domain.avro.normalized.NormalizedPlace mappedPlace;
+		com.tomtom.places.unicorn.domain.avro.normalized.NormalizedPlace normalizedPlace;
+	}
+}

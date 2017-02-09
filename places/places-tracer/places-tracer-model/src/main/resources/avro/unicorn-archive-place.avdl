@@ -1,0 +1,213 @@
+/**
+ * Archive place protocol in Avro IDL
+ *
+ * ArchivePlace encapsulates all the archive file record definitions.
+ * For a given productized place, only the pertinent file records and fields
+ * are populated. For example, a typical place will only populate the
+ * poi, relationship, and supplier records (POI.txt, REL.txt, SUP.txt)
+ *
+ *	archive files (dataset-specific):
+ *		*_POI.txt		Poi record and entrypoint records.
+ *		*_REL.txt		Relationships to POI (Service in Service, etc.)
+ *		*_SUP.txt		Suppliers of each contributing place in matching group
+ *		*_NVL.txt		Invalid - no mapping, bad geocode, orphaned entrypoint, trumped
+ *		*_BRL.txt		Bad/orphaned relationships
+ *		*_ERR.txt		Cardinality failures
+ *		*_BAD.txt		Bad pois
+ *		*_ATT.txt		EVS composite attributes
+ *
+ * TYPE:    Archive Place Avro IDL
+ * FILE:    unicorn-archive-place.avdl
+ * VERSION: 3.5-SNAPSHOT
+ */
+
+@namespace("com.tomtom.places.unicorn.domain.avro.archive")
+protocol ArchivePlaceDefinition {
+    import idl "unicorn-source-place.avdl";
+
+	// Unicorn-like address type to smooth the modeling to the archive since
+	// the archive fields are strange. e.g. first street/city has only one language,
+	// but the other two street/city sets have a language code for street and city.
+	record ArchiveStreetCity {
+		union { null, string } street = null;
+		union { null, string } streetLanguage = null;
+		union { null, string } city = null;
+		union { null, string } cityLanguage = null;
+	}
+	
+	// For archive field pairs BRAND_NAME_# / BRAND_NAME_#_NA.
+	record ArchiveBrandName {
+		union { null, string } value;
+		union { null, string } alphabet;
+	}
+
+	// For archive field pairs such as OFFICIAL_NAME_#/LANGUAGE_CODE_#.
+	record ArchiveName {
+		union { null, string } name;
+		union { null, string } language;
+	}
+
+	// For archive field pairs PHONE_NUMBER_#/PHONE_NUMBER_TYPE_#.
+	record ArchivePhoneNumber {
+		union { null, string } number;
+		union { null, string } type;
+	}
+
+	// For archive field pairs such as ATTRIBUTE#_CODE/ATTRIBUTE#_VALUE.
+	record ArchiveCodeValue {
+		union { null, string } code;
+		union { null, string } value;
+	}
+
+	// For archive field pairs STAR_RATING_SOURCE_#/STAR_RATING_#.
+	record ArchiveRating {
+		union { null, string } source;
+		union { null, string } rating;
+	}
+
+	record POI {
+		union { null, string } serviceGroupName = null;
+		union { null, string } serviceGroupNameDesc = null;
+		union { null, string } country = null;
+		union { null, string } dataset = null;
+		union { null, string } poiUniqueId = null;
+		union { null, string } externalIdentifier = null;
+		union { null, string } poiTifid = null;
+		union { null, string } gdfFeatureCode = null;
+		union { null, string } gdfFeatureCodeDesc = null;
+		union { null, string } subcategory = null;
+		union { null, string } subcategoryDesc = null;
+		union { null, array<ArchiveName> } officialNames = null;
+		union { null, array<ArchiveName> } alternateNames = null;
+		union { null, array<ArchiveBrandName> } brandNames = null;
+		union { null, string } acronym = null;
+		union { null, string } acronymNa = null;
+		union { null, string } houseNumber = null;
+		union { null, array<ArchiveStreetCity> } streetsAndCities = null;
+		union { null, string } postalCode = null;
+		union { null, string } postalCodeMain = null;
+		union { null, string } longitudeOfPoi = null;
+		union { null, string } latitudeOfPoi = null;
+		union { null, string } geocodingAccuracyLevel = null;
+		union { null, string } positionalAccuracy = null;
+		union { null, string } tifEdgeid = null;
+		union { null, string } faceid = null;
+		union { null, string } importance = null;
+		union { null, string } mrf = null;
+		union { null, string } fromDirection = null;
+		union { null, string } fromDirLangCode = null;
+		union { null, string } toDirection = null;
+		union { null, string } toDirLangCode = null;
+		union { null, array<string> } routenames = null;
+		union { null, array<string> } routenumbers = null;
+		union { null, array<string> } vicinities = null;
+		union { null, array<ArchivePhoneNumber> } phoneNumbers = null;
+		union { null, array<string> } faxNumbers = null;
+		union { null, string } email = null;
+		union { null, string } internet = null;
+		union { null, array<ArchiveCodeValue> } attributes = null;
+		union { null, array<ArchiveCodeValue> } alternateCodes = null;
+		union { null, array<ArchiveRating> } ratings = null;
+		union { null, array<string> } openingPeriods = null;
+		union { null, string } contentsource = null;
+		union { null, string } contentmodified = null;
+		union { null, string } hasLandmark = null;
+
+		// fields that are not part of the archive POI file but necessary in productization
+		boolean isBad = false;
+		boolean isMandatory = false;
+		boolean isCore = false;
+		boolean isShowStopper = false;
+		union { null, com.tomtom.places.unicorn.domain.avro.source.AVUUID } productizedLocusToEpKey = null;
+
+		// fields that are not part of the archive POI file but necessary for CPP
+		union { null, string } cppId = null;
+	}
+	
+	record REL {
+		union { null, string } relId = null;
+		union { null, string } fromPoiId = null;
+		union { null, string } toPoiId = null;
+		union { null, com.tomtom.places.unicorn.domain.avro.source.AVUUID } toDeliveryPlaceId = null;
+		union { null, string } code = null;
+		// fields that are not part of the archive REL file but necessary for CPP
+		union { null, string } toExternalIdentifier = null;
+		union { null, string } toCppId = null;
+		// fields that are not part of the archive REL file but are used to store relations by data
+		union { null, string } toLongitude = null;
+		union { null, string } toLatitude = null;
+		union { null, string } toGdfFeatureCode = null;
+		union { null, string } toSubcategory = null;
+		union { null, ArchiveName } toOfficialName = null;
+	}
+
+	record SUP {
+		union { null, string } poiUniqueId = null;
+		union { null, string } supplierCode = null;
+		union { null, string } deliveryId = null;
+		union { null, string } rawId = null;
+		union { null, string } totalAttributes = null;
+		union { null, string } visibleAttributes = null;
+	}
+		
+	record ATT {
+		union { null, string } attributeId = null;
+		union { null, string } poiUniqueId = null;
+		union { null, string } attributeCode = null;
+		union { null, string } attributeValue = null;
+		union { null, string } languageCode = null;
+		union { null, string } attributeHierarchy = null;
+		union { null, string } attributeHierarchyId = null;
+	}
+	
+	record ERR {
+		union { null, string } poi_unique_id = null;
+		union { null, string } gdf_feature_code = null;
+		union { null, string } attribute = null;
+		union { null, string } min_count = null;
+		union { null, string } max_count = null;
+		union { null, string } count = null;
+	}
+	
+	record NVL {
+		union { null, string } busId = null;
+		union { null, string } type = null;
+		union { null, string } delivery = null;
+		union { null, string } reason = null;
+		union { null, string } trumpset = null;
+		union { null, array<string> } categories = null;
+	}
+
+	record SIC {
+	    union { null, string } externalIdentifier = null;
+	    union { null, string } anzsicCode = null;
+	}
+
+	record ArchivePlace {
+        com.tomtom.places.unicorn.domain.avro.source.AVUUID archivePlaceId;
+		union { null, array<com.tomtom.places.unicorn.domain.avro.source.AVUUID> } deliveryPlaceIds = null;
+        union { null, string } iso3Country = null;
+        union { null, string } state = null;
+
+		union { null, array<POI> } pois  = null;
+		
+		union { null, array<REL> } relationships = null;
+		union { null, array<REL> } badRelationships = null;
+			
+		union { null, array<SUP> } suppliers = null;
+		
+		union { null, array<NVL> } invalid = null;
+		
+		union { null, array<ATT> } attributes = null;
+
+		union { null, array<ERR> } err = null;
+
+		union { null, array<SIC> } anzsic = null;
+		
+		boolean isAddObservation = false;
+		
+		//field to hold edit observation timestamp
+		union { null, string } mostRecentEditObservationTimestamp = null;
+
+	}	
+}

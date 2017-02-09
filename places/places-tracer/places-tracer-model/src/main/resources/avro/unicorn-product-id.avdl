@@ -1,0 +1,24 @@
+/**
+ * The stable product id
+ *
+ */
+
+@namespace("com.tomtom.places.unicorn.domain.avro.productized")
+protocol ProductIdDefinition {
+
+	import idl "unicorn-source-place.avdl";
+	import idl "unicorn-normalized-place.avdl";
+	
+	record ProductIdMapping {
+		com.tomtom.places.unicorn.domain.avro.source.AVUUID 		stableDeliveryId;
+		com.tomtom.places.unicorn.domain.avro.source.AVUUID 		productId;
+		com.tomtom.places.unicorn.domain.avro.normalized.Locality	locality;
+		long 														lastUsed;
+	}
+	
+	record ProductId{
+		com.tomtom.places.unicorn.domain.avro.source.AVUUID 		productId;
+		union {null, map<string>}									publishedId = null;
+		com.tomtom.places.unicorn.domain.avro.normalized.Locality 	locality;
+	}
+}

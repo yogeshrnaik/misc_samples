@@ -1,0 +1,324 @@
+/**
+ * Description of an AVRO trace.
+ * 
+ * NEVER REMOVE OR RENAME TRACE TYPES!!
+ * It will break backward compatibility with output artifacts of older PPP runs. Just mark the unwanted trace type as // OBSOLETE.
+ */
+@namespace("com.tomtom.places.unicorn.domain.avro.trace")
+protocol TraceDefinition {
+
+	enum TraceType {
+		// Geocoding
+		Geocoding_AddedTranslation,
+		Geocoding_FailedDistanceTest,
+		Geocoding_GeocodedEntryPoint,
+		Geocoding_GeocodedLocus,
+		Geocoding_GeocodingException,
+		GeocodingAdapter_NoCategories,
+		GeocodingAdapter_ReverseGeocodeSpecifiedWithoutPoint,
+
+		// Intake
+		IntakeDeliveryEntryHandler,
+		LocalityRule_DeliveryLocalityUnrecognized,
+		LocalityRule_IncorrectLocality,
+		LocalityRule_SourcePlace,
+		LocalityRule_SupplierLocalityMismatch,
+		LocalityRule_UsedAddressLocality,
+		LocalityRule_UsedDeliveryLocality,
+		Recode_MultipleMappingsForType,
+		Recode_NoMapping,
+		Recode_NoScheme,
+				
+		// Matching
+		CandidateSetAssembler_PlaceWithoutSet,
+		CandidateSets,
+		Clustering_Exception,
+		ClusterOriginIds,
+		Clusterer_RejectDoublePromotion,
+		Clustering_TotalMatchScore,
+		GeoPartitioner_NoValidPoints,
+		GeoPartitioner_NullLoci,
+
+		// Observation joining
+		IncompleteObservationsJoined,
+
+		// Normalization
+		AcronymRule_Name_Normalized,
+		AddressCleaningRule_Normalized,
+		AddressNormalizationRule_Normalized,
+		AddressTitleCasingRule_City,
+		AddressTitleCasingRule_Street,
+		BadLatin1EncodingNameNormalization_Name_Normalized,
+		BrandRecodingRule_AddedBrand,
+		BrandRecodingRule_AddedCategory,
+		BrandRecodingRule_AddedCharacteristic,
+		BrandRecodingRule_AddedPreemptiveCategory,
+		BrandRecodingRule_AddedPreemptiveCharacteristic,
+		BrandRule_AddedCategory,
+		BrandRule_AddedCharacteristic,
+		BrandRule_AddedPreemptiveCategory,
+		BrandRule_AddedPreemptiveCharacteristic,
+		BrandRule_BrandNotDetected,
+		BrandRule_DetectedBrandInBrand,
+		BrandRule_DetectedBrandInName,
+		BrandSpellingRule_Name_Normalized,
+		CategoryDetection_AddedCategory,
+		CategoryDetection_AddedCategoryThroughDetectedCharacteristic,
+		CategoryDetection_AddedCharacteristic,
+		CategoryDetection_CategoryDetectedInName,
+		CategoryDetection_CharacteristicDetectedInName,
+		CategoryRecodingRule_AddedCategory,
+		CategoryRecodingRule_NoMapping,
+		CategoryRecodingRule_NoScheme,
+		CategoryRecodingRule_UnknownScheme,
+		CategoryRecodingRule_UnknownSourceCategory,
+		CityNameNormalization_NotRecognized,
+		CityNameNormalization_Updated,
+		CoreRule_AddedCoreFlag,
+		DefaultNormalization_MatchName_Normalized,
+		DefaultNormalization_StrippedName_Normalized,
+		EmailUrlRule_InvalidEmail,
+		EmailUrlRule_InvalidUrl,
+		EmailUrlRule_ModifiedUrl,
+		EntryPointRecoding_NoDecimalPoint,
+		EvsRule_InconsistentSpot,
+		EvsRule_NumberOfSpotsNull,
+		ExternalIdNotUniqueForSupplierAndLocality,
+		FaceUpdate_NoFaceFoundInSameDataset,
+		FixedSupplierCategoriesRule_AddedBrand,
+		FixedSupplierCategoriesRule_AddedCategory,
+		FixedSupplierCategoriesRule_CategoryNotFound,
+		FixedSupplierCategoriesRule_IgnoredCharacteristic,
+		GenericAttributesRule_IsLandmark,
+		GenericNormalizationRule_Normalized,
+		LegacyAttributes_NoMappingFound,
+		LocalityRule_RegionNotRecognized,
+		LocusRule_Exception,
+		LocusRule_NoDecimalPoint,
+		LocusRule_NoPoint,
+		LocusRule_Normalized,
+		LocusRule_SplitAddress,
+		NormalizationService,
+		PhoneFaxRule_ForeignNumber,
+		PhoneFaxRule_InvalidNumber,
+		PhoneFaxRule_Normalized,
+		PlaceRelation,
+		ProcessingFlagsRule_DetectedFlag,
+		ProductNormalizationService, // OBSOLETE
+		RatingsRule_DuplicateRatingSource,
+		RatingsRule_InvalidRating,
+		RecodingService,
+		RegexRule_Exception,
+		RegexRule_Exception_AttributeCondition,
+		RegexRule_Exception_LanguageCondition,
+		RemoveAddressPartsRule_StrippedName_Normalized,
+		RemoveBrandsRule_StrippedName_Normalized,
+		RemoveCommonWordsRule_StrippedName_Normalized,
+		RemoveDoubleQuotesRule_Name_Normalized,
+		RemoveDuplicateNamesRule_Removed,
+		RemoveLegalTypeRule_Name_Normalized,
+		RemoveOnlyMinorEntryPointsRule_Removed,
+		RemoveParenthesesRule_Name_Normalized,
+		RemoveParenthesesRule_StrippedName_Normalized,
+		UnwantedCharacters,
+		ReplaceHtmlEntities_Name_Normalized,
+		RetrieveMissingCountryRule_Normalized,
+		StreetLocator_AddressNotFound,
+		StreetLocator_NoResult,
+		StreetLocator_UpdatedAddress,
+		Test,
+		TitleCasingRule_Name_Normalized,		
+		Advertizer,
+		SpaceAroundCommaNormalized,
+		
+		// Pipeline
+		Geocoding_TraceException,
+		NormalizationTraceServiceAdapter,
+		BuildingNumber_AddedRelation,
+		Geocoding_EffectiveReverseGeocode,
+		Geocoding_UnsupportedMultipleSuppliedPoints,
+		Gp3Writer_Exception,
+		Intake_Exception,
+		IntakeServiceAdapter,
+		LocalityRule_UsedSupplierLocality,
+		ProductizationServiceAdapter,
+		ProductNormalizationServiceAdapter, // OBSOLETE
+		RecodingServiceAdapter,
+		Removed_relation_without_end_point,
+
+		// Productizing
+		AddressesRule_GeocodedHouseNumber,
+		AddressesRule_NoHouseNumber,
+		AddressesRule_SourceHouseNumber,
+		AddressesRule_InvalidGeocodedHouseNumber,
+		AddressesRule_InvalidSourceHouseNumber,
+		AddressesRule_HouseNumberWithoutStreet,
+		ArchivePlaceFieldNormalizer_FieldNormalization,
+		ArchivePlaceFieldNormalizer_FieldLengthViolation,
+		ArchivePlaceFieldNormalizer_RelatedAttributeRemoved,	
+		ArchiveFieldRule_Exception,
+		BrandNamesRule_RemovedSuperfluousBrand,
+		BrandNamesRule_SuppressedBrand,
+		CardinalityRule_AddedDefaultValuesForMissingAttribute,
+		CardinalityRule_OmittedExtraAttribute,
+		CardinalityRule_MissingGdfFeatureCode,
+		CardinalityRule_RemovedSuperfluousAttribute,
+		CardinalityRule_Violation,
+		ClassificationRule_NoRankFoundForGdf,
+		ClassificationRule_FeatureTypeChangedAfterUnspecifiedRemoval,
+		ClassificationRuleFieldEmpty,
+		ClassificationRule_ShowFields,
+		ClassificationRule_SubcategoryEmpty,
+		CompositeEvsRule_LengthViolation,
+		DataSelector_SourceAddressesTrumpNormalized,
+		DataSelector_SourceCategoriesTrumpNormalized,
+		DataSelector_SourceLocationsTrumpNormalized,
+		DataSelector_SourceNamesTrumpNormalized,
+		DataSelector_RemovedPreemptiveDueToSupplierRank,
+		DefaultLanguageCodeAssignment_AssignedDefaultLanguage,
+		DefaultLanguageCodeAssignment_NoDefaultLanguageAssigned,
+		EntryPointsRule_EntryPointDatasetDifferentFromPoi,
+		EntryPointsRule_EntryPointFailedAccuracy,
+		EntryPointsRule_EntryPointTooFarFromPoi,
+		EntryPointsRule_EntryPointTooFarFromPoiButIgnoredForMandatoryOrCore,
+		EntryPointsRule_EntryPointTooFarFromPoiButIgnoredForConnectCountry,
+		EntryPointsRule_EntryPointWithoutPoint,
+		EntryPointsRule_NoMainEntryPointSoAllEntryPointsAndTheirRelationshipsRemoved,
+		EntryPointsRule_SkipDistanceCheckForFeature,
+		EntryPointsRule_TifEntryPointGeocodeFailedUseMappedEntryPoint,
+		FaceUpdate_NoFaceFound,
+		FaceUpdate_PlaceNotInValidArea,
+		FaceUpdate_PlaceOrEntryPointInDummyArea,
+		GP3PlaceOriginIds,
+		GP3PlaceWriter_POI_UNIQUE_ID,
+		Gp3ProductizationService_Exception,
+		GenericAttributesRule_InvalidAttributeValue,
+		GenericAttributesRule_UnmappedAttributeValue,
+		GenericAttributesRule_NoMappingFound,
+		GenericAttributesRule_DuplicateAttribute,
+		GenericAttributesRule_NullGdfCodeDesc,
+		GenericAttributesRule_FeatureDoesNotSupportQualityMark,
+		Identifier_ExternalIdentifier,
+		IsCore,
+		IsMandatory,
+		IsHighestRanked,
+		InvalidCombinationInName,
+		LocationDataRule_LogAccuracies,
+		LocationDataRule_LogCoordinates,
+		LocationDataRule_LogPoiDistance,
+		LocationDataRule_NoAccuracies,
+		LocationDataRule_NoCoordinates,
+		TifSourceNotRejected_BADGEOCODE,
+		MandatoryNotRejected_OOB,
+		NotRejected_NOENTRYPOINT,
+		NVLRelation,
+		OfficialNamesRule_GeneratedAlternateNameFromBrand,
+		OfficialNamesRule_GeneratedOfficialNameFromBrand,
+		OfficialNamesRule_GeneratedOfficialNameFromLocality,
+		AlternateNamesRule_GeneratedAlternateName,
+		AlternateNamesRule_SkippedSimilarAlternateName,
+		AlternateNamesRule_SkippedEqualAlternateName,
+		NamesRule_InvalidCharactersInName,
+		NamesRule_InvalidZeroInName,
+		OpeningHoursRule_SkippedInvalid,
+		//PhoneFaxRule_InvalidNumber, duplicate value
+		PhoneFaxRule_NumberParseException,
+		MapProcessing_EntryPointInWater,
+		MapProcessing_PointInWater,
+		MapProcessing_PointInDummyAdminArea,
+		MapProcessing_PointOutsideCountry,
+		Reject_BADGEOCODE,
+		Reject_NOENTRYPOINT,
+		Reject_NOMAP,
+		Reject_OOB,
+		Reject_TRUMP,
+		Reject_Accepted,
+		Reject_UNKNOWN,
+		Reject_CATEGORY_BLACKLISTED,
+		Reject_INVALID_CHARACTER,
+		Reject_INVALID_ZERO_IN_NAME,
+		RelatedFeatureUpdate_RestAreaRemoveServiceWithNoRelations,
+		TrumperMerger_ClusterReplacedByMandatoryReclustering,
+		TrumperMerger_NewClusterForMandatoryPlace,
+		TrumperMerger_Reject,
+		TrumperMerger_SupplierRank,
+		VicinityUpdate_NoVicinityCodeFoundForCityCenter,
+		Missing_Core_Relation,
+		Missing_external_related_place,
+		RelationsRule_InvalidRelation,
+		RemoveInvalidRelations_InvalidRelationRemoved, // OBSOLETE
+		RemoveInvalidRelations_InvalidCategoryRelationRemoved,
+		RemoveInvalidRelations_InvalidDatasetRelationRemoved,
+		RelatedFeatureUpdate_RestAreaAddMissingServiceForExistingRelations,
+		OOB_Removed,
+		ObservationApplied,
+		ObservationNotApplied,
+		MandatoryPlace_ReplacedByObservation,
+		ObservationNotMatched,
+		ObservationIncomplete,
+		RemoveDuplicatePublishedId,
+		LimitToOnePerLanguage,
+		
+		// AssociationResolution
+		ResolvedCorrectly, // OBSOLETE
+		ResolvedIncorrectly,
+		ResolutionNotNeeded, // OBSOLETE
+		PlaceHasNoAssociations, // OBSOLETE
+		RejectedDuplicateCluster,
+		// StableId
+		AssignStableId_New,
+		AssignStableId_Existing,
+		LargePartition,
+		Merged,
+		
+		
+		//Online Product
+		OPProductizationService_Exception, // OBSOLETE
+		OPPlaceOriginIds, // OBSOLETE
+		Reject_NoCategory, // OBSOLETE
+		Reject_NoLatLong, // OBSOLETE
+		Reject_NoName, // OBSOLETE
+		Reject_NoID, // OBSOLETE
+		ProductizedAdvertizer, // OBSOLETE
+
+		// FakeRuleFactory and other tests
+		TEST
+	}
+
+	enum Phase {
+		Intake,
+		StableId,
+		Normalization,
+		Geocoding,
+		Matching,
+		ObservationJoining,
+		Productizing,
+		AssociationResolution
+	}
+
+   enum Verbosity {
+        TRACE,
+        DEBUG,
+        INFO,
+        WARN,
+        ERROR
+    }
+
+	record Trace {
+	
+		Verbosity traceLevel;
+		union { null, long } timestamp = null;
+	
+		string objectId;
+		union { null, array<string> } originObjectIds = null;
+		
+		Phase phase;
+		
+		// what are we tracing? e.g classname of rule
+		TraceType traceType;
+		
+		// parameters for tracetype? e.g. attribute worked on, before state data, after state data
+		// traceparameter can be key=value e.g. brand=McDonalds. To be investigated
+		union { null, map<string> } traceParameters = null;
+	}
+}

@@ -1,0 +1,26 @@
+/**
+ * TYPE:    Clustered Place AVRO IDL
+ * FILE:    unicorn-clustered-place.avdl 
+ */
+
+@namespace("com.tomtom.places.unicorn.domain.avro.clustered")
+protocol ClusteredPlaceDefinition {
+
+	import idl "unicorn-source-place.avdl";
+	import idl "unicorn-composite-place.avdl";
+	import idl "unicorn-product-id.avdl";
+	
+	record Observation {
+		union { null, com.tomtom.places.unicorn.domain.avro.composite.CompositePlace } before = null;
+		union { null, com.tomtom.places.unicorn.domain.avro.composite.CompositePlace } after = null;
+	}
+	
+	record ClusteredPlace {
+		com.tomtom.places.unicorn.domain.avro.source.AVUUID clusteredPlaceId;
+		union { null, com.tomtom.places.unicorn.domain.avro.productized.ProductId } productId = null;
+		union { null, array<com.tomtom.places.unicorn.domain.avro.composite.CompositePlace> } matchingPlaces;
+		union { null, array<com.tomtom.places.unicorn.domain.avro.composite.CompositePlace> } rejectedPlaces = null;
+		union { null, array<Observation> } editObservations = null;
+		boolean isFromSplit = false;
+	}
+}

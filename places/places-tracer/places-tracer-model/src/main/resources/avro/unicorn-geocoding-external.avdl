@@ -1,0 +1,73 @@
+/**
+ * Geocoding Service Avro IDL for JPPF
+ */
+@namespace("com.tomtom.places.unicorn.domain.avro.geocoding.external")
+
+protocol GeocodingExternalDefinition {
+
+	import idl "unicorn-normalized-place.avdl";
+		
+	record ExtReverseParameters {
+		string radius;
+		string matchType;
+	}
+		
+	record ExtLocus {
+		com.tomtom.places.unicorn.domain.avro.source.AVUUID locusToEpKey;
+		com.tomtom.places.unicorn.domain.avro.source.LocationContentType locationContentType;
+		union { null, com.tomtom.places.unicorn.domain.avro.source.MapReference } mapReference = null;
+		union { null, com.tomtom.places.unicorn.domain.avro.normalized.NAccuracy } accuracy = null;
+		union { null, com.tomtom.places.unicorn.domain.avro.normalized.ForwardGeocodingStatus } forwardGeocodingStatus = null;
+		union { null, com.tomtom.places.unicorn.domain.avro.normalized.NPoint } point = null;
+		union { null, com.tomtom.places.unicorn.domain.avro.normalized.NAddress } address = null;
+		union { null, ExtReverseParameters } reverseParameters = null;
+	}
+
+	record ExtEntryPoint {
+		union { null, com.tomtom.places.unicorn.domain.avro.source.AVUUID } locusToEpKey;
+		union { null, com.tomtom.places.unicorn.domain.avro.source.EntryPointType } type = null;
+	    union { null, com.tomtom.places.unicorn.domain.avro.source.MapReference } mapReference = null;
+	    union { null, com.tomtom.places.unicorn.domain.avro.normalized.NAccuracy } accuracy = null;
+		union { null, com.tomtom.places.unicorn.domain.avro.normalized.NPoint } point = null;
+		union { null, ExtReverseParameters } reverseParameters = null;
+	}
+	
+	record GeocodingValues {
+		union { null, string} label = null;
+		union { null, string } country = null;
+		union { null, string} state = null;
+		union { null, array<ExtLocus> } loci = null;
+		union { null, array<ExtEntryPoint> } entryPoints = null;
+		boolean reverseGeocode;
+	}
+	
+	/* Geocode request sent to service */
+	record GeocodeRequest {
+		com.tomtom.places.unicorn.domain.avro.source.AVUUID deliveryPlaceId;
+		GeocodingValues geocodingValues;
+		union { null, string } hashKey = null;
+	}
+
+	/* Server error types */
+	enum GeocodingErrorType {
+	    GeolocusException, 
+    	GeoAmericaException,
+    	IOException,
+    	UnknownException,
+    	FatalException
+	}
+			
+	 /* Error thrown by the geocoding service */
+	error GeocodingErrorEx {
+		GeocodingErrorType type;
+		union {string, null} description;
+	}
+	
+	/*Geocode response returned by service */
+	record GeocodeResponse {
+		com.tomtom.places.unicorn.domain.avro.source.AVUUID deliveryPlaceId;
+		union { null, GeocodingValues } geocodingValues = null;
+		union { null, GeocodingErrorEx } reportedError = null;
+		union { null, string } hashKey = null;
+	}
+}

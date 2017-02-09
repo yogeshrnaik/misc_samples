@@ -1,0 +1,28 @@
+/**
+ * TYPE:    Violation Avro IDL
+ * FILE:    unicorn-archive-violation.avdl
+ * VERSION: 3.5-SNAPSHOT
+ */
+
+@namespace("com.tomtom.places.unicorn.domain.avro.archive")
+protocol ViolationDefinition {
+
+	record ViolationVariable {
+	    string key;
+	    string value;
+	}
+
+	record Violation {
+		int ruleId;
+		int ruleMajorVersion;
+		int ruleMediumVersion;
+		union { null, string} featureId=null;
+		union { null, string} featureType=null;
+		union { null, string} message;
+        union { null, string} ruleLink;
+		union { null, string} ruleBehaviour;
+		union { null, string} ruleSeverity;
+        array<ViolationVariable> variables;
+	}
+
+}

@@ -1,0 +1,29 @@
+/**
+ * TYPE:    Related Archive Place Diff Cluster Avro IDL
+ * FILE:    unicorn-related-archive-place-diff-cluster.avdl
+ */
+
+@namespace("com.tomtom.places.unicorn.domain.avro.archive")
+protocol RelatedArchivePlaceDiffClusterDefinition {
+
+	import idl "unicorn-related-archive-place-diff.avdl";
+	
+	record Point {		
+		union { null, double } latitude = null;
+		union { null, double } longitude = null;
+	}
+	
+	enum Operation {
+		Delete,
+		Add,
+		Update,
+		Grouped
+	}
+
+	record RelatedArchivePlaceDiffCluster {
+		union { null, string } clusterId = null;
+		union { null, Point} location =null;
+		union { null, Operation } operation =null;
+		union { null, array<RelatedArchivePlaceDiff> }relatedArchivePlaceDiffs=null;
+	}
+}

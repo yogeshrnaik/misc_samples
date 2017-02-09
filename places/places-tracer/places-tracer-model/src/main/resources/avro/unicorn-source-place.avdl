@@ -1,0 +1,517 @@
+/**
+ * TYPE:    Source Place AVRO IDL
+ * FILE:    unicorn-source-place.avdl 
+ * VERSION: 2.1.4-SNAPSHOT
+ */
+ 
+@namespace("com.tomtom.places.unicorn.domain.avro.source")
+protocol SourcePlaceDefinition {
+
+	record AVUUID {
+	    long mostSigBits;
+	    long leastSigBits;
+	}
+
+	enum ExternalIdType {
+		Stable,
+		NotStable
+	}
+
+	record ExternalId {
+		ExternalIdType type;
+		string value;
+	}
+	
+	record Supplier {
+		string id = "";
+		string name;
+	}
+	
+	record Delivery {
+		string id = "";
+		string version;
+		union { null, string } country = null;
+	}
+	
+	enum LanguageCodeType {
+		IsoA2,
+		IsoA3,
+		Tif,
+		Locale
+	}
+
+	record Text {
+		union { null, string } value;
+		union { null, string } language;
+		union { null, LanguageCodeType } languageCodeType;
+	}
+	
+	enum LocalitySource {
+		Supplier,
+		Delivery,
+		Address
+	}
+	
+	record LocalityOrigin {
+		union { null, LocalitySource } source;
+		union { null, int } localityId;
+	}
+
+/* Name components */	
+	
+	enum NameType {
+		Official, 
+		Alternative
+	}
+
+	record Name {
+		Text text;
+		union { null, NameType } type = null;
+	}
+
+/* Addressing components */
+
+	enum EntryPointType {
+		Main,
+		Secondary
+	}
+
+	enum LocationContentType {
+	    AddressDelivered, 
+    	PointDelivered
+	}
+
+	enum PositionalAccuracy {
+		NormalAccurate,
+		LowInaccurate,
+		HighInaccurate
+	}
+
+	enum GeocodingAccuracy {
+		AddressPoint,
+		AddressPointNearby,
+		HouseNumber,
+		HouseNumberReverse,  // In MP only used for TIF:GAL16
+		HouseNumberNearby,
+		HouseNumberNearbyReverse,  // In MP only used for TIF:GAL17
+		Intersection,
+		Street,
+		StreetReverse,  // In MP only used for TIF:GAL18
+		AdminArea,
+		Calculated,
+		ClosestEdge,
+		ManuallyPlaced,
+		ManuallyPlaced1,  // In MP only used for TIF:GAL1
+		ManuallyPlaced2,  // In MP only used for TIF:GAL2
+		Failed,
+		FailedDistanceTest,
+		PostalCode,
+		Area,
+		Country,
+		NotGeocoded
+	}
+
+	record Accuracy {
+		union { null, string } rawAccuracy = null;
+		union { null, GeocodingAccuracy } geocodingAccuracy = null; 
+		union { null, PositionalAccuracy } positionalAccuracy = null;
+	}
+
+	record House {
+		union { null, string } raw = null;
+		union { null, string } number = null;
+		union { null, string } extension = null;
+		union { null, string } building = null;
+		union { null, string } suite = null;
+	}
+	
+	record PostalCode {
+		union { null, string } raw = null;
+		union { null, string } main = null;
+		union { null, string } sub = null;
+	}
+
+	record Point {
+		union { null, string } raw = null;
+		union { null, string } latitude = null;
+		union { null, string } longitude = null;
+		union { null, int} epsg = null; 
+		// All coordinates should be converted to 4326 (WGS84) on intake;
+	}
+	
+	record MapReference {
+		union { null, string } edgeId = null;
+		union { null, string } edgeSide = null;
+		union { null, string } partition = null;
+		union { null, string } dataset = null;
+		union { null, string } mapversion = null;
+		union { null, string } faceid = null;
+	}
+		
+	record Address {
+		union { null, string } country = null;
+		union { null, array<string> } rawAddressText = null;
+		union { null, Text } city = null;
+		union { null, Text } stateOrProvince = null;
+		union { null, Text } street = null;
+		union { null, House } house = null;
+		union { null, PostalCode } postalCode = null;
+	}
+	
+	record Locus {
+		union { null, LocationContentType } locationContentType = null;
+		union { null, MapReference } mapReference = null;
+		union { null, Accuracy } accuracy = null;
+		union { null, Point } point = null;
+		union { null, Address } address = null;
+	}
+	
+	record EntryPoint {
+		union { null, Text } name = null;
+		union { null, EntryPointType } type = null;
+		union { null, MapReference } mapReference = null;
+		union { null, Accuracy } accuracy = null;
+		union { null, Point } point = null;
+	}
+		
+/* Communication channel components */
+
+	enum PhoneType {
+		Local,
+		Fax,
+		Central
+	}
+	
+	record PhoneNumber {
+		union { null, PhoneType } type = null;
+        union { null, string } countryCode = null;
+		union { null, string } value = null;
+	}
+
+	record WebAddress {
+		union { null, string } value = null;
+	}
+	
+	record EmailAddress {
+		union { null, string } value = null;
+		union { null, string } displayName = null;
+	}
+
+/* Other attributes for all Places */ 
+
+	record Hours {
+		union { null, string } open = null;
+		union { null, string } close = null;
+		union { null, string } dayOfWeek = null;
+		union { null, string } gdfTime = null;
+	}
+
+	record Description {
+		union { null, Text } text = null;
+	}
+	
+	enum PaymentMethod {
+		Cash,
+		ExactChange,
+		CashOnDelivery,
+		Pin,
+		Cheque,
+		DebitCard,
+		CreditCard,
+		Visa,
+		IDeal,
+		MasterCard,
+		PayPal,
+		FuelCard,
+		DieselOnlyCard,
+		ElectronicPurse,
+		ElectronicToll,		
+		Coupon,
+		Invoice,
+		WireTransfer,
+		Variable,
+		ServiceProviderPaymentMethod,
+		NoPayment
+	}
+	
+/* Classification components */ 
+
+	record Category {
+		long id = -1;
+		union { null, string } text = null;
+	}
+	
+	record Keyword {
+		long id = -1;
+		union { null, Text } text = null;
+	}
+	
+	record Brand {
+		long id = -1;
+		union { null, Text } name = null;
+	}
+	
+	record Recode {
+		union { null, string } scheme = null;
+		union { null, string } value = null;
+		union { null, string } targetRef = null;
+	}
+	
+	enum RelationType {
+		ServiceBelongingToService,
+		ServiceToRestArea,
+		ServiceToAirport,
+		AccessToAirport,
+		ParkingToService,
+		RestaurantToService,
+		ServiceToShoppingCenter,
+		ElectricVehicleStationToService,
+		Vicinity
+	}
+	
+	record Relation {
+		union { null, ExternalId } relatedExternalPlaceId = null;
+		union { null, RelationType } relType = null;
+		union { null, AVUUID } relatedDeliveryPlaceId = null;
+		union { null, string } relatedLongitude = null;
+		union { null, string } relatedLatitude = null;
+		union { null, Text } relatedName = null;
+		union { null, Recode } relatedPoiType = null;
+	}
+	
+/* Category specific attributes */ 
+
+	enum EvsCharging {
+		EVS_110_120V_10A_1_Phase,
+		EVS_110_120V_12A_1_Phase,
+		EVS_110_120V_16A_1_Phase,
+		EVS_200_240V_10A_1_Phase,
+		EVS_200_240V_12A_1_Phase,
+		EVS_200_240V_16A_1_Phase,
+		EVS_200_240V_16A_3_Phase,
+		EVS_200_240V_32A_1_Phase,
+		EVS_200_240V_32A_3_Phase,
+		EVS_380_480V_16A_3_Phase,
+		EVS_380_480V_32A_3_Phase,
+		EVS_380_480V_63A_3_Phase,
+		EVS_100_120V_8A_1_Phase,
+		EVS_200_240V_8A_1_Phase,
+		EVS_50_500V_Direct_Current_62A_25kW,
+		EVS_50_500V_Direct_Current_125A_50kW,
+		EVS_200_450V_Direct_Current_200A_90kW,
+		EVS_200_480V_Direct_Current_255A_120kW,
+		EVS_BatteryExchange,
+		EVS_Unused
+	}
+
+	enum EvsReceptacle {
+		EVS_AVCON_Connector,
+		EVS_CableWith_IEC_62196_2_Type_1_Connector,
+		EVS_CableWith_IEC_62196_2_Type_2_ConnectorMode_1_3,
+		EVS_CableWith_IEC_62196_2_Type_2_ConnectorMode_2_3,
+		EVS_CableWith_IEC_62196_2_Type_3_Connector_16A_1_Phase,
+		EVS_CableWith_IEC_62196_2_Type_3_Connector_32A_1_Phase,
+		EVS_CableWith_IEC_62196_2_Type_3_Connector_32A_3_Phase,
+		EVS_IEC_60309,
+		EVS_IEC_62196_2_Type_2_Outlet,
+		EVS_IEC_62196_2_Type_3_16A_1_PhaseOutlet,
+		EVS_IEC_62196_2_Type_3_32A_1_PhaseOutlet,
+		EVS_IEC_62196_2_Type_3_32A_3_PhaseOutlet,
+		EVS_InductiveLargePaddle,
+		EVS_InductiveSmallPaddle,
+		EVS_NEMA_5_20,
+		EVS_SAE_J1772,
+		EVS_StandardHousehold,
+		EVS_TEPCO,
+		EVS_TeslaConnector,
+		Combo_Type_1_Base,
+		Combo_Type_2_Base,
+		China_GB_Part_2,
+		China_GB_Part_3,
+		Better_Place_Socket,
+		Marechal_Socket,
+		IEC_309_2_DC_Plug
+	}
+
+	enum EvsAccess {
+		EVS_AuthorizedPersonnelOnly,
+		EVS_EmployeesOnly,
+		EVS_GenericRestriction,
+		EVS_MembersOnly,
+		EVS_NoRestriction,
+		EVS_ResidentsOnly
+	}
+	
+	enum EvsReservability {
+		ProvidesAvailability,
+		IsReservable
+	}
+
+	record EvsSpot {
+		union { null, string } evsSpotIdentifier = null;
+		union { null, string } evsIdentifier = null;
+		union { null, string } evsCompanyName = null;
+		union { null, int } evsNumberOfSpots = null;
+		union { null, EvsAccess } evsAccess = null;
+		union { null, array<string> } evsStorey = null;
+		union { null, array<EvsCharging> } evsCharging = null;
+		union { null, EvsReceptacle } evsReceptacle = null;
+		union { null, array<EvsReservability> } evsReservability = null;
+		union { null, array<PaymentMethod> } paymentMethods = null;	
+	}
+	
+	record Rating {
+		union { null, string } rawRating = null;
+		union { null, int } rating = null;
+		union { null, string } source = null;
+	}
+	
+/* Generic key value pairs */
+
+	record KeyValuePair {
+		union { null, string } key = null;
+		union { null, string } value = null;
+	}
+	
+	record Generic {
+		union { null, string } name = null;
+		union { null, array<KeyValuePair> } keyValues = null;
+	}
+		
+/* Processing flags */
+
+	enum ProcessingFlag {
+		OutOfBusiness,		
+		NoMatching,			// OBSOLETE
+		Mandatory,
+		Advertizer,         // OBSOLETE
+		TifCore,
+		Has3DLandmark,
+		AlongHighway,		// OBSOLETE
+		MajorRoad,
+		NoDetection,		// OBSOLETE
+		NoDetectionInNames, // OBSOLETE
+		PreserveNames,      // OBSOLETE
+		Debug,              // OBSOLETE
+		NeedsTitleCasing,	// OBSOLETE
+		NoAddressCasing,	// OBSOLETE
+		CleanCity,			// OBSOLETE
+		CleanStreet,		// OBSOLETE
+		KeepParentheses,	// OBSOLETE
+		UseSourceLocation,	// OBSOLETE
+		ReverseGeocode,
+		ForwardGeocode,
+		ShowStopper,
+		MainAirport
+	}
+
+	enum PetrolFlag {
+		LPG,
+		Petrol,
+		Diesel,
+		CNG,
+		Hours24,
+		FoodShop,
+		CarWash,
+		CreditCards,
+		FuelCards,
+		DieselOnlyCards,
+		Biodiesel,
+		TruckPumps,
+		Highway,
+		AdBlue,
+		DieselCommercial,
+		E85,
+		Hydrogen,
+		Propane
+	}
+	/* Observations*/
+	
+	enum ObservationType {
+		BeforeEdit,
+		AfterEdit,
+		Addition
+	}
+		
+	record MetaData {
+		union { null, string } featureId = null;
+		union { null, string } timeStamp = null;
+		union { null, string } transactionId = null;
+		union { null, string } branchId = null;
+		union { null, string } startVersion = null;
+		union { null, string } endVersion = null;
+		union { null, string } projectId = null;
+		union { null, string } userId = null;
+	}
+	
+	record Observation{
+		union { null, ObservationType } observationType = null;
+		union { null, string } observationId = null;
+		union { null, MetaData } metaData = null;
+	}
+
+	record SourcePlace {
+	
+		AVUUID deliveryPlaceId;
+		
+		union { null, array<ExternalId> } externalIds = null;
+		
+		union { null, int } lineNumber = null;
+		
+		union {null, LocalityOrigin } localityOrigin = null;
+			
+		union { null, Supplier} supplier = null;
+		
+		union { null, Delivery } delivery = null;
+
+		union { null, array<Name> } names = null;
+		
+		union { null, array<Locus> } loci = null;
+		
+		union { null, array<EntryPoint> } entryPoints = null;
+		
+		union { null, array<PhoneNumber> } phoneNumbers = null;
+		
+		union { null, array<WebAddress> } webAddresses = null;
+		
+		union { null, array<EmailAddress> } emailAddresses = null;
+
+		union { null, array<Hours> } openingHours = null;
+		
+		union { null, array<Description> } descriptions = null;
+		
+		union { null, array<PaymentMethod> } paymentMethods = null;	
+
+		union { null, array<Relation> } relations = null;
+		
+		union { null, array<Category> } categories = null;
+		
+		union { null, array<Keyword> } keywords = null;
+				
+		union { null, array<Brand> } brands = null;
+		
+		union { null, array<EvsSpot> } evsStation = null;
+
+		union { null, array<Rating> } ratings = null;
+		
+		union { null, array<Recode> } recodes = null;
+		
+		union { null, array<Generic> } genericAttributes = null;
+		
+		union { null, array<ProcessingFlag> } processingFlags = null;
+/*
+		union { null, boolean } IsOutOfBusiness = null;
+		
+		union { null, string } ThreeDeeLandMarkId = null;
+		
+		union { null, boolean } LiesAlongMajorRoad = null;
+*/
+		union { null, string } region = null;
+		
+		union { null, array<Observation> } observation = null;
+		
+		// To be removed again when taxonomy changes have been completed
+		union { null, array<PetrolFlag> } petrolFlags  = null;
+				
+	}	
+}

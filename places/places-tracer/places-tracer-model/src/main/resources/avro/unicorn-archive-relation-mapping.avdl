@@ -1,0 +1,14 @@
+/**
+ * TYPE:    Archive Relation Mapping IDL
+ * FILE:    unicorn-archive-relation-mapping.avdl 
+ * VERSION: 3.5-SNAPSHOT
+ */
+
+@namespace("com.tomtom.places.unicorn.domain.avro.archive")
+protocol ArchiveRelationMappingDefinition {
+	
+	record ArchiveRelationMapping {
+		string fromExternalId;
+		string toExternalId;
+	}
+}

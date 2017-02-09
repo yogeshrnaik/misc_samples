@@ -1,22 +1,11 @@
 @namespace("com.tomtom.places.unicorn.domain.avro.tracer")
 protocol PlaceTraceDefinition {
 
-	@namespace("com.tomtom.places.unicorn.domain.avro.normalized")
-	record NormalizedPlace {
-	}
-	
-	@namespace("com.tomtom.places.unicorn.domain.avro.clustered")
-	record ClusteredPlace {
-	}
-	
-	@namespace("com.tomtom.places.unicorn.domain.avro.archive")
-	record ArchivePlace {
-	}
-	
-	@namespace("com.tomtom.places.unicorn.domain.avro.trace")
-	record Trace {
-	}
-	
+	import idl "unicorn-normalized-place.avdl";
+	import idl "unicorn-clustered-place.avdl";
+	import idl "unicorn-archive-place.avdl";
+	import idl "unicorn-trace.avdl";
+
 	record PlaceTrace {
 		union { null, com.tomtom.places.unicorn.domain.avro.normalized.NormalizedPlace } mappedPlace = null;
 		union { null, com.tomtom.places.unicorn.domain.avro.clustered.ClusteredPlace } clusteredPlace = null;

@@ -1,0 +1,261 @@
+/**
+ * TYPE:    Normalized Place AVRO IDL
+ * FILE:    unicorn-normalized-place.avdl 
+ * VERSION: 2.1.5-RELEASE
+ */
+ 
+@namespace("com.tomtom.places.unicorn.domain.avro.normalized")
+protocol NormalizedPlaceDefinition {
+
+	import idl "unicorn-source-place.avdl";
+
+	record NText {
+		union { null, string } value = null;
+		union { null, string } language = null; //shortest ISO 639 possible
+		union { null, string } territory = null; //ISO ISO 3166-1 alpha-2 and UN codes for supra-national territories
+		union { null, string } script = null; //ISO 15924
+		union { null, string } variant = null; //variant subtag registered with IANA
+	}
+	  
+/* Name components */	
+
+	record NName {
+		union { null, NText } text;
+		union { null, string } matchNormalizedName = null;
+		union { null, string } strippedNormalizedName = null;
+		union { null, com.tomtom.places.unicorn.domain.avro.source.NameType } type = null;
+	}
+
+/* Addressing components */
+
+	record NAccuracy {
+		union { null, com.tomtom.places.unicorn.domain.avro.source.GeocodingAccuracy } geocodingAccuracy = null; 
+		union { null, com.tomtom.places.unicorn.domain.avro.source.PositionalAccuracy } positionalAccuracy = null;
+	}
+
+	record NHouse {
+		union { null, string } number = null;
+		union { null, string } extension = null;
+		union { null, string } building = null;
+		union { null, string } suite = null;
+	}	
+  
+	record NPostalCode {
+		union { null, string } main = null;
+		union { null, string } sub = null;
+	}
+	
+	record NPoint {		
+		union { null, double } latitude = null;
+		union { null, double } longitude = null;
+		union { null, long } morton = null;
+	}
+					
+	record NAddress {
+		union { null, string } country = null; //ISOA2
+		union { null, NText } city = null;
+		union { null, NText } stateOrProvince = null;
+		union { null, NText } street = null;
+		union { null, NText } unNormalizedStreet = null;
+		union { null, NHouse } house = null;
+		union { null, NPostalCode } postalCode = null;
+	}
+	
+	enum ForwardGeocodingStatus {
+		Succeeded,
+		FailedAccuracyTest,
+		FailedDistanceTest,
+		NotEvaluated
+	}
+	
+	record NLocus {
+		com.tomtom.places.unicorn.domain.avro.source.AVUUID locusToEpKey;
+		com.tomtom.places.unicorn.domain.avro.source.LocationContentType locationContentType;
+		union { null, com.tomtom.places.unicorn.domain.avro.source.MapReference } mapReference = null;
+		union { null, NAccuracy } accuracy = null;
+		union { null, ForwardGeocodingStatus } forwardGeocodingStatus = null;
+		union { null, NPoint } point = null;
+		union { null, NAddress } address = null;
+	}
+
+	record NEntryPoint {
+		union { null, com.tomtom.places.unicorn.domain.avro.source.AVUUID } locusToEpKey;
+		union { null, NText } name = null;
+		union { null, com.tomtom.places.unicorn.domain.avro.source.EntryPointType } type = null;
+	    union { null, com.tomtom.places.unicorn.domain.avro.source.MapReference } mapReference = null;
+	    union { null, NAccuracy } accuracy = null;
+		union { null, NPoint } point = null;
+	}
+	
+	record Locality {
+		union { null, long } id = null;
+	}
+				
+/* Communication channel components */
+
+	record NPhoneNumber {
+		union { null, com.tomtom.places.unicorn.domain.avro.source.PhoneType } type = null;
+		union { null, int } countryCode = null;
+		union { null, string } nationalNumber = null;
+		union { null, string } extension = null;
+	}
+
+/* Classification components */ 	
+
+	record NCategory {
+		union { null, long } id = null;
+		union { null, string } text = null;
+	}
+	
+	record NKeyword {
+		union { null, long } id = null;
+		union { null, NText } text = null;
+	}
+	
+	record NBrand {
+		union { null, long } id = null;
+		union { null, NText } name = null;
+	}
+
+/* Other attributes for all Places */ 
+
+	record NDescription {
+		union { null, NText } text = null;
+	}
+	
+	enum RelationType {
+		ServiceToService,
+		Vicinity
+	}
+
+	record NRelation {
+		union { null, com.tomtom.places.unicorn.domain.avro.source.ExternalId } relatedExternalPlaceId = null; // this field is only necessary because the resolution of the related delivery place ID is done after normalization
+		union { null, com.tomtom.places.unicorn.domain.avro.source.AVUUID } relatedDeliveryPlaceId = null;
+		union { null, RelationType } relType = null;
+		union { null, NPoint } relatedPoint = null;
+		union { null, NText } relatedName = null;
+		union { null, array<NCategory> } relatedCategories = null;
+	}	
+
+/* Category specific attributes */ 
+
+	record NEvsSpot {
+		union { null, array<com.tomtom.places.unicorn.domain.avro.source.EvsCharging> } evsCharging = null;
+		union { null, com.tomtom.places.unicorn.domain.avro.source.EvsReceptacle } evsReceptacle = null;
+		union { null, array<com.tomtom.places.unicorn.domain.avro.source.EvsReservability> } evsReservability = null;
+	}
+
+	record NEvsStation {
+		union { null, string } evsCompanyName = null;
+		union { null, int } evsNumberOfSpots = null;
+		union { null, string } evsIdentifier = null;
+		union { null, com.tomtom.places.unicorn.domain.avro.source.EvsAccess } evsAccess = null;
+		union { null, array<string> } evsStorey = null;
+		union { null, array<NEvsSpot> } evsSpot = null;
+		union { null, array<com.tomtom.places.unicorn.domain.avro.source.PaymentMethod> } paymentMethods = null;
+	}
+
+	record NRating {
+		union { null, int } rating = null;
+		union { null, string } source = null;
+	}
+	
+		/* Observations*/
+	
+	enum NObservationType {
+		BeforeEdit,
+		AfterEdit,
+		Addition
+	}
+		
+	record NMetaData {
+		union { null, string } featureId = null;
+		union { null, string } timeStamp = null;
+		union { null, string } transactionId = null;
+		union { null, string } branchId = null;
+		union { null, string } startVersion = null;
+		union { null, string } endVersion = null;
+		union { null, string } projectId = null;
+		union { null, string } userId = null;
+	}
+	
+	record NObservation{
+		union { null, NObservationType } observationType = null;
+		union { null, string } observationId = null;
+		union { null, NMetaData } metaData = null;		
+		union { null, string } subType = null;
+	}
+
+    /* To direction/From direction and associated language code */
+    record NDirection {
+             union { null, array<string> } routeNames = null;
+             union { null, array<string> } routeNumbers = null;
+             union { null, array<NText> } fromDirections = null;
+             union { null, array<NText> } toDirections = null;
+       }
+	record NormalizedPlace {		
+
+		com.tomtom.places.unicorn.domain.avro.source.AVUUID deliveryPlaceId;
+		
+		union { null, com.tomtom.places.unicorn.domain.avro.source.AVUUID } stableDeliveryId = null;
+		
+		union { null, array<com.tomtom.places.unicorn.domain.avro.source.ExternalId> } externalIds = null;
+
+		union { null, com.tomtom.places.unicorn.domain.avro.source.Supplier } supplier = null;	
+		
+		union { null, com.tomtom.places.unicorn.domain.avro.source.Delivery } delivery = null;
+		
+		union { null, array<NName> } names = null;
+		
+		union { null, array<NLocus> } loci = null;
+		
+		union { null, array<NEntryPoint> } entryPoints = null;
+		
+		union { null, Locality } locality = null;
+		
+		union { null, array<NPhoneNumber> } phoneNumbers = null;
+		
+		union { null, array<com.tomtom.places.unicorn.domain.avro.source.WebAddress> } webAddresses = null;
+		
+		union { null, array<com.tomtom.places.unicorn.domain.avro.source.EmailAddress> } emailAddresses = null;
+		
+		union { null, array<com.tomtom.places.unicorn.domain.avro.source.Hours> } openingHours = null;
+		
+		union { null, array<NDescription> } descriptions = null;
+		
+		union { null, array<com.tomtom.places.unicorn.domain.avro.source.PaymentMethod> } paymentMethods = null;
+		
+		union { null, array<NRelation> } relations = null;
+
+		union { null, array<NCategory> } categories = null;
+		
+		union { null, array<NCategory> } insertedCategories = null;
+		
+		union { null, array<NCategory> } preemptiveCategories = null;
+		
+		union { null, array<NKeyword> } keywords = null;
+
+		union { null, array<NBrand> } brands = null;
+
+		union { null, array<NEvsStation> } evsStation = null;
+
+		union { null, array<NRating> } ratings = null;
+		
+		union { null, boolean } emergency24h = null;
+		
+		union { null, array<com.tomtom.places.unicorn.domain.avro.source.Generic> } genericAttributes = null;
+		
+		union { null, array<com.tomtom.places.unicorn.domain.avro.source.ProcessingFlag> } processingFlags = null;
+		
+		// To be removed again when taxonomy changes have been completed
+		union { null, array<com.tomtom.places.unicorn.domain.avro.source.PetrolFlag> } petrolFlags = null;
+
+		union { null, array<string>} matchPartitions = null;
+		
+		union { null, NObservation } observation = null;
+		
+		// only for rest areas
+        union { null, NDirection } direction = null;		
+		
+	}
+}

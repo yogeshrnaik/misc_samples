@@ -1,0 +1,16 @@
+/**
+ * TYPE:    Clustered Place AVRO IDL
+ * FILE:    unicorn-clustered-place-merge.avdl 
+ */
+
+@namespace("com.tomtom.places.unicorn.domain.avro.clustered")
+protocol ClusteredPlaceMergeDefinition {
+
+	import idl "unicorn-clustered-place.avdl";
+	import idl "unicorn-source-place.avdl";
+	
+	record MergedClusteredPlace {
+		com.tomtom.places.unicorn.domain.avro.clustered.ClusteredPlace clusteredPlace;
+		union { null, array<com.tomtom.places.unicorn.domain.avro.source.AVUUID> } originIds = null;
+	}
+}

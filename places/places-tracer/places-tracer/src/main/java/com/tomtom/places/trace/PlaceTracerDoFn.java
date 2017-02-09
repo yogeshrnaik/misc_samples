@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 
-import org.apache.avro.specific.SpecificRecordBase;
+import org.apache.commons.collections.CollectionUtils;
 
 import com.cloudera.crunch.DoFn;
 import com.cloudera.crunch.Emitter;
@@ -17,12 +17,12 @@ import com.tomtom.places.unicorn.domain.avro.normalized.NormalizedPlace;
 import com.tomtom.places.unicorn.domain.avro.trace.Trace;
 import com.tomtom.places.unicorn.domain.avro.tracer.PlaceTrace;
 
-public class PlaceTracerDoFn extends DoFn<Pair<String, Iterable<Pair<String, SpecificRecordBase>>>, PlaceTrace> {
+public class PlaceTracerDoFn extends DoFn<Pair<String, Iterable<Pair<String, PlaceTrace>>>, PlaceTrace> {
 
     private static final long serialVersionUID = -956735151112380467L;
 
     @Override
-    public void process(Pair<String, Iterable<Pair<String, SpecificRecordBase>>> input, Emitter<PlaceTrace> emitter) {
+    public void process(Pair<String, Iterable<Pair<String, PlaceTrace>>> input, Emitter<PlaceTrace> emitter) {
         PlaceTrace placeTrace = createPlaceTrace(input);
         sortTracesByTimestamp(placeTrace);
         if (placeTrace.getMappedPlace() != null) {
@@ -31,7 +31,7 @@ public class PlaceTracerDoFn extends DoFn<Pair<String, Iterable<Pair<String, Spe
         }
     }
 
-    private PlaceTrace createPlaceTrace(Pair<String, Iterable<Pair<String, SpecificRecordBase>>> input) {
+    private PlaceTrace createPlaceTrace(Pair<String, Iterable<Pair<String, PlaceTrace>>> input) {
         PlaceTrace placeTrace = PlaceTrace.newBuilder().setTraces(Lists.<Trace>newArrayList()).build();
         Set<Trace> uniqueTraces = Sets.newHashSet();
         fillPlaceTrace(input, placeTrace, uniqueTraces);
@@ -39,19 +39,21 @@ public class PlaceTracerDoFn extends DoFn<Pair<String, Iterable<Pair<String, Spe
         return placeTrace;
     }
 
-    private void fillPlaceTrace(Pair<String, Iterable<Pair<String, SpecificRecordBase>>> input, PlaceTrace placeTrace,
+    private void fillPlaceTrace(Pair<String, Iterable<Pair<String, PlaceTrace>>> input, PlaceTrace placeTrace,
         Set<Trace> uniqueTraces) {
-        for (Pair<String, SpecificRecordBase> pair : input.second()) {
-            SpecificRecordBase record = pair.second();
+        for (Pair<String, PlaceTrace> pair : input.second()) {
+            PlaceTrace record = pair.second();
 
-            if (record instanceof NormalizedPlace) {
-                placeTrace.setMappedPlace(NormalizedPlace.newBuilder((NormalizedPlace)record).build());
-            } else if (record instanceof ClusteredPlace) {
-                placeTrace.setClusteredPlace(ClusteredPlace.newBuilder((ClusteredPlace)record).build());
-            } else if (record instanceof ArchivePlace) {
-                placeTrace.setArchivePlace(ArchivePlace.newBuilder((ArchivePlace)record).build());
-            } else if (record instanceof Trace) {
-                uniqueTraces.add(Trace.newBuilder((Trace)record).build());
+            if (record.getMappedPlace() != null) {
+                placeTrace.setMappedPlace(NormalizedPlace.newBuilder(record.getMappedPlace()).build());
+            } else if (record.getClusteredPlace() != null) {
+                placeTrace.setClusteredPlace(ClusteredPlace.newBuilder(record.getClusteredPlace()).build());
+            } else if (record.getArchivePlace() != null) {
+                placeTrace.setArchivePlace(ArchivePlace.newBuilder(record.getArchivePlace()).build());
+            } else if (CollectionUtils.isNotEmpty(record.getTraces())) {
+                for (Trace trace : record.getTraces()) {
+                    uniqueTraces.add(Trace.newBuilder(trace).build());
+                }
             }
         }
     }

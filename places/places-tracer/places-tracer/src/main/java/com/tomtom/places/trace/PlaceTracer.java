@@ -1,21 +1,17 @@
 package com.tomtom.places.trace;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.avro.specific.SpecificRecordBase;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.DirectoryFileFilter;
-import org.apache.commons.io.filefilter.RegexFileFilter;
+import org.apache.commons.lang.time.DurationFormatUtils;
+import org.apache.commons.lang3.time.StopWatch;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-import com.cloudera.crunch.MapFn;
 import com.cloudera.crunch.PCollection;
 import com.cloudera.crunch.PGroupedTable;
 import com.cloudera.crunch.Pair;
@@ -26,25 +22,15 @@ import com.cloudera.crunch.impl.mr.MRPipeline;
 import com.cloudera.crunch.io.avro.AvroFileSource;
 import com.cloudera.crunch.io.avro.AvroFileTarget;
 import com.cloudera.crunch.types.avro.Avros;
-import com.tomtom.places.trace.util.Utils;
 import com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace;
 import com.tomtom.places.unicorn.domain.avro.clustered.ClusteredPlace;
 import com.tomtom.places.unicorn.domain.avro.normalized.NormalizedPlace;
-import com.tomtom.places.unicorn.domain.avro.trace.Trace;
 import com.tomtom.places.unicorn.domain.avro.tracer.PlaceTrace;
 import com.tomtom.places.unicorn.pipeline.repository.RunDescriptorSupport;
 import com.tomtom.places.unicorn.pipelineutil.HdfsTools;
 import com.tomtom.places.unicorn.rundescriptor.ArtifactId;
 
 public class PlaceTracer extends Configured implements Tool {
-
-    public class PlaceKeyFn extends MapFn<Pair<String, SpecificRecordBase>, String> {
-
-        @Override
-        public String map(Pair<String, SpecificRecordBase> input) {
-            return input.first();
-        }
-    }
 
     private final String runDescriptorPath;
     private final RunDescriptorSupport rds;
@@ -54,13 +40,16 @@ public class PlaceTracer extends Configured implements Tool {
     }
 
     public PlaceTracer(String runDescriptorPath, Configuration conf) throws Exception {
+        super(conf);
         this.runDescriptorPath = runDescriptorPath;
         rds = RunDescriptorSupport.loadFromFile(conf, runDescriptorPath);
     }
 
     public static void main(String[] args) throws Exception {
-        Configuration conf = HdfsTools.forLocalFileSystem().getConfiguration();
-        ToolRunner.run(conf, new PlaceTracer(args[0], conf), args);
+        StopWatch watch = new StopWatch();
+        watch.start();
+        ToolRunner.run(new Configuration(), new PlaceTracer(args[0]), args);
+        System.out.println("Finished in: " + DurationFormatUtils.formatDuration(watch.getTime(), "HH 'hr', mm 'min', ss 'sec'"));
     }
 
     public int run(String[] args) throws Exception {
@@ -69,7 +58,7 @@ public class PlaceTracer extends Configured implements Tool {
         return result.succeeded() ? 0 : -1;
     }
 
-    public PipelineResult run(Pipeline pipeline) throws IOException {
+    public PipelineResult run(Pipeline pipeline) throws Exception {
         String mappedPlaces = rds.getOutputArtifactPath(ArtifactId.MAPPED_PLACES, true);
         List<String> dirs = HdfsTools.forDefaultFileSystem().listDirectories(mappedPlaces, ".*");
         for (String locality : dirs) {
@@ -79,23 +68,16 @@ public class PlaceTracer extends Configured implements Tool {
     }
 
     @SuppressWarnings("unchecked")
-    public void createPlaceTraces(String locality, Pipeline pipeline) throws IOException {
-        PCollection<? extends SpecificRecordBase> mappedPlaces = readMappedPlaces(locality, pipeline);
-        PCollection<Pair<String, SpecificRecordBase>> mapped = withKey("MAPPED_PLACES_KEY", mappedPlaces, NormalizedPlace.class);
+    public void createPlaceTraces(String locality, Pipeline pipeline) throws Exception {
 
-        PCollection<? extends SpecificRecordBase> clusteredPlaces = readClusteredPlaces(locality, pipeline);
-        PCollection<Pair<String, SpecificRecordBase>> clustered = withKey("CLUSTERED_PLACES_KEY", clusteredPlaces, ClusteredPlace.class);
+        PCollection<Pair<String, PlaceTrace>> mapped = wrapArtifact(ArtifactId.MAPPED_PLACES, NormalizedPlace.class, pipeline);
+        PCollection<Pair<String, PlaceTrace>> clustered = wrapArtifact(ArtifactId.CLUSTERED_PLACES, ClusteredPlace.class, pipeline);
+        PCollection<Pair<String, PlaceTrace>> archives = wrapArtifact(ArtifactId.ARCHIVE_PLACES, ArchivePlace.class, pipeline);
+        // PCollection<Pair<String, PlaceTrace>> traces = wrapArtifact(ArtifactId.TRACE_DUMP, Trace.class, pipeline);
 
-        PCollection<? extends SpecificRecordBase> traceColl = readTraces(locality, pipeline);
-        PCollection<Pair<String, SpecificRecordBase>> traces = withKey("TRACES_KEY", traceColl, Trace.class);
+        PCollection<Pair<String, PlaceTrace>> union = mapped.union(clustered).union(archives)/* .union(traces) */;
 
-        PCollection<? extends SpecificRecordBase> archivePlaces = readArchivePlaces(locality, pipeline);
-        PCollection<Pair<String, SpecificRecordBase>> archives = withKey("ARCHIVE_PLACES_KEY", archivePlaces, ArchivePlace.class);
-
-        PCollection<Pair<String, SpecificRecordBase>> union = mapped.union(clustered).union(archives).union(traces);
-
-        PGroupedTable<String, Pair<String, SpecificRecordBase>> groupByKey =
-            union.by(new PlaceKeyFn(), Avros.strings()).groupByKey();
+        PGroupedTable<String, Pair<String, PlaceTrace>> groupByKey = union.by(new PlaceKeyFn(), Avros.strings()).groupByKey();
 
         PCollection<PlaceTrace> traced = groupByKey.parallelDo(new PlaceTracerDoFn(), Avros.records(PlaceTrace.class));
 
@@ -107,58 +89,43 @@ public class PlaceTracer extends Configured implements Tool {
         writeTraced(pipeline, traced);
     }
 
+    private <T extends SpecificRecordBase> PCollection<Pair<String, PlaceTrace>>
+        wrapArtifact(ArtifactId artifactId, Class<T> clazz, Pipeline pipeline) throws Exception {
+        PCollection<T> artifact = readArtifact(artifactId, clazz, pipeline);
+        return artifact.parallelDo(artifactId.toString(), new KeyDoFn(), Avros.pairs(Avros.strings(), Avros.records(clazz)));
+    }
+
     private void writeTraced(Pipeline pipeline, PCollection<PlaceTrace> traced) throws IOException {
-        String placeTracesPath = rds.getOutputArtifactPath(ArtifactId.TRACE_DUMP, true) + "/place-traces";
+        String placeTracesPath = runDescriptorPath.substring(0, runDescriptorPath.indexOf("run-descriptor") - 1) + "/place-traces";
         HdfsTools.forDefaultFileSystem().mkdirs(placeTracesPath);
         Target target = new AvroFileTarget(placeTracesPath);
         pipeline.write(traced, target);
     }
 
-    private PCollection<Pair<String, SpecificRecordBase>> withKey(String operation, PCollection<? extends SpecificRecordBase> coll,
-        Class<? extends SpecificRecordBase> clazz) {
-        return coll.parallelDo(operation, new KeyDoFn(), Avros.pairs(Avros.strings(), Avros.records(clazz)));
+    private <T extends SpecificRecordBase> PCollection<T> readArtifact(ArtifactId artifact, Class<T> clazz,
+        Pipeline pipeline) throws Exception {
+        String artifactPath = rds.getOutputArtifactPath(artifact, true);
+        return readRecursively(clazz, artifactPath, pipeline);
     }
 
-    private PCollection<? extends SpecificRecordBase> readMappedPlaces(String locality, Pipeline pipeline) {
-        String mappedPlaces = rds.getOutputArtifactPath(ArtifactId.MAPPED_PLACES, true);
-        return read(NormalizedPlace.class, mappedPlaces + "/" + locality, pipeline);
-    }
-
-    private PCollection<? extends SpecificRecordBase> readClusteredPlaces(String locality, Pipeline pipeline) {
-        String clusteredPlaces = rds.getOutputArtifactPath(ArtifactId.CLUSTERED_PLACES, true);
-        return read(ClusteredPlace.class, clusteredPlaces + "/" + locality, pipeline);
-    }
-
-    private PCollection<? extends SpecificRecordBase> readArchivePlaces(String locality, Pipeline pipeline) {
-        String archivePlaces = rds.getOutputArtifactPath(ArtifactId.ARCHIVE_PLACES, true);
-        return read(ArchivePlace.class, archivePlaces + "/" + locality + "/GP3_ARCHIVE", pipeline);
-    }
-
-    private PCollection<? extends SpecificRecordBase> readTraces(String locality, Pipeline pipeline) throws IOException {
-        String tracePath = rds.getOutputArtifactPath(ArtifactId.TRACE_DUMP, true) + "/traces";
-
-        Collection<File> dirs = FileUtils.listFiles(new File(tracePath), new RegexFileFilter("^(.*?)"), DirectoryFileFilter.DIRECTORY);
-        PCollection<Trace> traces = readTraces(pipeline, dirs);
-        return traces;
-    }
-
-    private PCollection<Trace> readTraces(Pipeline pipeline, Collection<File> dirs) {
-        PCollection<Trace> traces = null;
-        for (File dir : dirs) {
-            PCollection<Trace> currTraces = read(Trace.class, dir.getAbsolutePath(), pipeline);
-            traces = traces == null ? currTraces : traces.union(currTraces);
+    public static <T extends SpecificRecordBase> PCollection<T> readRecursively(Class<T> clazz, String parentPath, Pipeline pipeline)
+        throws Exception {
+        if (HdfsTools.forDefaultFileSystem().isFile(parentPath)) {
+            return readFile(clazz, parentPath, pipeline);
         }
-        return traces;
-    }
 
-    public static <T extends SpecificRecordBase> PCollection<T> read(Class<T> clazz, String path, Pipeline pipeline) {
-        return pipeline.read(new AvroFileSource<T>(new Path(path), Avros.records(clazz)));
-    }
-
-    public static void print(PCollection<? extends SpecificRecordBase> mappedPlaces) {
-        List<? extends SpecificRecordBase> places = Utils.materialize(mappedPlaces);
-        for (SpecificRecordBase p : places) {
-            System.out.println(p);
+        List<String> dirs = HdfsTools.forDefaultFileSystem().listAll(parentPath, ".*");
+        PCollection<T> result = null;
+        for (String dir : dirs) {
+            PCollection<T> data = readRecursively(clazz, parentPath + "/" + dir, pipeline);
+            result = result == null ? data : result.union(data);
         }
+        return result;
     }
+
+    private static <T extends SpecificRecordBase> PCollection<T> readFile(Class<T> clazz, String parentPath, Pipeline pipeline) {
+        AvroFileSource<T> source = new AvroFileSource<T>(new Path(parentPath), Avros.records(clazz));
+        return pipeline.read(source);
+    }
+
 }

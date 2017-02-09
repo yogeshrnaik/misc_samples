@@ -28,10 +28,6 @@ import com.cloudera.crunch.Target;
 import com.cloudera.crunch.impl.mem.MemPipeline;
 import com.cloudera.crunch.io.avro.AvroFileTarget;
 import com.google.common.collect.Lists;
-import com.tomtom.places.unicorn.domain.avro.archive.AdminAreaInfo;
-import com.tomtom.places.unicorn.domain.avro.archive.ArchiveFallout;
-import com.tomtom.places.unicorn.domain.avro.archive.RelatedArchivePlaceDiff;
-import com.tomtom.places.unicorn.domain.avro.archive.RelatedArchivePlaceDiffCluster;
 import com.tomtom.places.unicorn.domain.avro.tracer.PlaceTrace;
 
 /**
@@ -48,10 +44,6 @@ public class InMemoryPipeline implements Pipeline {
 
     private static final Map<Class<?>, Schema> schemas = new HashMap<Class<?>, Schema>();
     static {
-        schemas.put(RelatedArchivePlaceDiff.class, RelatedArchivePlaceDiff.SCHEMA$);
-        schemas.put(RelatedArchivePlaceDiffCluster.class, RelatedArchivePlaceDiffCluster.SCHEMA$);
-        schemas.put(ArchiveFallout.class, ArchiveFallout.SCHEMA$);
-        schemas.put(AdminAreaInfo.class, AdminAreaInfo.SCHEMA$);
         schemas.put(PlaceTrace.class, PlaceTrace.SCHEMA$);
     }
 

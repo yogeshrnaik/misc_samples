@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.tomtom.places.unicorn</groupId>
+	<groupId>com.tomtom.places</groupId>
 	<artifactId>places-tracker-model</artifactId>
 	<version>4.21-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -11,6 +11,12 @@
 
 	<description>AVRO models for the Unicorn domain objects</description>
 
+	<parent>
+		<groupId>com.tomtom.places</groupId>
+		<artifactId>places-tracer-parent</artifactId>
+		<version>0.1-SNAPSHOT</version>
+	</parent>
+	
 	<organization>
 		<name>TomTom</name>
 		<url>http://www.tomtom.com</url>

@@ -3,8 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.tomtom.places</groupId>
 	<artifactId>places-tracer</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
+	
+	<parent>
+		<groupId>com.tomtom.places</groupId>
+		<artifactId>places-tracer-parent</artifactId>
+		<version>0.1-SNAPSHOT</version>
+	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,6 +22,11 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.tomtom.places</groupId>
+			<artifactId>places-tracker-model</artifactId>
+			<version>4.21-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>com.tomtom.places.unicorn</groupId>
 			<artifactId>domain</artifactId>

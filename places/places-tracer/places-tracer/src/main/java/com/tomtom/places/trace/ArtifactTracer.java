@@ -1,6 +1,7 @@
 package com.tomtom.places.trace;
 
 import org.apache.avro.specific.SpecificRecordBase;
+import org.apache.log4j.Logger;
 
 import com.cloudera.crunch.PCollection;
 import com.cloudera.crunch.Pair;
@@ -17,6 +18,8 @@ import com.tomtom.places.unicorn.rundescriptor.ArtifactId;
 
 public class ArtifactTracer {
 
+    private static final Logger LOGGER = Logger.getLogger(ArtifactTracer.class);
+
     private final String runDescriptorPath;
     private final RunDescriptorSupport rds;
     private final ArtifactReader reader;
@@ -28,6 +31,8 @@ public class ArtifactTracer {
     }
 
     public PCollection<Pair<String, PlaceTrace>> getAllArtifacts(String locality, Pipeline pipeline) throws Exception {
+        LOGGER.info("Processing artifacts for: " + locality + " from run: " + runDescriptorPath);
+
         PCollection<NormalizedPlace> mappedPlaces = reader.readMappedPlaces(locality, pipeline);
         PCollection<Pair<String, PlaceTrace>> mapped = wrapArtifact(locality, ArtifactId.MAPPED_PLACES, mappedPlaces, pipeline);
 

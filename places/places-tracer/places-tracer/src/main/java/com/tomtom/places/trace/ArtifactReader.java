@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.hadoop.fs.Path;
+import org.apache.log4j.Logger;
 
 import com.cloudera.crunch.PCollection;
 import com.cloudera.crunch.Pipeline;
@@ -20,6 +21,8 @@ import com.tomtom.places.unicorn.pipelineutil.MultiPathAvroFileSource;
 import com.tomtom.places.unicorn.rundescriptor.ArtifactId;
 
 public class ArtifactReader {
+
+    private static final Logger LOGGER = Logger.getLogger(ArtifactReader.class);
 
     private final String runDescriptorPath;
     private final RunDescriptorSupport rds;
@@ -47,7 +50,7 @@ public class ArtifactReader {
     public PCollection<Trace> readTraces(String locality, Pipeline pipeline) throws Exception {
         String tracesPath = rds.getOutputArtifactPath(ArtifactId.TRACE_DUMP, true) + "/traces";
 
-        MultiPathAvroFileSource<Trace> source = new MultiPathAvroFileSource(Avros.records(Trace.class), true);
+        MultiPathAvroFileSource<Trace> source = new MultiPathAvroFileSource<Trace>(Avros.records(Trace.class), true);
         addPathIfExists(tracesPath + "/_SHARED/Intake", source);
         for (Phase phase : Phase.values()) {
             addPathIfExists(tracesPath + "/" + locality + "/" + phase, source);
@@ -58,6 +61,7 @@ public class ArtifactReader {
     private void addPathIfExists(String path, MultiPathAvroFileSource<Trace> source) throws IOException {
         if (hdfs.exists(path)) {
             source.addPath(new Path(path));
+            LOGGER.info(String.format("Added path: [%s] from run: [%s]", path, runDescriptorPath));
         }
     }
 

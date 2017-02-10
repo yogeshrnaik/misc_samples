@@ -9,6 +9,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
+import org.apache.log4j.Logger;
 
 import com.cloudera.crunch.PCollection;
 import com.cloudera.crunch.PGroupedTable;
@@ -25,6 +26,8 @@ import com.tomtom.places.unicorn.pipelineutil.HdfsTools;
 import com.tomtom.places.unicorn.rundescriptor.ArtifactId;
 
 public class PlaceTracer extends Configured implements Tool {
+
+    private static final Logger LOGGER = Logger.getLogger(PlaceTracer.class);
 
     private final String runDescriptorPath;
     private final RunDescriptorSupport rds;
@@ -45,13 +48,15 @@ public class PlaceTracer extends Configured implements Tool {
         StopWatch watch = new StopWatch();
         watch.start();
         ToolRunner.run(new Configuration(), new PlaceTracer(args[0]), args);
-        System.out.println("Finished in: " + DurationFormatUtils.formatDuration(watch.getTime(), "HH 'hr', mm 'min', ss 'sec'"));
+        LOGGER.info("Finished in: " + DurationFormatUtils.formatDuration(watch.getTime(), "HH 'hr', mm 'min', ss 'sec'"));
     }
 
     public int run(String[] args) throws Exception {
         Pipeline pipeline = new MRPipeline(PlaceTracer.class, getConf());
         PipelineResult result = run(pipeline);
-        return result.succeeded() ? 0 : -1;
+        int status = result.succeeded() ? 0 : -1;
+        LOGGER.info("Pipeline status:" + status);
+        return status;
     }
 
     public PipelineResult run(Pipeline pipeline) throws Exception {
@@ -65,7 +70,7 @@ public class PlaceTracer extends Configured implements Tool {
 
     @SuppressWarnings("unchecked")
     public void createPlaceTraces(String locality, Pipeline pipeline) throws Exception {
-        ArtifactTracer wrapper = new ArtifactTracer(locality, rds, HdfsTools.forDefaultFileSystem());
+        ArtifactTracer wrapper = new ArtifactTracer(runDescriptorPath, rds, HdfsTools.forDefaultFileSystem());
         PCollection<Pair<String, PlaceTrace>> artifacts = wrapper.getAllArtifacts(locality, pipeline);
         PGroupedTable<String, Pair<String, PlaceTrace>> groupByKey = artifacts.by(new PlaceKeyFn(), Avros.strings()).groupByKey();
         PCollection<PlaceTrace> traced = groupByKey.parallelDo(new PlaceTracerDoFn(), Avros.records(PlaceTrace.class));
@@ -81,6 +86,7 @@ public class PlaceTracer extends Configured implements Tool {
     private void writeTraced(Pipeline pipeline, PCollection<PlaceTrace> traced) throws IOException {
         String placeTracesPath = runDescriptorPath.substring(0, runDescriptorPath.indexOf("run-descriptor") - 1) + "/place-traces";
         HdfsTools.forDefaultFileSystem().mkdirs(placeTracesPath);
+        LOGGER.info("Writing place traces in: " + placeTracesPath);
         Target target = new AvroFileTarget(placeTracesPath);
         pipeline.write(traced, target);
     }

@@ -63,28 +63,30 @@ public class PlaceTracer extends Configured implements Tool {
         String mappedPlaces = rds.getOutputArtifactPath(ArtifactId.MAPPED_PLACES, true);
         List<String> dirs = HdfsTools.forDefaultFileSystem().listDirectories(mappedPlaces, ".*");
         for (String locality : dirs) {
-            createPlaceTraces(locality, pipeline);
+            PCollection<PlaceTrace> traces = createPlaceTraces(locality, pipeline);
+            writePlaceTraces(locality, pipeline, traces);
         }
         return pipeline.done();
     }
 
     @SuppressWarnings("unchecked")
-    public void createPlaceTraces(String locality, Pipeline pipeline) throws Exception {
-        ArtifactTracer wrapper = new ArtifactTracer(runDescriptorPath, rds, HdfsTools.forDefaultFileSystem());
+    public PCollection<PlaceTrace> createPlaceTraces(String locality, Pipeline pipeline) throws Exception {
+        ArtifactWrapperWithKey wrapper = new ArtifactWrapperWithKey(runDescriptorPath, rds, HdfsTools.forDefaultFileSystem());
         PCollection<Pair<String, PlaceTrace>> artifacts = wrapper.getAllArtifacts(locality, pipeline);
         PGroupedTable<String, Pair<String, PlaceTrace>> groupByKey = artifacts.by(new PlaceKeyFn(), Avros.strings()).groupByKey();
-        PCollection<PlaceTrace> traced = groupByKey.parallelDo(new PlaceTracerDoFn(), Avros.records(PlaceTrace.class));
+        PCollection<PlaceTrace> traces = groupByKey.parallelDo(new PlaceTracerDoFn(), Avros.records(PlaceTrace.class));
+        return traces;
 
         // TODO: gather traces logged with ClusterPlaceID and/or ArchivePlaceID
-        // 1) emit traced collection as Pair<ClusteredPlaceId, PlaceTrackInfo>
-        // 2) read and emit archive places as Pair<ArchivePlaceId, Wrap ArchivePlace into PlackTrackInfo>
+        // 1) emit traced collection as Pair<ClusteredPlaceId, PlaceTrace>
+        // 2) read and emit archive places as Pair<ArchivePlaceId, Wrap ArchivePlace into PlaceTrace>
         // 3) how to emit and combine traces that were logged with ClusteredPlaceId?
-        // union 1, 2 & 3 and groupByKey() then in process wrap all places together into PlaceTrackInfo and emit wrapped PlaceTrackInfo
-        writeTraced(pipeline, traced);
+        // union 1, 2 & 3 and groupByKey() then in process wrap all places together into PlaceTrace and emit wrapped PlaceTrace
     }
 
-    private void writeTraced(Pipeline pipeline, PCollection<PlaceTrace> traced) throws IOException {
-        String placeTracesPath = runDescriptorPath.substring(0, runDescriptorPath.indexOf("run-descriptor") - 1) + "/place-traces";
+    private void writePlaceTraces(String locality, Pipeline pipeline, PCollection<PlaceTrace> traced) throws IOException {
+        String placeTracesPath =
+            runDescriptorPath.substring(0, runDescriptorPath.indexOf("run-descriptor") - 1) + "/place-traces/" + locality;
         HdfsTools.forDefaultFileSystem().mkdirs(placeTracesPath);
         LOGGER.info("Writing place traces in: " + placeTracesPath);
         Target target = new AvroFileTarget(placeTracesPath);

@@ -16,15 +16,15 @@ import com.tomtom.places.unicorn.pipeline.repository.RunDescriptorSupport;
 import com.tomtom.places.unicorn.pipelineutil.HdfsTools;
 import com.tomtom.places.unicorn.rundescriptor.ArtifactId;
 
-public class ArtifactTracer {
+public class ArtifactWrapperWithKey {
 
-    private static final Logger LOGGER = Logger.getLogger(ArtifactTracer.class);
+    private static final Logger LOGGER = Logger.getLogger(ArtifactWrapperWithKey.class);
 
     private final String runDescriptorPath;
     private final RunDescriptorSupport rds;
     private final ArtifactReader reader;
 
-    public ArtifactTracer(String runDescriptorPath, RunDescriptorSupport rds, HdfsTools hdfs) {
+    public ArtifactWrapperWithKey(String runDescriptorPath, RunDescriptorSupport rds, HdfsTools hdfs) {
         this.runDescriptorPath = runDescriptorPath;
         this.rds = rds;
         reader = new ArtifactReader(runDescriptorPath, rds, hdfs);
@@ -34,22 +34,22 @@ public class ArtifactTracer {
         LOGGER.info("Processing artifacts for: " + locality + " from run: " + runDescriptorPath);
 
         PCollection<NormalizedPlace> mappedPlaces = reader.readMappedPlaces(locality, pipeline);
-        PCollection<Pair<String, PlaceTrace>> mapped = wrapArtifact(locality, ArtifactId.MAPPED_PLACES, mappedPlaces, pipeline);
+        PCollection<Pair<String, PlaceTrace>> mapped = withKey(locality, ArtifactId.MAPPED_PLACES, mappedPlaces, pipeline);
 
         PCollection<ClusteredPlace> clusteredPlaces = reader.readClusteredPlaces(locality, pipeline);
-        PCollection<Pair<String, PlaceTrace>> clustered = wrapArtifact(locality, ArtifactId.CLUSTERED_PLACES, clusteredPlaces, pipeline);
+        PCollection<Pair<String, PlaceTrace>> clustered = withKey(locality, ArtifactId.CLUSTERED_PLACES, clusteredPlaces, pipeline);
 
         PCollection<ArchivePlace> archivePlaces = reader.readArchivePlaces(locality, pipeline);
-        PCollection<Pair<String, PlaceTrace>> archives = wrapArtifact(locality, ArtifactId.ARCHIVE_PLACES, archivePlaces, pipeline);
+        PCollection<Pair<String, PlaceTrace>> archives = withKey(locality, ArtifactId.ARCHIVE_PLACES, archivePlaces, pipeline);
 
         PCollection<Trace> allTraces = reader.readTraces(locality, pipeline);
-        PCollection<Pair<String, PlaceTrace>> traces = wrapArtifact(locality, ArtifactId.TRACE_DUMP, allTraces, pipeline);
+        PCollection<Pair<String, PlaceTrace>> traces = withKey(locality, ArtifactId.TRACE_DUMP, allTraces, pipeline);
 
         return mapped.union(clustered).union(archives).union(traces);
     }
 
     private <T extends SpecificRecordBase> PCollection<Pair<String, PlaceTrace>>
-        wrapArtifact(String locality, ArtifactId artifactId, PCollection<T> artifact, Pipeline pipeline) throws Exception {
-        return artifact.parallelDo(artifactId.toString(), new KeyDoFn(), Avros.pairs(Avros.strings(), Avros.records(PlaceTrace.class)));
+        withKey(String locality, ArtifactId artifactId, PCollection<T> artifact, Pipeline pipeline) throws Exception {
+        return artifact.parallelDo(artifactId.toString(), new ArtifactWrapperWithKeyDoFn(), Avros.pairs(Avros.strings(), Avros.records(PlaceTrace.class)));
     }
 }

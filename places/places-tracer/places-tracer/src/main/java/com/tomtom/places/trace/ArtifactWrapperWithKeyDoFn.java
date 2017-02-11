@@ -15,7 +15,7 @@ import com.tomtom.places.unicorn.domain.avro.source.AVUUID;
 import com.tomtom.places.unicorn.domain.avro.trace.Trace;
 import com.tomtom.places.unicorn.domain.avro.tracer.PlaceTrace;
 
-public class KeyDoFn<S extends SpecificRecordBase> extends DoFn<S, Pair<String, PlaceTrace>> {
+public class ArtifactWrapperWithKeyDoFn<S extends SpecificRecordBase> extends DoFn<S, Pair<String, PlaceTrace>> {
 
     @Override
     public void process(S input, Emitter<Pair<String, PlaceTrace>> emitter) {

@@ -55,6 +55,8 @@ import com.tomtom.cpu.coredb.common.json.JsonUtil;
 import com.tomtom.cpu.coredb.commons.utils.GeometryConversionUtils;
 import com.tomtom.cpu.coredb.mapdata.ModificationType;
 import com.tomtom.cpu.coredb.writeapi.logicaltransactions.MetaDataForVersion;
+import com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace;
+import com.tomtom.places.unicorn.ttom.TtomToArchive;
 
 public class VersionViewer {
 
@@ -62,15 +64,15 @@ public class VersionViewer {
     // private static final String[] POI_FEATURE_IDS = {"00005a41-3400-2800-0000-00000bf58416"};
     // private static final String BRANCH_ID = "2a33d651-b896-4337-8d1a-bffe61615444";
 
-    private static final String POI_FEATURE_ID = "f8a1a48d-3731-4cff-9504-443edf9478f2";
-    private static final String[] POI_FEATURE_IDS = {"f8a1a48d-3731-4cff-9504-443edf9478f2"};
+    private static final String POI_FEATURE_ID = "00004c55-5800-2800-0000-00000bec83bd";
+    private static final String[] POI_FEATURE_IDS = {"00004c55-5800-2800-0000-00000bec83bd"};
     private static final String BRANCH_ID = "233b38a4-f0bf-4289-bfdc-7f2a04fc4ab3";
     // private static final String BRANCH_ID = "99d05099-dce4-4afc-bacc-a88c6b7a96ab";
 
-    // private static final String COREDB_URL =
-    // "http://processing-cppedit-cpp-r2.service.eu-west-1-mapsco.maps-contentops.amiefarm.com/coredb-main-ws";
     private static final String COREDB_URL =
-        "http://processing-cppread-cpp-r2.service.eu-west-1-mapsco.maps-contentops.amiefarm.com/coredb-main-ws";
+        "http://processing-cppedit-cpp-r2.service.eu-west-1-mapsco.maps-contentops.amiefarm.com/coredb-main-ws";
+    // private static final String COREDB_URL =
+    // "http://processing-cppread-cpp-r2.service.eu-west-1-mapsco.maps-contentops.amiefarm.com/coredb-main-ws";
     private static final TTOM MODEL = new TTOM(DictionaryModelStoreFactory.getModelStore());
     private static final int BBOX_DISTANCE = 10;
 
@@ -101,14 +103,27 @@ public class VersionViewer {
 
         long currentVersion = journal.getCurrentVersion(new Branch(UUID.fromString(BRANCH_ID))).getJournalVersion();
         // long currentVersion = 22706915L;
-        // Feature<? extends Geometry> feature = read.getFeatureById(POI_FEATURE_ID, currentVersion, BRANCH_ID);
-        // Extremes extremes = getExtremes(feature.getGeometry());
+        Feature<? extends Geometry> feature = read.getFeatureById(POI_FEATURE_ID, currentVersion, BRANCH_ID);
+        Extremes extremes = getExtremes(feature.getGeometry());
         // Extremes extremes = new Extremes(526818850, 88368950, 526818870, 88368970);
-        Extremes extremes = getExtremes(new Coordinate(282436294, -261823183));
+        // Extremes extremes = getExtremes(new Coordinate(282436294, -261823183));
 
-        // System.out.println(
-        // "Feature ID: " + POI_FEATURE_ID + ", External ID: " + getExternalIdentifier(feature) + ", Location: "
-        // + feature.getGeometry().toString());
+        System.out.println(
+            "Feature ID: " + POI_FEATURE_ID + ", External ID: " + getExternalIdentifier(feature) + ", Location: "
+                + feature.getGeometry().toString());
+
+        ArchivePlace poi = TtomToArchive.newTtomToArchive().poiToFeature(feature);
+        System.out.println(poi);
+
+        // Collection<Attribute<?>> attributes = feature.getAttributes();
+        // for (Attribute<?> attribute : attributes) {
+        // System.out.println(attribute);
+        // }
+        // Collection<Attribute<?>> station =
+        // feature.getAttributes(MODEL.TTOM_POI.FEATURES.ElectricVehicleStation.CompositeChargingStation);
+        // for (Attribute<?> s : station) {
+        // System.out.println(s.getType() + "\t" + s.getValue());
+        // }
 
         CloseableHttpClient client = HttpClientBuilder.create().build();
         String url =
@@ -139,7 +154,7 @@ public class VersionViewer {
             public void accept(BranchHistoryBean transaction) {
                 long version = transaction.getMergeVersion();
                 UUID txnId = transaction.getTransactionId();
-                // System.out.println("Checking for Txn " + txnId + "...");
+                System.out.println("Checking for Txn " + txnId + "...");
                 Delta delta = journal.getDelta(txnId.toString());
                 Collection<FeatureModification> featureModifications =
                     delta.getFeaturesModifications(ModificationType.ALL,

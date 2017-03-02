@@ -37,6 +37,11 @@
 			<version>${ppp-ct.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>com.tomtom.places.unicorn</groupId>
+			<artifactId>ttom-to-archive-place</artifactId>
+			<version>${ppp-ct.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>com.tomtom.qa</groupId>
 			<artifactId>qa-io</artifactId>
 			<version>${qa-io.version}</version>

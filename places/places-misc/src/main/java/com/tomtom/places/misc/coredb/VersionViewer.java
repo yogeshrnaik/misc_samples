@@ -64,9 +64,9 @@ public class VersionViewer {
     // private static final String[] POI_FEATURE_IDS = {"00005a41-3400-2800-0000-00000bf58416"};
     // private static final String BRANCH_ID = "2a33d651-b896-4337-8d1a-bffe61615444";
 
-    private static final String POI_FEATURE_ID = "00004c55-5800-2800-0000-00000bec83bd";
-    private static final String[] POI_FEATURE_IDS = {"00004c55-5800-2800-0000-00000bec83bd"};
-    private static final String BRANCH_ID = "233b38a4-f0bf-4289-bfdc-7f2a04fc4ab3";
+    private static final String POI_FEATURE_ID = "00004436-3000-2800-0000-00000c28afe7";
+    private static final String[] POI_FEATURE_IDS = {"00004436-3000-2800-0000-00000c28afe7"};
+    private static final String BRANCH_ID = "cbc158d3-4256-4fce-9c99-0dd7b9a294c1";
     // private static final String BRANCH_ID = "99d05099-dce4-4afc-bacc-a88c6b7a96ab";
 
     private static final String COREDB_URL =

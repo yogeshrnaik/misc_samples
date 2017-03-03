@@ -1,9 +1,9 @@
-package com.tomtom.places.avro;
+package com.tomtom.places.unicorn.mdsupdate.evs;
 
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.Option;
 
-public class CommandLineOptions {
+public class CommandLineParams {
 
     @Argument(index = 0, required = true, usage = "Path to input file containing feature IDs.")
     public String inputFile;

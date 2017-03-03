@@ -1,4 +1,4 @@
-package com.tomtom.places.avro;
+package com.tomtom.places.unicorn.mdsupdate.evs;
 
 public class EvsSpotKey {
 

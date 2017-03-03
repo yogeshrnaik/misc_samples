@@ -10,7 +10,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<coredb.version>4.3.98</coredb.version>
+		<coredb.version>4.4.38</coredb.version>
 		<qa-io.version>6.1.9</qa-io.version>
 		<ppp-ct.version>4.18</ppp-ct.version>
 		<ppp.version>4.21</ppp.version>
@@ -43,8 +43,18 @@
 			<version>${coredb.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>com.tomtom.cpu.coredb</groupId>
+			<artifactId>coredb-main-client-data-interfaces</artifactId>
+			<version>${coredb.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>com.tomtom.places.unicorn</groupId>
 			<artifactId>coredb-client-util</artifactId>
+			<version>${ppp-ct.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.tomtom.places.unicorn</groupId>
+			<artifactId>ttom-util</artifactId>
 			<version>${ppp-ct.version}</version>
 		</dependency>
 		<dependency>

@@ -426,7 +426,6 @@ public class NormalizeEvsStations {
             Set<Violation> violations = qaResponse.getViolations();
             List<String> violationMessages = Lists.newArrayList(Iterables.transform(violations, new Function<Violation, String>() {
 
-                @Override
                 public String apply(Violation input) {
                     return input.getMessage();
                 }
@@ -449,7 +448,6 @@ public class NormalizeEvsStations {
         Set<Violation> violations = qaResponse.getViolations();
         List<String> violationMessages = Lists.newArrayList(Iterables.transform(violations, new Function<Violation, String>() {
 
-            @Override
             public String apply(Violation input) {
                 return input.getMessage();
             }

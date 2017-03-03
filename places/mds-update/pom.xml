@@ -21,6 +21,12 @@
 	<url>http://maven.apache.org</url>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-lgpl -->
+		<dependency>
+		    <groupId>org.codehaus.jackson</groupId>
+		    <artifactId>jackson-mapper-lgpl</artifactId>
+		    <version>1.9.0</version>
+		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>

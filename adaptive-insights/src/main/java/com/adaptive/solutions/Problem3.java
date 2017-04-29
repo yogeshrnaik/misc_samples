@@ -4,12 +4,12 @@ import java.util.Arrays;
 
 public class Problem3 {
 
-    public static boolean isSplitArrayInEqualPartsPossible(int[] input) {
+    public static boolean isSplitArrayInEqualPartsPossible(final int[] input) {
         if (input == null || input.length <= 1) {
             return false;
         }
 
-        int sum = Arrays.stream(input).sum();
+        final int sum = Arrays.stream(input).sum();
         int sumSoFar = 0;
 
         for (int i = 0; i < input.length - 1; i++) {

@@ -13,6 +13,7 @@ public class Problem4Test {
         assertEquals("", insertAsterik(""));
         assertEquals(" ", insertAsterik(" "));
         assertEquals("a", insertAsterik("a"));
+        assertEquals("*", insertAsterik("*"));
     }
 
     @Test

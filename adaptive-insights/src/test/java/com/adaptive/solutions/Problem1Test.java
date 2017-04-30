@@ -1,5 +1,6 @@
 package com.adaptive.solutions;
 
+import static com.adaptive.solutions.Problem1.getClosestTo;
 import static com.adaptive.solutions.Problem1.getClosestTo1000;
 import static org.junit.Assert.assertEquals;
 
@@ -8,10 +9,13 @@ import org.junit.Test;
 public class Problem1Test {
 
     @Test
-    public void returnClosedNumberTo1000() {
+    public void givenSameNumbersReturnsSameNumber() {
         assertEquals(10, getClosestTo1000(10, 10));
         assertEquals(1000, getClosestTo1000(1000, 1000));
+    }
 
+    @Test
+    public void returnClosedNumberTo1000() {
         assertEquals(100, getClosestTo1000(100, 10));
         assertEquals(100, getClosestTo1000(10, 100));
 
@@ -42,5 +46,35 @@ public class Problem1Test {
 
         assertEquals(-10, getClosestTo1000(-10, Integer.MAX_VALUE));
         assertEquals(-10, getClosestTo1000(-10, Integer.MIN_VALUE));
+    }
+
+    @Test
+    public void returnClosedNumberToMinIntValue() {
+        assertEquals(Integer.MIN_VALUE, getClosestTo(Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE));
+        assertEquals(Integer.MIN_VALUE, getClosestTo(Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE));
+
+        assertEquals(Integer.MIN_VALUE, getClosestTo(Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE));
+        assertEquals(Integer.MAX_VALUE, getClosestTo(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE));
+
+        assertEquals(Integer.MIN_VALUE, getClosestTo(0, Integer.MIN_VALUE, Integer.MIN_VALUE));
+        assertEquals(0, getClosestTo(0, Integer.MAX_VALUE, Integer.MIN_VALUE));
+
+        assertEquals(-10, getClosestTo(-10, Integer.MAX_VALUE, Integer.MIN_VALUE));
+        assertEquals(Integer.MIN_VALUE, getClosestTo(-10, Integer.MIN_VALUE, Integer.MIN_VALUE));
+    }
+
+    @Test
+    public void returnClosedNumberToMaxIntValue() {
+        assertEquals(Integer.MAX_VALUE, getClosestTo(Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE));
+        assertEquals(Integer.MAX_VALUE, getClosestTo(Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE));
+
+        assertEquals(Integer.MIN_VALUE, getClosestTo(Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE));
+        assertEquals(Integer.MAX_VALUE, getClosestTo(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE));
+
+        assertEquals(Integer.MAX_VALUE, getClosestTo(0, Integer.MAX_VALUE, Integer.MAX_VALUE));
+        assertEquals(0, getClosestTo(0, Integer.MIN_VALUE, Integer.MAX_VALUE));
+
+        assertEquals(-10, getClosestTo(-10, Integer.MIN_VALUE, Integer.MAX_VALUE));
+        assertEquals(Integer.MAX_VALUE, getClosestTo(-10, Integer.MAX_VALUE, Integer.MAX_VALUE));
     }
 }

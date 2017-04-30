@@ -8,9 +8,13 @@ import org.junit.Test;
 public class Problem4Test {
 
     @Test
-    public void insertAsterikInNullOrEmptryOrSingleCharString() {
+    public void insertAsterikInNullOrEmptryStringReturnsSameString() {
         assertEquals(null, insertAsterik(null));
         assertEquals("", insertAsterik(""));
+    }
+
+    @Test
+    public void insertAsterikInSingleCharStringReturnsSameString() {
         assertEquals(" ", insertAsterik(" "));
         assertEquals("a", insertAsterik("a"));
         assertEquals("*", insertAsterik("*"));

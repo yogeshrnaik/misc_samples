@@ -1,6 +1,6 @@
 package com.adaptive.solutions;
 
-import static com.adaptive.solutions.Problem3.isSplitArrayInEqualPartsPossible;
+import static com.adaptive.solutions.Problem3.isEqualSplitPossible;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -10,25 +10,48 @@ public class Problem3Test {
 
     @Test
     public void splitArrayInEqualPartsPossible() {
-        assertTrue(isSplitArrayInEqualPartsPossible(new int[] {1, 1}));
+        assertTrue(isEqualSplitPossible(toArray(1, 1)));
 
-        assertTrue(isSplitArrayInEqualPartsPossible(new int[] {1, 2, 3}));
-        assertTrue(isSplitArrayInEqualPartsPossible(new int[] {0, 2, 2}));
-        assertTrue(isSplitArrayInEqualPartsPossible(new int[] {-2, 2, 0, 0}));
+        assertTrue(isEqualSplitPossible(toArray(1, 2, 3)));
+        assertTrue(isEqualSplitPossible(toArray(0, 2, 2)));
+        assertTrue(isEqualSplitPossible(toArray(-2, 2, 0, 0)));
 
-        assertTrue(isSplitArrayInEqualPartsPossible(new int[] {1, 2, 3, 4, 10}));
+        assertTrue(isEqualSplitPossible(toArray(1, 2, 3, 4, 10)));
 
-        assertTrue(isSplitArrayInEqualPartsPossible(new int[] {10, 1, 2, 3, 4}));
+        assertTrue(isEqualSplitPossible(toArray(10, 1, 2, 3, 4)));
 
-        assertTrue(isSplitArrayInEqualPartsPossible(new int[] {-10, -1, -2, -3, -4}));
+        assertTrue(isEqualSplitPossible(toArray(-10, -1, -2, -3, -4)));
+        assertTrue(isEqualSplitPossible(toArray(-1, -2, -3, -4, -10)));
     }
 
     @Test
     public void splitArrayInEqualPartsNotPossible() {
-        assertFalse(isSplitArrayInEqualPartsPossible(null));
-        assertFalse(isSplitArrayInEqualPartsPossible(new int[] {}));
-        assertFalse(isSplitArrayInEqualPartsPossible(new int[] {1}));
-        assertFalse(isSplitArrayInEqualPartsPossible(new int[] {1, 2}));
-        assertFalse(isSplitArrayInEqualPartsPossible(new int[] {2, 2, 2}));
+        assertFalse(isEqualSplitPossible(null));
+        assertFalse(isEqualSplitPossible(toArray()));
+        assertFalse(isEqualSplitPossible(toArray(1)));
+        assertFalse(isEqualSplitPossible(toArray(1, 2)));
+        assertFalse(isEqualSplitPossible(toArray(2, 2, 2)));
+    }
+
+    @Test
+    public void splitPossibleForArrayWithMinAndMaxIntValues() {
+        assertTrue(isEqualSplitPossible(toArray(Integer.MAX_VALUE, Integer.MAX_VALUE)));
+        assertTrue(isEqualSplitPossible(toArray(Integer.MIN_VALUE, Integer.MIN_VALUE)));
+
+        assertTrue(isEqualSplitPossible(toArray(Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE)));
+        assertTrue(isEqualSplitPossible(toArray(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE)));
+    }
+
+    @Test
+    public void splitNotPossibleForArrayWithMinAndMaxIntValues() {
+        assertFalse(isEqualSplitPossible(toArray(Integer.MIN_VALUE, Integer.MAX_VALUE)));
+        assertFalse(isEqualSplitPossible(toArray(Integer.MAX_VALUE, Integer.MIN_VALUE)));
+
+        assertFalse(isEqualSplitPossible(toArray(Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE)));
+        assertFalse(isEqualSplitPossible(toArray(Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE)));
+    }
+
+    private int[] toArray(int... numbers) {
+        return numbers;
     }
 }

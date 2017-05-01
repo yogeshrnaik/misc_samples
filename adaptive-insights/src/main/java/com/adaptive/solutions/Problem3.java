@@ -28,7 +28,8 @@ public class Problem3 {
 
         for (int index = 0; index < input.length - 1; index++) {
             sumSoFar += input[index];
-            if (sumSoFar * 2 == sum) {
+
+            if (2 * sumSoFar == sum) {
                 return true;
             }
         }

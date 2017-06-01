@@ -34,7 +34,9 @@ import java.util.List;
 // 2) New requirement is to add a new flexi-claim type called 'Clothing Allowance'
 // Re-factor the code so that it is clean and if you add new flexi-claim types,
 // we should be able to do it by adding new code rather than modifying existing one.
-// 3) How to Unit test this class?
+// 3) Unit test this class
+// 4) Allowing the constants to be changed without having to touch the code
+// 5) Internationalisation/Localisation of expense report (e.g. represent labels in other languages)
 
 class FlexiClaim {
 

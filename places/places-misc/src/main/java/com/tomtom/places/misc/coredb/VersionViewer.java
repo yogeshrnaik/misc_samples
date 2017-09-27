@@ -55,8 +55,6 @@ import com.tomtom.cpu.coredb.common.json.JsonUtil;
 import com.tomtom.cpu.coredb.commons.utils.GeometryConversionUtils;
 import com.tomtom.cpu.coredb.mapdata.ModificationType;
 import com.tomtom.cpu.coredb.writeapi.logicaltransactions.MetaDataForVersion;
-import com.tomtom.places.unicorn.domain.avro.archive.ArchivePlace;
-import com.tomtom.places.unicorn.ttom.TtomToArchive;
 
 public class VersionViewer {
 
@@ -64,9 +62,9 @@ public class VersionViewer {
     // private static final String[] POI_FEATURE_IDS = {"00005a41-3400-2800-0000-00000bf58416"};
     // private static final String BRANCH_ID = "2a33d651-b896-4337-8d1a-bffe61615444";
 
-    private static final String POI_FEATURE_ID = "00004436-3000-2800-0000-00000c28afe7";
-    private static final String[] POI_FEATURE_IDS = {"00004436-3000-2800-0000-00000c28afe7"};
-    private static final String BRANCH_ID = "cbc158d3-4256-4fce-9c99-0dd7b9a294c1";
+    private static final String POI_FEATURE_ID = "ce796a31-5ada-4a2e-84cf-b7d3a1c70bc8";
+    private static final String[] POI_FEATURE_IDS = {"ce796a31-5ada-4a2e-84cf-b7d3a1c70bc8", "da92847c-247c-4b4e-9a16-5f568af588d9"};
+    private static final String BRANCH_ID = "233b38a4-f0bf-4289-bfdc-7f2a04fc4ab3";
     // private static final String BRANCH_ID = "99d05099-dce4-4afc-bacc-a88c6b7a96ab";
 
     private static final String COREDB_URL =
@@ -74,7 +72,7 @@ public class VersionViewer {
     // private static final String COREDB_URL =
     // "http://processing-cppread-cpp-r2.service.eu-west-1-mapsco.maps-contentops.amiefarm.com/coredb-main-ws";
     private static final TTOM MODEL = new TTOM(DictionaryModelStoreFactory.getModelStore());
-    private static final int BBOX_DISTANCE = 10;
+    private static final int BBOX_DISTANCE = 100;
 
     private static final String METADATA_KEY_USERID = "TransactionUserID";
     private static final String METADATA_KEY_COMMITDATE = "TransactionCommitDate";
@@ -98,22 +96,22 @@ public class VersionViewer {
         final DataConnection dc = new DataConnectionImpl();
         dc.connect(ci);
         ReadInterface read = dc.getReadInterface();
-        JournalInterface journal = dc.getJournalInterface();
-        MetadataInterface metadata = dc.getMetadataInterface();
+        final JournalInterface journal = dc.getJournalInterface();
+        final MetadataInterface metadata = dc.getMetadataInterface();
 
         long currentVersion = journal.getCurrentVersion(new Branch(UUID.fromString(BRANCH_ID))).getJournalVersion();
         // long currentVersion = 22706915L;
         Feature<? extends Geometry> feature = read.getFeatureById(POI_FEATURE_ID, currentVersion, BRANCH_ID);
         Extremes extremes = getExtremes(feature.getGeometry());
         // Extremes extremes = new Extremes(526818850, 88368950, 526818870, 88368970);
-        // Extremes extremes = getExtremes(new Coordinate(282436294, -261823183));
+        // Extremes extremes = getExtremes(new Coordinate(103865682, -1283798));
 
-        System.out.println(
-            "Feature ID: " + POI_FEATURE_ID + ", External ID: " + getExternalIdentifier(feature) + ", Location: "
-                + feature.getGeometry().toString());
+        // System.out.println(
+        // "Feature ID: " + POI_FEATURE_ID + ", External ID: " + getExternalIdentifier(feature) + ", Location: "
+        // + feature.getGeometry().toString());
 
-        ArchivePlace poi = TtomToArchive.newTtomToArchive().poiToFeature(feature);
-        System.out.println(poi);
+        // ArchivePlace poi = TtomToArchive.newTtomToArchive().poiToFeature(feature);
+        // System.out.println(poi);
 
         // Collection<Attribute<?>> attributes = feature.getAttributes();
         // for (Attribute<?> attribute : attributes) {
@@ -195,9 +193,9 @@ public class VersionViewer {
     }
 
     private static boolean check(Modification modification) {
-        return Arrays.binarySearch(POI_FEATURE_IDS, modification.getObjectId().toString()) >= 0;
+        // return Arrays.binarySearch(POI_FEATURE_IDS, modification.getObjectId().toString()) >= 0;
         // return modification.getObjectId().toString().equalsIgnoreCase(POI_FEATURE_ID);
-        // return true;
+        return true;
     }
 
     private static Extremes getExtremes(Geometry geometry) {

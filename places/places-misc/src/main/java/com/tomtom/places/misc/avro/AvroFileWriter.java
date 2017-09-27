@@ -41,7 +41,6 @@ public class AvroFileWriter<T> implements Closeable {
         }
     }
 
-    @Override
     public void close() throws IOException {
         flush();
 

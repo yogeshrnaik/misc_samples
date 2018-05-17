@@ -20,15 +20,15 @@ public class Lesson1 {
      */
     public void runExercises() {
         System.out.println("JDK 8 Lambdas and Streams MOOC Lesson 1");
-        System.out.println("Running exercise 1 solution...");
+        System.out.println("********** Running exercise 1 solution... **********");
         exercise1();
-        System.out.println("Running exercise 2 solution...");
+        System.out.println("********** Running exercise 2 solution... **********");
         exercise2();
-        System.out.println("Running exercise 3 solution...");
+        System.out.println("********** Running exercise 3 solution... **********");
         exercise3();
-        System.out.println("Running exercise 4 solution...");
+        System.out.println("********** Running exercise 4 solution... **********");
         exercise4();
-        System.out.println("Running exercise 5 solution...");
+        System.out.println("********** Running exercise 5 solution... **********");
         exercise5();
     }
 

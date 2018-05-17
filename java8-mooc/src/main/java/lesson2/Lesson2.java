@@ -27,19 +27,19 @@ public class Lesson2 {
      */
     public void runExercises() throws IOException {
         System.out.println("JDK 8 Lambdas and Streams MOOC Lesson 2");
-        System.out.println("Running exercise 1 solution...");
+        System.out.println("********** Running exercise 1 solution... **********");
         exercise1();
-        System.out.println("Running exercise 2 solution...");
+        System.out.println("********** Running exercise 2 solution... **********");
         exercise2();
-        System.out.println("Running exercise 3 solution...");
+        System.out.println("********** Running exercise 3 solution... **********");
         exercise3();
-        System.out.println("Running exercise 4 solution...");
+        System.out.println("********** Running exercise 4 solution... **********");
         exercise4();
-        System.out.println("Running exercise 5 solution...");
+        System.out.println("********** Running exercise 5 solution... **********");
         exercise5();
-        System.out.println("Running exercise 6 solution...");
+        System.out.println("********** Running exercise 6 solution... **********");
         exercise6();
-        System.out.println("Running exercise 7 solution...");
+        System.out.println("********** Running exercise 7 solution... **********");
         exercise7();
     }
 

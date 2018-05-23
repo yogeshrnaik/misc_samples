@@ -14,7 +14,7 @@ public class DeclarativeCount {
             "Java7", "Clojure", "Scala", "Java5", "Groovy");
         countLanguages(languages);
 
-        // countLanguagesWithStream(languages);
+        countLanguagesWithStream(languages);
     }
 
     private static void countLanguages(List<String> languages) {
@@ -29,9 +29,9 @@ public class DeclarativeCount {
         languageCounts.merge(languge, 1, (oldValue, value) -> oldValue + value);
     }
 
-    private void countLanguagesWithStream(List<String> languages) {
+    private static void countLanguagesWithStream(List<String> languages) {
         Map<String, Long> languageCounts = languages.stream()
-            .collect(Collectors.groupingBy(l -> l + this, Collectors.counting()));
+            .collect(Collectors.groupingBy(lang -> lang, Collectors.counting()));
 
         System.out.println(languageCounts);
 
